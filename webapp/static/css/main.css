@@ -47,16 +47,20 @@ ums_main {
 	position: relative;
 }
 
-ums_footer {
+ums_footer  {
 	position: relative;
 }
 
 .ums_container {
-	width: 100%;
+	width: 920px;
 	min-width: 920px;
-	height: 100%;
+	height: 518px;
 	min-height: 518px;
 	background-color: #cccccc;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin:-259px 0 0 -460px;
 }
 
 .login_container {
