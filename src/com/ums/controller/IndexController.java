@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 	
-	@RequestMapping(value="login", method=RequestMethod.GET)
+	@RequestMapping(value="/login", method=RequestMethod.GET)
 	public String login(Map<String, Object> map) {
 		map.put("logoImg", "http://bpic.588ku.com/element_origin_min_pic/20/16/02/1956c6bbc1bbf9b.jpg");
 		return "login";

@@ -11,12 +11,11 @@
 </head>
 <body>
 	<button class="btn btn-success">MANAGE</button>
+	<a href="${APP_PATH}/shiro/logout">退出</a>
 	<script type="text/javascript" src="${APP_PATH }/static/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="${APP_PATH }/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-		$(function(){
-			alert(1);
-		});
+		
 	</script>
 </body>
 </html>
