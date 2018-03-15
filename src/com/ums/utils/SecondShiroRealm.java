@@ -17,14 +17,14 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 
-public class ShiroRealm extends AuthorizingRealm {
+public class SecondShiroRealm extends AuthorizingRealm {
 
 	// 用于认证的方法
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		// TODO Auto-generated method stub
 		// 将token强转为UsernamePasswordToken
-		System.out.println("firstShiroRealm....");
+		System.out.println("SecondShiroRealm....");
 		UsernamePasswordToken currentUser = (UsernamePasswordToken) token;
 		// 获取登录用户名
 		String userName = currentUser.getUsername();
@@ -35,9 +35,9 @@ public class ShiroRealm extends AuthorizingRealm {
 		Object principal = userName;
 		Object hashedCredentials = null;
 		if ("admin".equals(userName)) {
-			hashedCredentials = "cf2f84b6b83710fd7442ede509c95012";
+			hashedCredentials = "fe6c2688014ef583554250eadc8cf9fc249c6d91";
 		} else if ("zelei".equals(userName)) {
-			hashedCredentials = "97ce7ef67570a4d730f6b929fb77faef";
+			hashedCredentials = "38c326aef6689e547d7a57eb060151031ff9cfc4";
 		} else {
 			hashedCredentials = "97ce7ef67570a4d797ce7ef67570a4d7";
 		}
@@ -46,21 +46,16 @@ public class ShiroRealm extends AuthorizingRealm {
 		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, hashedCredentials, credentialsSalt, realmName);
 		return info;
 	}
-	// 用于授权的方法
+
 	@Override
-	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principas) {
-		// 设置基本角色
+	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Set<String> roles = new HashSet<String>();
 		roles.add("user");
-		// 获取登录用户信息
-		Object principal = principas.getPrimaryPrincipal();
-		// 利用登录用户信息获取当前用户角色或权限
+		Object principal = principals.getPrimaryPrincipal();
 		if ("admin".equals(principal)) {
 			roles.add("admin");
 		}
-		// 创建SimpleAuthorizationInfo，并设置其roles属性
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);
-		// 返回SimpleAuthorizationInfo对象
 		return info;
 	}
 }

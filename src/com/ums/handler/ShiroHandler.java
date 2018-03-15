@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ums.utils.GeneratingHTML;
 import com.ums.utils.ReqResult;
 
 @Controller
@@ -22,29 +23,17 @@ public class ShiroHandler {
 	@ResponseBody
 	public ReqResult login(@RequestParam("username") String username, @RequestParam("password") String password) {
 		Subject currentUser = SecurityUtils.getSubject();
-		System.out.println("username=====>"+username);
-		System.out.println("password=====>"+password);
 		if (!currentUser.isAuthenticated()) {
 			// 把用户名封装成UsernamePasswordToken对象
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+			token.setRememberMe(true);
 			try {
 				currentUser.login(token);
 			} catch (AuthenticationException e) {
 				// TODO Auto-generated catch block
-				System.out.println("登录失败");
-				return ReqResult.fail("unauthorized.jsp");
+				return ReqResult.fail().add("info", GeneratingHTML.genLoginError());
 			}
 		}
-		return ReqResult.success("manage");
+		return ReqResult.success().add("url", "manage");
 	}
-	
-	/*
-	@RequestMapping(value = "/logout", method = RequestMethod.POST)
-	@ResponseBody
-	public ReqResult logout() {
-		System.out.println("=======================logout");
-		return ReqResult.success("index.jsp");
-	}
-	*/
-	
 }

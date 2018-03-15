@@ -27,8 +27,7 @@
 										for="inputName">用户名 :</label>
 									<div class="col-sm-7 col-md-7 col-lg-7">
 										<input type="text" class="form-control" name="username"
-											id="inputName"> <span
-											class="glyphicon glyphicon-ok form-control-feedback"></span>
+											id="inputName">
 									</div>
 								</div>
 							</div>
@@ -38,12 +37,7 @@
 										for="inputPwd">密&nbsp;&nbsp;&nbsp;码 :</label>
 									<div class="col-sm-7 col-md-7 col-lg-7">
 										<input type="password" class="form-control" name="password"
-											id="inputPwd"> <span
-											class="glyphicon glyphicon-ok form-control-feedback"></span>
-											<!-- 
-										<label class="control-label" for="inputPwd">Input with
-											success</label>
-											 -->
+											id="inputPwd">	
 									</div>
 								</div>
 							</div>
@@ -71,7 +65,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<script type="text/javascript" src="${APP_PATH }/static/js/jquery-3.3.1.min.js"></script>
 	<script type="text/javascript" src="${APP_PATH }/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
@@ -82,10 +75,20 @@
 					type:"POST",
 					data:$("#form_user_login").serialize(),
 					success: function(result){
-						console.log(result);
-						window.location.href = "${APP_PATH}/"+result.message;
+						if (1==result.code) { 
+							// 进入管理页面
+							window.location.href = "${APP_PATH}/"+result.extend.url;
+						} else {
+							// 返回错误验证信息
+							$("#inputPwd").parent().append($(result.extend.info.dom));
+							$("#resetBtn").attr("validate-id", result.extend.info.id);
+						}
 					}
 				});
+			});
+			$("#resetBtn").click(function(){
+				$($(this).attr("validate-id")).remove();
+				$("#form_user_login")[0].reset();
 			});
 		});
 	</script>
