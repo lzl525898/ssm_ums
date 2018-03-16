@@ -2,6 +2,8 @@ package com.ums.handler;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -22,17 +24,16 @@ public class ShiroHandler {
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public ReqResult login(@RequestParam("username") String username, @RequestParam("password") String password, @RequestParam("rememberMe")String rememberMe) {
-		if ("on".equals(rememberMe)) {
-			System.out.println("ok");
-		} else {
-			System.out.println("no");
-		}
+	public ReqResult login(@RequestParam("username")String userName, @RequestParam("password")String passWord, HttpServletRequest request) {
+		String rememberMe = request.getParameter("rememberMe"); 
 		Subject currentUser = SecurityUtils.getSubject();
 		if (!currentUser.isAuthenticated()) {
 			// 把用户名封装成UsernamePasswordToken对象
-			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-	//		token.setRememberMe(true);
+			UsernamePasswordToken token = new UsernamePasswordToken(userName, passWord);
+			if ("on".equals(rememberMe)) {
+				// 点击记住我时设置
+				token.setRememberMe(true);
+			}
 			try {
 				currentUser.login(token);
 			} catch (AuthenticationException e) {

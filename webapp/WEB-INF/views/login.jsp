@@ -65,28 +65,46 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="${APP_PATH }/static/js/jquery-3.3.1.min.js"></script>
-	<script type="text/javascript" src="${APP_PATH }/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+	<script src="${APP_PATH }/static/js/jquery-3.3.1.min.js"></script>
+	<script src="${APP_PATH }/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
-		$(function(){
-			$("#loginBtn").click(function(){
-				$.ajax({
-					url: "${APP_PATH}/shiro/login",
-					type:"POST",
-					data:$("#form_user_login").serialize(),
-					success: function(result){
-						if (1==result.code) { 
-							// 进入管理页面
-							window.location.href = "${APP_PATH}/"+result.extend.url;
-						} else {
-							// 返回错误验证信息
-							$("#inputPwd").parent().append($(result.extend.info.dom));
-							$("#resetBtn").attr("validate-id", result.extend.info.id);
-						}
-					}
-				});
+		$(function() {
+			$("#loginBtn").click(
+					function() {
+						$.ajax({
+							url : "${APP_PATH}/shiro/login",
+							type : "POST",
+							data : $("#form_user_login").serialize(),
+							success : function(result) {
+								if (1 == result.code) {
+									// 进入管理页面
+									window.location.href = "${APP_PATH}/"
+											+ result.extend.url;
+								} else {
+									if ($(result.extend.info.id)) {
+										$(result.extend.info.id).remove();
+									}
+									// 返回错误验证信息
+									$("#inputPwd").parent().append(
+											$(result.extend.info.dom));
+									$("#resetBtn").attr("validate-id",
+											result.extend.info.id);
+								}
+							},
+							error : function(error) {
+								alert("请稍后再试...");
+							}
+						});
+					});
+			// 回车登录
+			$("#form_user_login").keydown(function(e) {
+				var e = e || event, keycode = e.which || e.keyCode;
+				if (keycode == 13) {
+					$("#loginBtn").trigger("click");
+				}
 			});
-			$("#resetBtn").click(function(){
+			//重置后清空form及checkbox
+			$("#resetBtn").click(function() {
 				$($(this).attr("validate-id")).remove();
 				$("#form_user_login")[0].reset();
 			});

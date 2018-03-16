@@ -17,9 +17,11 @@ public class FilterChainDefinitionMapBuilder {
 		map.put("/login", "anon");
 		map.put("/shiro/login", "anon");
 		map.put("/static/**", "anon");
-		map.put("/manage", "authc,roles[admin]");
+		map.put("/manage", "user");
+//		map.put("/manage", "authc,roles[admin]");
 		map.put("/shiro/logout", "logout");
-		map.put("/**", "authc");
+		map.put("/**", "rememberAuthFilter");
+//		map.put("/**", "authc");
 		return map;
 	}
 	

@@ -17,6 +17,13 @@ body {
 	color: #1d1007;
 }
 
+a:link,a:visited{
+ text-decoration:none;  /*超链接无下划线*/
+}
+a:hover{
+ text-decoration:underline;  /*鼠标放上去有下划线*/
+}
+
 ol, ul {
 	list-style: none;
 }
@@ -106,4 +113,39 @@ ums_footer  {
 	width: 100%;
 	height: 80%;
 	margin-left: 15px;
+}
+
+.ums-nav {
+	height: 64px; 
+	width: 100%; 
+	position: fixed; 
+	top: 0;
+}
+
+.ums-nav-info {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: fixed;
+	right: 0;
+	top: 0;
+	height: 64px;
+	width: 80px;
+}
+
+.ums-nav-info:hover{
+	background-color: #87CEEB;
+}
+
+.ums-nav-info:active{
+	background-color: #87CEEB;
+}
+
+.ums-nav-info img {
+	height: 48px;
+	width: 48px;
+}
+
+.ums-nav-info span {
+	color: #ffffff;
 }
