@@ -11,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="${APP_PATH }/static/css/main.css"/>
 </head>
 <body>
+	<jsp:include page="loading.jsp"></jsp:include>
 	<div style="height: 100%; padding: 100px;">
 		<div class="ums_container">
 			<div class="login_container">
@@ -69,8 +70,14 @@
 	<script src="${APP_PATH }/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			setFormComponent(true);
+			if ("${sessionIsLogin}"!="") {// 已经登录
+				setFormComponent(false);
+				window.location.href = "${APP_PATH}/${sessionIsLogin.url}";
+			} 
 			$("#loginBtn").click(
 					function() {
+						loadingShow();
 						$.ajax({
 							url : "${APP_PATH}/shiro/login",
 							type : "POST",
@@ -78,6 +85,7 @@
 							success : function(result) {
 								if (1 == result.code) {
 									// 进入管理页面
+									loadingHide();
 									window.location.href = "${APP_PATH}/"
 											+ result.extend.url;
 								} else {
@@ -85,6 +93,7 @@
 										$(result.extend.info.id).remove();
 									}
 									// 返回错误验证信息
+									loadingHide();
 									$("#inputPwd").parent().append(
 											$(result.extend.info.dom));
 									$("#resetBtn").attr("validate-id",
@@ -92,6 +101,7 @@
 								}
 							},
 							error : function(error) {
+								loadingHide();
 								alert("请稍后再试...");
 							}
 						});
@@ -103,11 +113,28 @@
 					$("#loginBtn").trigger("click");
 				}
 			});
-			//重置后清空form及checkbox
+			// 重置后清空form及checkbox
 			$("#resetBtn").click(function() {
 				$($(this).attr("validate-id")).remove();
 				$("#form_user_login")[0].reset();
 			});
+			// 设置form表单子子件是否可用   disabled true 表示可用 false 表示不可用
+			function setFormComponent(disabled){
+				if (!disabled) {
+					$("#inputPwd").attr("disabled", true);
+					$("#inputName").attr("disabled", true);
+					$("#loginBtn").attr("disabled", true);
+					$("#resetBtn").attr("disabled", true);
+					$("#checkRemember").attr("disabled", true);
+				} else {
+					$("#inputPwd").attr("disabled", false);
+					$("#inputName").attr("disabled", false);
+					$("#loginBtn").attr("disabled", false);
+					$("#resetBtn").attr("disabled", false);
+					$("#checkRemember").attr("disabled", false);
+				}
+				
+			}
 		});
 	</script>
 </body>

@@ -10,7 +10,7 @@
 		</commentGenerator>
 		<!-- 配置数据库连接 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://localhost:3306/ssm-ums" userId="root"
+			connectionURL="jdbc:mysql://localhost:3306/smart" userId="root"
 			password="">
 		</jdbcConnection>
 
@@ -38,7 +38,60 @@
 
 
 		<!-- table指定每个表的生成策略 -->
-		<table tableName="ums_role" domainObjectName="Role"></table>
-		<table tableName="ums_user" domainObjectName="User"></table>
+		<table tableName="address" domainObjectName="Address"></table>
+		<table tableName="answer_praise" domainObjectName="AnswerPraise"></table>
+		<table tableName="book" domainObjectName="Book"></table>
+		<table tableName="camp" domainObjectName="Camp"></table>
+		<table tableName="exam_result" domainObjectName="ExamResult"></table>
+		<table tableName="grade" domainObjectName="Grade"></table>
+		<table tableName="image_manage" domainObjectName="ImageManage"></table>
+		<table tableName="integrationdetail" domainObjectName="Integrationdetail"></table>
+		<table tableName="logs" domainObjectName="Logs"></table>
+		<table tableName="menu" domainObjectName="Menu"></table>
+		<table tableName="offline_course" domainObjectName="OfflineCourse"></table>
+		<table tableName="offline_course_signup" domainObjectName="OfflineCourseSignup"></table>
+		<table tableName="period" domainObjectName="Period"></table>
+		<table tableName="phone_vercode" domainObjectName="PhoneVercode"></table>
+		<table tableName="question_praise" domainObjectName="QuestionPraise"></table>
+		<table tableName="role" domainObjectName="Role"></table>
+		<table tableName="role_permission" domainObjectName="RolePermission"></table>
+		<table tableName="role" domainObjectName="Role"></table>
+		<table tableName="room" domainObjectName="Room"></table>
+		<table tableName="school" domainObjectName="School"></table>
+		<table tableName="scwork" domainObjectName="Scwork"></table>
+		<table tableName="sign" domainObjectName="Sign"></table>
+		<table tableName="stu_task" domainObjectName="StuTask"></table>
+		<table tableName="student" domainObjectName="Student"></table>
+		<table tableName="task_type" domainObjectName="TaskType"></table>
+		<table tableName="tasklib" domainObjectName="TaskLib"></table>
+		<table tableName="tasktitle" domainObjectName="TaskTitle"></table>
+		<table tableName="teacher_resource" domainObjectName="TeacherResource"></table>
+		<table tableName="teacher_task" domainObjectName="TeacherTask"></table>
+		<table tableName="tw_comments" domainObjectName="Comments"></table>
+		<table tableName="tw_course" domainObjectName="Course"></table>
+		<table tableName="tw_course_answer" domainObjectName="CourseAnswer"></table>
+		<table tableName="tw_course_index" domainObjectName="CourseIndex"></table>
+		<table tableName="tw_course_map" domainObjectName="CourseMap"></table>
+		<table tableName="tw_course_materials" domainObjectName="CourseMaterials"></table>
+		<table tableName="tw_course_materialstype" domainObjectName="CourseMaterialsType"></table>
+		<table tableName="tw_course_menu_my" domainObjectName="CourseMenuMy"></table>
+		<table tableName="tw_course_my" domainObjectName="CourseMy"></table>
+		<table tableName="tw_course_note" domainObjectName="CourseNote"></table>
+		<table tableName="tw_course_question" domainObjectName="CourseQuestion"></table>
+		<table tableName="tw_course_sc" domainObjectName="CourseSC"></table>
+		<table tableName="tw_coursebuyhistory" domainObjectName="CourseBuyHistory"></table>
+		<table tableName="tw_coursemenu" domainObjectName="CourseMenu"></table>
+		<table tableName="tw_coursetype" domainObjectName="CourseType"></table>
+		<table tableName="tw_index_news" domainObjectName="IndexNews"></table>
+		<table tableName="tw_news" domainObjectName="News"></table>
+		<table tableName="tw_newstype" domainObjectName="NewsType"></table>
+		<table tableName="tw_opinion" domainObjectName="Opinion"></table>
+		<table tableName="tw_order" domainObjectName="Order"></table>
+		<table tableName="tw_replycomments" domainObjectName="ReplyComments"></table>
+		<table tableName="tw_work" domainObjectName="Work"></table>
+		<table tableName="tw_worktype" domainObjectName="WorkType"></table>
+		<table tableName="user" domainObjectName="User"></table>
+		<table tableName="user_authority" domainObjectName="UserAuthority"></table>
+		<table tableName="user_role" domainObjectName="UserRole"></table>
 	</context>
 </generatorConfiguration>

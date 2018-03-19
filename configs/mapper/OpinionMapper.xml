@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.OpinionMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.Opinion">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="createtime" jdbcType="VARCHAR" property="createtime" />
+    <result column="flag" jdbcType="VARCHAR" property="flag" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="replycontent" jdbcType="VARCHAR" property="replycontent" />
+    <result column="replytime" jdbcType="VARCHAR" property="replytime" />
+    <result column="replyid" jdbcType="INTEGER" property="replyid" />
+    <result column="replyname" jdbcType="VARCHAR" property="replyname" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, content, email, createtime, flag, type, replycontent, replytime, replyid, replyname
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.OpinionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tw_opinion
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tw_opinion
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.OpinionExample">
+    delete from tw_opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.Opinion">
+    insert into tw_opinion (id, content, email, 
+      createtime, flag, type, 
+      replycontent, replytime, replyid, 
+      replyname)
+    values (#{id,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=VARCHAR}, #{flag,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{replycontent,jdbcType=VARCHAR}, #{replytime,jdbcType=VARCHAR}, #{replyid,jdbcType=INTEGER}, 
+      #{replyname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.Opinion">
+    insert into tw_opinion
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="replycontent != null">
+        replycontent,
+      </if>
+      <if test="replytime != null">
+        replytime,
+      </if>
+      <if test="replyid != null">
+        replyid,
+      </if>
+      <if test="replyname != null">
+        replyname,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="replycontent != null">
+        #{replycontent,jdbcType=VARCHAR},
+      </if>
+      <if test="replytime != null">
+        #{replytime,jdbcType=VARCHAR},
+      </if>
+      <if test="replyid != null">
+        #{replyid,jdbcType=INTEGER},
+      </if>
+      <if test="replyname != null">
+        #{replyname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.OpinionExample" resultType="java.lang.Long">
+    select count(*) from tw_opinion
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_opinion
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null">
+        createtime = #{record.createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.flag != null">
+        flag = #{record.flag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.replycontent != null">
+        replycontent = #{record.replycontent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replytime != null">
+        replytime = #{record.replytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replyid != null">
+        replyid = #{record.replyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.replyname != null">
+        replyname = #{record.replyname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_opinion
+    set id = #{record.id,jdbcType=INTEGER},
+      content = #{record.content,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=VARCHAR},
+      flag = #{record.flag,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      replycontent = #{record.replycontent,jdbcType=VARCHAR},
+      replytime = #{record.replytime,jdbcType=VARCHAR},
+      replyid = #{record.replyid,jdbcType=INTEGER},
+      replyname = #{record.replyname,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Opinion">
+    update tw_opinion
+    <set>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=VARCHAR},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="replycontent != null">
+        replycontent = #{replycontent,jdbcType=VARCHAR},
+      </if>
+      <if test="replytime != null">
+        replytime = #{replytime,jdbcType=VARCHAR},
+      </if>
+      <if test="replyid != null">
+        replyid = #{replyid,jdbcType=INTEGER},
+      </if>
+      <if test="replyname != null">
+        replyname = #{replyname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.Opinion">
+    update tw_opinion
+    set content = #{content,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=VARCHAR},
+      flag = #{flag,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      replycontent = #{replycontent,jdbcType=VARCHAR},
+      replytime = #{replytime,jdbcType=VARCHAR},
+      replyid = #{replyid,jdbcType=INTEGER},
+      replyname = #{replyname,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

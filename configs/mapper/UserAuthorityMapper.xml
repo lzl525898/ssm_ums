@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.UserAuthorityMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.UserAuthority">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="menuId" jdbcType="BIGINT" property="menuid" />
+    <result column="userRoleId" jdbcType="BIGINT" property="userroleid" />
+    <result column="authority" jdbcType="BIGINT" property="authority" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, menuId, userRoleId, authority, createTime
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.UserAuthorityExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_authority
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_authority
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user_authority
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.UserAuthorityExample">
+    delete from user_authority
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.UserAuthority">
+    insert into user_authority (id, menuId, userRoleId, 
+      authority, createTime)
+    values (#{id,jdbcType=BIGINT}, #{menuid,jdbcType=BIGINT}, #{userroleid,jdbcType=BIGINT}, 
+      #{authority,jdbcType=BIGINT}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.UserAuthority">
+    insert into user_authority
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="menuid != null">
+        menuId,
+      </if>
+      <if test="userroleid != null">
+        userRoleId,
+      </if>
+      <if test="authority != null">
+        authority,
+      </if>
+      <if test="createtime != null">
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="menuid != null">
+        #{menuid,jdbcType=BIGINT},
+      </if>
+      <if test="userroleid != null">
+        #{userroleid,jdbcType=BIGINT},
+      </if>
+      <if test="authority != null">
+        #{authority,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.UserAuthorityExample" resultType="java.lang.Long">
+    select count(*) from user_authority
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user_authority
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuid != null">
+        menuId = #{record.menuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userroleid != null">
+        userRoleId = #{record.userroleid,jdbcType=BIGINT},
+      </if>
+      <if test="record.authority != null">
+        authority = #{record.authority,jdbcType=BIGINT},
+      </if>
+      <if test="record.createtime != null">
+        createTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user_authority
+    set id = #{record.id,jdbcType=BIGINT},
+      menuId = #{record.menuid,jdbcType=BIGINT},
+      userRoleId = #{record.userroleid,jdbcType=BIGINT},
+      authority = #{record.authority,jdbcType=BIGINT},
+      createTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.UserAuthority">
+    update user_authority
+    <set>
+      <if test="menuid != null">
+        menuId = #{menuid,jdbcType=BIGINT},
+      </if>
+      <if test="userroleid != null">
+        userRoleId = #{userroleid,jdbcType=BIGINT},
+      </if>
+      <if test="authority != null">
+        authority = #{authority,jdbcType=BIGINT},
+      </if>
+      <if test="createtime != null">
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.UserAuthority">
+    update user_authority
+    set menuId = #{menuid,jdbcType=BIGINT},
+      userRoleId = #{userroleid,jdbcType=BIGINT},
+      authority = #{authority,jdbcType=BIGINT},
+      createTime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

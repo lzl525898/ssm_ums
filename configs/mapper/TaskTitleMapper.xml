@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.TaskTitleMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.TaskTitle">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="courseid" jdbcType="BIGINT" property="courseid" />
+    <result column="menuid" jdbcType="BIGINT" property="menuid" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="answer" jdbcType="VARCHAR" property="answer" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="selectType" jdbcType="INTEGER" property="selecttype" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ums.bean.TaskTitleWithBLOBs">
+    <result column="title" jdbcType="LONGVARCHAR" property="title" />
+    <result column="answerA" jdbcType="LONGVARCHAR" property="answera" />
+    <result column="answerB" jdbcType="LONGVARCHAR" property="answerb" />
+    <result column="answerC" jdbcType="LONGVARCHAR" property="answerc" />
+    <result column="answerD" jdbcType="LONGVARCHAR" property="answerd" />
+    <result column="aDesc" jdbcType="LONGVARCHAR" property="adesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, courseid, menuid, score, answer, type, selectType, time
+  </sql>
+  <sql id="Blob_Column_List">
+    title, answerA, answerB, answerC, answerD, aDesc
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ums.bean.TaskTitleExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tasktitle
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ums.bean.TaskTitleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tasktitle
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tasktitle
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tasktitle
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.TaskTitleExample">
+    delete from tasktitle
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.TaskTitleWithBLOBs">
+    insert into tasktitle (id, courseid, menuid, 
+      score, answer, type, 
+      selectType, time, title, 
+      answerA, answerB, answerC, 
+      answerD, aDesc)
+    values (#{id,jdbcType=BIGINT}, #{courseid,jdbcType=BIGINT}, #{menuid,jdbcType=BIGINT}, 
+      #{score,jdbcType=INTEGER}, #{answer,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
+      #{selecttype,jdbcType=INTEGER}, #{time,jdbcType=VARCHAR}, #{title,jdbcType=LONGVARCHAR}, 
+      #{answera,jdbcType=LONGVARCHAR}, #{answerb,jdbcType=LONGVARCHAR}, #{answerc,jdbcType=LONGVARCHAR}, 
+      #{answerd,jdbcType=LONGVARCHAR}, #{adesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.TaskTitleWithBLOBs">
+    insert into tasktitle
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="courseid != null">
+        courseid,
+      </if>
+      <if test="menuid != null">
+        menuid,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="answer != null">
+        answer,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="selecttype != null">
+        selectType,
+      </if>
+      <if test="time != null">
+        time,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="answera != null">
+        answerA,
+      </if>
+      <if test="answerb != null">
+        answerB,
+      </if>
+      <if test="answerc != null">
+        answerC,
+      </if>
+      <if test="answerd != null">
+        answerD,
+      </if>
+      <if test="adesc != null">
+        aDesc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="courseid != null">
+        #{courseid,jdbcType=BIGINT},
+      </if>
+      <if test="menuid != null">
+        #{menuid,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null">
+        #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="selecttype != null">
+        #{selecttype,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answera != null">
+        #{answera,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerb != null">
+        #{answerb,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerc != null">
+        #{answerc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerd != null">
+        #{answerd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adesc != null">
+        #{adesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.TaskTitleExample" resultType="java.lang.Long">
+    select count(*) from tasktitle
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tasktitle
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.courseid != null">
+        courseid = #{record.courseid,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuid != null">
+        menuid = #{record.menuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.answer != null">
+        answer = #{record.answer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.selecttype != null">
+        selectType = #{record.selecttype,jdbcType=INTEGER},
+      </if>
+      <if test="record.time != null">
+        time = #{record.time,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.answera != null">
+        answerA = #{record.answera,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.answerb != null">
+        answerB = #{record.answerb,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.answerc != null">
+        answerC = #{record.answerc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.answerd != null">
+        answerD = #{record.answerd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.adesc != null">
+        aDesc = #{record.adesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tasktitle
+    set id = #{record.id,jdbcType=BIGINT},
+      courseid = #{record.courseid,jdbcType=BIGINT},
+      menuid = #{record.menuid,jdbcType=BIGINT},
+      score = #{record.score,jdbcType=INTEGER},
+      answer = #{record.answer,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      selectType = #{record.selecttype,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=LONGVARCHAR},
+      answerA = #{record.answera,jdbcType=LONGVARCHAR},
+      answerB = #{record.answerb,jdbcType=LONGVARCHAR},
+      answerC = #{record.answerc,jdbcType=LONGVARCHAR},
+      answerD = #{record.answerd,jdbcType=LONGVARCHAR},
+      aDesc = #{record.adesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tasktitle
+    set id = #{record.id,jdbcType=BIGINT},
+      courseid = #{record.courseid,jdbcType=BIGINT},
+      menuid = #{record.menuid,jdbcType=BIGINT},
+      score = #{record.score,jdbcType=INTEGER},
+      answer = #{record.answer,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      selectType = #{record.selecttype,jdbcType=INTEGER},
+      time = #{record.time,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.TaskTitleWithBLOBs">
+    update tasktitle
+    <set>
+      <if test="courseid != null">
+        courseid = #{courseid,jdbcType=BIGINT},
+      </if>
+      <if test="menuid != null">
+        menuid = #{menuid,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=INTEGER},
+      </if>
+      <if test="answer != null">
+        answer = #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="selecttype != null">
+        selectType = #{selecttype,jdbcType=INTEGER},
+      </if>
+      <if test="time != null">
+        time = #{time,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answera != null">
+        answerA = #{answera,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerb != null">
+        answerB = #{answerb,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerc != null">
+        answerC = #{answerc,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="answerd != null">
+        answerD = #{answerd,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="adesc != null">
+        aDesc = #{adesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ums.bean.TaskTitleWithBLOBs">
+    update tasktitle
+    set courseid = #{courseid,jdbcType=BIGINT},
+      menuid = #{menuid,jdbcType=BIGINT},
+      score = #{score,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      selectType = #{selecttype,jdbcType=INTEGER},
+      time = #{time,jdbcType=VARCHAR},
+      title = #{title,jdbcType=LONGVARCHAR},
+      answerA = #{answera,jdbcType=LONGVARCHAR},
+      answerB = #{answerb,jdbcType=LONGVARCHAR},
+      answerC = #{answerc,jdbcType=LONGVARCHAR},
+      answerD = #{answerd,jdbcType=LONGVARCHAR},
+      aDesc = #{adesc,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.TaskTitle">
+    update tasktitle
+    set courseid = #{courseid,jdbcType=BIGINT},
+      menuid = #{menuid,jdbcType=BIGINT},
+      score = #{score,jdbcType=INTEGER},
+      answer = #{answer,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      selectType = #{selecttype,jdbcType=INTEGER},
+      time = #{time,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

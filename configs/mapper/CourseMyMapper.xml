@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.CourseMyMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.CourseMy">
+    <id column="mid" jdbcType="BIGINT" property="mid" />
+    <result column="courseid" jdbcType="BIGINT" property="courseid" />
+    <result column="userid" jdbcType="BIGINT" property="userid" />
+    <result column="progress" jdbcType="BIGINT" property="progress" />
+    <result column="studytime" jdbcType="VARCHAR" property="studytime" />
+    <result column="menuid" jdbcType="BIGINT" property="menuid" />
+    <result column="menuLearn" jdbcType="INTEGER" property="menulearn" />
+    <result column="menuAll" jdbcType="INTEGER" property="menuall" />
+    <result column="startTime" jdbcType="VARCHAR" property="starttime" />
+    <result column="endTime" jdbcType="VARCHAR" property="endtime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mid, courseid, userid, progress, studytime, menuid, menuLearn, menuAll, startTime, 
+    endTime
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.CourseMyExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_course_my
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tw_course_my
+    where mid = #{mid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tw_course_my
+    where mid = #{mid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.CourseMyExample">
+    delete from tw_course_my
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.CourseMy">
+    insert into tw_course_my (mid, courseid, userid, 
+      progress, studytime, menuid, 
+      menuLearn, menuAll, startTime, 
+      endTime)
+    values (#{mid,jdbcType=BIGINT}, #{courseid,jdbcType=BIGINT}, #{userid,jdbcType=BIGINT}, 
+      #{progress,jdbcType=BIGINT}, #{studytime,jdbcType=VARCHAR}, #{menuid,jdbcType=BIGINT}, 
+      #{menulearn,jdbcType=INTEGER}, #{menuall,jdbcType=INTEGER}, #{starttime,jdbcType=VARCHAR}, 
+      #{endtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.CourseMy">
+    insert into tw_course_my
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        mid,
+      </if>
+      <if test="courseid != null">
+        courseid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="progress != null">
+        progress,
+      </if>
+      <if test="studytime != null">
+        studytime,
+      </if>
+      <if test="menuid != null">
+        menuid,
+      </if>
+      <if test="menulearn != null">
+        menuLearn,
+      </if>
+      <if test="menuall != null">
+        menuAll,
+      </if>
+      <if test="starttime != null">
+        startTime,
+      </if>
+      <if test="endtime != null">
+        endTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="mid != null">
+        #{mid,jdbcType=BIGINT},
+      </if>
+      <if test="courseid != null">
+        #{courseid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="progress != null">
+        #{progress,jdbcType=BIGINT},
+      </if>
+      <if test="studytime != null">
+        #{studytime,jdbcType=VARCHAR},
+      </if>
+      <if test="menuid != null">
+        #{menuid,jdbcType=BIGINT},
+      </if>
+      <if test="menulearn != null">
+        #{menulearn,jdbcType=INTEGER},
+      </if>
+      <if test="menuall != null">
+        #{menuall,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null">
+        #{endtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.CourseMyExample" resultType="java.lang.Long">
+    select count(*) from tw_course_my
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_course_my
+    <set>
+      <if test="record.mid != null">
+        mid = #{record.mid,jdbcType=BIGINT},
+      </if>
+      <if test="record.courseid != null">
+        courseid = #{record.courseid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=BIGINT},
+      </if>
+      <if test="record.progress != null">
+        progress = #{record.progress,jdbcType=BIGINT},
+      </if>
+      <if test="record.studytime != null">
+        studytime = #{record.studytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.menuid != null">
+        menuid = #{record.menuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.menulearn != null">
+        menuLearn = #{record.menulearn,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuall != null">
+        menuAll = #{record.menuall,jdbcType=INTEGER},
+      </if>
+      <if test="record.starttime != null">
+        startTime = #{record.starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.endtime != null">
+        endTime = #{record.endtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_course_my
+    set mid = #{record.mid,jdbcType=BIGINT},
+      courseid = #{record.courseid,jdbcType=BIGINT},
+      userid = #{record.userid,jdbcType=BIGINT},
+      progress = #{record.progress,jdbcType=BIGINT},
+      studytime = #{record.studytime,jdbcType=VARCHAR},
+      menuid = #{record.menuid,jdbcType=BIGINT},
+      menuLearn = #{record.menulearn,jdbcType=INTEGER},
+      menuAll = #{record.menuall,jdbcType=INTEGER},
+      startTime = #{record.starttime,jdbcType=VARCHAR},
+      endTime = #{record.endtime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.CourseMy">
+    update tw_course_my
+    <set>
+      <if test="courseid != null">
+        courseid = #{courseid,jdbcType=BIGINT},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=BIGINT},
+      </if>
+      <if test="progress != null">
+        progress = #{progress,jdbcType=BIGINT},
+      </if>
+      <if test="studytime != null">
+        studytime = #{studytime,jdbcType=VARCHAR},
+      </if>
+      <if test="menuid != null">
+        menuid = #{menuid,jdbcType=BIGINT},
+      </if>
+      <if test="menulearn != null">
+        menuLearn = #{menulearn,jdbcType=INTEGER},
+      </if>
+      <if test="menuall != null">
+        menuAll = #{menuall,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null">
+        startTime = #{starttime,jdbcType=VARCHAR},
+      </if>
+      <if test="endtime != null">
+        endTime = #{endtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mid = #{mid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.CourseMy">
+    update tw_course_my
+    set courseid = #{courseid,jdbcType=BIGINT},
+      userid = #{userid,jdbcType=BIGINT},
+      progress = #{progress,jdbcType=BIGINT},
+      studytime = #{studytime,jdbcType=VARCHAR},
+      menuid = #{menuid,jdbcType=BIGINT},
+      menuLearn = #{menulearn,jdbcType=INTEGER},
+      menuAll = #{menuall,jdbcType=INTEGER},
+      startTime = #{starttime,jdbcType=VARCHAR},
+      endTime = #{endtime,jdbcType=VARCHAR}
+    where mid = #{mid,jdbcType=BIGINT}
+  </update>
+</mapper>

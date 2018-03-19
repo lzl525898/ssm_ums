@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.CourseAnswerMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.CourseAnswer">
+    <id column="anwserId" jdbcType="BIGINT" property="anwserid" />
+    <result column="anwserreplyId" jdbcType="BIGINT" property="anwserreplyid" />
+    <result column="anwserquestionId" jdbcType="BIGINT" property="anwserquestionid" />
+    <result column="answercourseId" jdbcType="BIGINT" property="answercourseid" />
+    <result column="questioneruserId" jdbcType="BIGINT" property="questioneruserid" />
+    <result column="respondentsuserId" jdbcType="BIGINT" property="respondentsuserid" />
+    <result column="anwsercreatime" jdbcType="VARCHAR" property="anwsercreatime" />
+    <result column="anwserisshow" jdbcType="TINYINT" property="anwserisshow" />
+    <result column="anwsereason" jdbcType="VARCHAR" property="anwsereason" />
+    <result column="anwsermodifytime" jdbcType="VARCHAR" property="anwsermodifytime" />
+    <result column="anwsermodifyuserId" jdbcType="BIGINT" property="anwsermodifyuserid" />
+    <result column="praisenum" jdbcType="INTEGER" property="praisenum" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ums.bean.CourseAnswer">
+    <result column="respondentsdetail" jdbcType="LONGVARCHAR" property="respondentsdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    anwserId, anwserreplyId, anwserquestionId, answercourseId, questioneruserId, respondentsuserId, 
+    anwsercreatime, anwserisshow, anwsereason, anwsermodifytime, anwsermodifyuserId, 
+    praisenum
+  </sql>
+  <sql id="Blob_Column_List">
+    respondentsdetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ums.bean.CourseAnswerExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_course_answer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ums.bean.CourseAnswerExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_course_answer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_course_answer
+    where anwserId = #{anwserid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tw_course_answer
+    where anwserId = #{anwserid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.CourseAnswerExample">
+    delete from tw_course_answer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.CourseAnswer">
+    insert into tw_course_answer (anwserId, anwserreplyId, anwserquestionId, 
+      answercourseId, questioneruserId, respondentsuserId, 
+      anwsercreatime, anwserisshow, anwsereason, 
+      anwsermodifytime, anwsermodifyuserId, praisenum, 
+      respondentsdetail)
+    values (#{anwserid,jdbcType=BIGINT}, #{anwserreplyid,jdbcType=BIGINT}, #{anwserquestionid,jdbcType=BIGINT}, 
+      #{answercourseid,jdbcType=BIGINT}, #{questioneruserid,jdbcType=BIGINT}, #{respondentsuserid,jdbcType=BIGINT}, 
+      #{anwsercreatime,jdbcType=VARCHAR}, #{anwserisshow,jdbcType=TINYINT}, #{anwsereason,jdbcType=VARCHAR}, 
+      #{anwsermodifytime,jdbcType=VARCHAR}, #{anwsermodifyuserid,jdbcType=BIGINT}, #{praisenum,jdbcType=INTEGER}, 
+      #{respondentsdetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.CourseAnswer">
+    insert into tw_course_answer
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="anwserid != null">
+        anwserId,
+      </if>
+      <if test="anwserreplyid != null">
+        anwserreplyId,
+      </if>
+      <if test="anwserquestionid != null">
+        anwserquestionId,
+      </if>
+      <if test="answercourseid != null">
+        answercourseId,
+      </if>
+      <if test="questioneruserid != null">
+        questioneruserId,
+      </if>
+      <if test="respondentsuserid != null">
+        respondentsuserId,
+      </if>
+      <if test="anwsercreatime != null">
+        anwsercreatime,
+      </if>
+      <if test="anwserisshow != null">
+        anwserisshow,
+      </if>
+      <if test="anwsereason != null">
+        anwsereason,
+      </if>
+      <if test="anwsermodifytime != null">
+        anwsermodifytime,
+      </if>
+      <if test="anwsermodifyuserid != null">
+        anwsermodifyuserId,
+      </if>
+      <if test="praisenum != null">
+        praisenum,
+      </if>
+      <if test="respondentsdetail != null">
+        respondentsdetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="anwserid != null">
+        #{anwserid,jdbcType=BIGINT},
+      </if>
+      <if test="anwserreplyid != null">
+        #{anwserreplyid,jdbcType=BIGINT},
+      </if>
+      <if test="anwserquestionid != null">
+        #{anwserquestionid,jdbcType=BIGINT},
+      </if>
+      <if test="answercourseid != null">
+        #{answercourseid,jdbcType=BIGINT},
+      </if>
+      <if test="questioneruserid != null">
+        #{questioneruserid,jdbcType=BIGINT},
+      </if>
+      <if test="respondentsuserid != null">
+        #{respondentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="anwsercreatime != null">
+        #{anwsercreatime,jdbcType=VARCHAR},
+      </if>
+      <if test="anwserisshow != null">
+        #{anwserisshow,jdbcType=TINYINT},
+      </if>
+      <if test="anwsereason != null">
+        #{anwsereason,jdbcType=VARCHAR},
+      </if>
+      <if test="anwsermodifytime != null">
+        #{anwsermodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="anwsermodifyuserid != null">
+        #{anwsermodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="praisenum != null">
+        #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="respondentsdetail != null">
+        #{respondentsdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.CourseAnswerExample" resultType="java.lang.Long">
+    select count(*) from tw_course_answer
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_course_answer
+    <set>
+      <if test="record.anwserid != null">
+        anwserId = #{record.anwserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.anwserreplyid != null">
+        anwserreplyId = #{record.anwserreplyid,jdbcType=BIGINT},
+      </if>
+      <if test="record.anwserquestionid != null">
+        anwserquestionId = #{record.anwserquestionid,jdbcType=BIGINT},
+      </if>
+      <if test="record.answercourseid != null">
+        answercourseId = #{record.answercourseid,jdbcType=BIGINT},
+      </if>
+      <if test="record.questioneruserid != null">
+        questioneruserId = #{record.questioneruserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.respondentsuserid != null">
+        respondentsuserId = #{record.respondentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.anwsercreatime != null">
+        anwsercreatime = #{record.anwsercreatime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.anwserisshow != null">
+        anwserisshow = #{record.anwserisshow,jdbcType=TINYINT},
+      </if>
+      <if test="record.anwsereason != null">
+        anwsereason = #{record.anwsereason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.anwsermodifytime != null">
+        anwsermodifytime = #{record.anwsermodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.anwsermodifyuserid != null">
+        anwsermodifyuserId = #{record.anwsermodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.praisenum != null">
+        praisenum = #{record.praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="record.respondentsdetail != null">
+        respondentsdetail = #{record.respondentsdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tw_course_answer
+    set anwserId = #{record.anwserid,jdbcType=BIGINT},
+      anwserreplyId = #{record.anwserreplyid,jdbcType=BIGINT},
+      anwserquestionId = #{record.anwserquestionid,jdbcType=BIGINT},
+      answercourseId = #{record.answercourseid,jdbcType=BIGINT},
+      questioneruserId = #{record.questioneruserid,jdbcType=BIGINT},
+      respondentsuserId = #{record.respondentsuserid,jdbcType=BIGINT},
+      anwsercreatime = #{record.anwsercreatime,jdbcType=VARCHAR},
+      anwserisshow = #{record.anwserisshow,jdbcType=TINYINT},
+      anwsereason = #{record.anwsereason,jdbcType=VARCHAR},
+      anwsermodifytime = #{record.anwsermodifytime,jdbcType=VARCHAR},
+      anwsermodifyuserId = #{record.anwsermodifyuserid,jdbcType=BIGINT},
+      praisenum = #{record.praisenum,jdbcType=INTEGER},
+      respondentsdetail = #{record.respondentsdetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_course_answer
+    set anwserId = #{record.anwserid,jdbcType=BIGINT},
+      anwserreplyId = #{record.anwserreplyid,jdbcType=BIGINT},
+      anwserquestionId = #{record.anwserquestionid,jdbcType=BIGINT},
+      answercourseId = #{record.answercourseid,jdbcType=BIGINT},
+      questioneruserId = #{record.questioneruserid,jdbcType=BIGINT},
+      respondentsuserId = #{record.respondentsuserid,jdbcType=BIGINT},
+      anwsercreatime = #{record.anwsercreatime,jdbcType=VARCHAR},
+      anwserisshow = #{record.anwserisshow,jdbcType=TINYINT},
+      anwsereason = #{record.anwsereason,jdbcType=VARCHAR},
+      anwsermodifytime = #{record.anwsermodifytime,jdbcType=VARCHAR},
+      anwsermodifyuserId = #{record.anwsermodifyuserid,jdbcType=BIGINT},
+      praisenum = #{record.praisenum,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.CourseAnswer">
+    update tw_course_answer
+    <set>
+      <if test="anwserreplyid != null">
+        anwserreplyId = #{anwserreplyid,jdbcType=BIGINT},
+      </if>
+      <if test="anwserquestionid != null">
+        anwserquestionId = #{anwserquestionid,jdbcType=BIGINT},
+      </if>
+      <if test="answercourseid != null">
+        answercourseId = #{answercourseid,jdbcType=BIGINT},
+      </if>
+      <if test="questioneruserid != null">
+        questioneruserId = #{questioneruserid,jdbcType=BIGINT},
+      </if>
+      <if test="respondentsuserid != null">
+        respondentsuserId = #{respondentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="anwsercreatime != null">
+        anwsercreatime = #{anwsercreatime,jdbcType=VARCHAR},
+      </if>
+      <if test="anwserisshow != null">
+        anwserisshow = #{anwserisshow,jdbcType=TINYINT},
+      </if>
+      <if test="anwsereason != null">
+        anwsereason = #{anwsereason,jdbcType=VARCHAR},
+      </if>
+      <if test="anwsermodifytime != null">
+        anwsermodifytime = #{anwsermodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="anwsermodifyuserid != null">
+        anwsermodifyuserId = #{anwsermodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="praisenum != null">
+        praisenum = #{praisenum,jdbcType=INTEGER},
+      </if>
+      <if test="respondentsdetail != null">
+        respondentsdetail = #{respondentsdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where anwserId = #{anwserid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ums.bean.CourseAnswer">
+    update tw_course_answer
+    set anwserreplyId = #{anwserreplyid,jdbcType=BIGINT},
+      anwserquestionId = #{anwserquestionid,jdbcType=BIGINT},
+      answercourseId = #{answercourseid,jdbcType=BIGINT},
+      questioneruserId = #{questioneruserid,jdbcType=BIGINT},
+      respondentsuserId = #{respondentsuserid,jdbcType=BIGINT},
+      anwsercreatime = #{anwsercreatime,jdbcType=VARCHAR},
+      anwserisshow = #{anwserisshow,jdbcType=TINYINT},
+      anwsereason = #{anwsereason,jdbcType=VARCHAR},
+      anwsermodifytime = #{anwsermodifytime,jdbcType=VARCHAR},
+      anwsermodifyuserId = #{anwsermodifyuserid,jdbcType=BIGINT},
+      praisenum = #{praisenum,jdbcType=INTEGER},
+      respondentsdetail = #{respondentsdetail,jdbcType=LONGVARCHAR}
+    where anwserId = #{anwserid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.CourseAnswer">
+    update tw_course_answer
+    set anwserreplyId = #{anwserreplyid,jdbcType=BIGINT},
+      anwserquestionId = #{anwserquestionid,jdbcType=BIGINT},
+      answercourseId = #{answercourseid,jdbcType=BIGINT},
+      questioneruserId = #{questioneruserid,jdbcType=BIGINT},
+      respondentsuserId = #{respondentsuserid,jdbcType=BIGINT},
+      anwsercreatime = #{anwsercreatime,jdbcType=VARCHAR},
+      anwserisshow = #{anwserisshow,jdbcType=TINYINT},
+      anwsereason = #{anwsereason,jdbcType=VARCHAR},
+      anwsermodifytime = #{anwsermodifytime,jdbcType=VARCHAR},
+      anwsermodifyuserId = #{anwsermodifyuserid,jdbcType=BIGINT},
+      praisenum = #{praisenum,jdbcType=INTEGER}
+    where anwserId = #{anwserid,jdbcType=BIGINT}
+  </update>
+</mapper>

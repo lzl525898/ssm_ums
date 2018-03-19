@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.ReplyCommentsMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.ReplyComments">
+    <id column="replyCommentsId" jdbcType="BIGINT" property="replycommentsid" />
+    <result column="replyCommentsWorkId" jdbcType="BIGINT" property="replycommentsworkid" />
+    <result column="oldCommentsUserId" jdbcType="BIGINT" property="oldcommentsuserid" />
+    <result column="replyCommentsUserId" jdbcType="BIGINT" property="replycommentsuserid" />
+    <result column="replyCommentsCreateTime" jdbcType="VARCHAR" property="replycommentscreatetime" />
+    <result column="replyCommentsIsShow" jdbcType="TINYINT" property="replycommentsisshow" />
+    <result column="replyCommentReason" jdbcType="VARCHAR" property="replycommentreason" />
+    <result column="replyCommentModifyTime" jdbcType="VARCHAR" property="replycommentmodifytime" />
+    <result column="replyWorkCommentsUserId" jdbcType="BIGINT" property="replyworkcommentsuserid" />
+    <result column="replycommentsrcId" jdbcType="BIGINT" property="replycommentsrcid" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ums.bean.ReplyComments">
+    <result column="replyDetail" jdbcType="LONGVARCHAR" property="replydetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    replyCommentsId, replyCommentsWorkId, oldCommentsUserId, replyCommentsUserId, replyCommentsCreateTime, 
+    replyCommentsIsShow, replyCommentReason, replyCommentModifyTime, replyWorkCommentsUserId, 
+    replycommentsrcId
+  </sql>
+  <sql id="Blob_Column_List">
+    replyDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ums.bean.ReplyCommentsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_replycomments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ums.bean.ReplyCommentsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_replycomments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_replycomments
+    where replyCommentsId = #{replycommentsid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tw_replycomments
+    where replyCommentsId = #{replycommentsid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.ReplyCommentsExample">
+    delete from tw_replycomments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.ReplyComments">
+    insert into tw_replycomments (replyCommentsId, replyCommentsWorkId, 
+      oldCommentsUserId, replyCommentsUserId, replyCommentsCreateTime, 
+      replyCommentsIsShow, replyCommentReason, 
+      replyCommentModifyTime, replyWorkCommentsUserId, 
+      replycommentsrcId, replyDetail)
+    values (#{replycommentsid,jdbcType=BIGINT}, #{replycommentsworkid,jdbcType=BIGINT}, 
+      #{oldcommentsuserid,jdbcType=BIGINT}, #{replycommentsuserid,jdbcType=BIGINT}, #{replycommentscreatetime,jdbcType=VARCHAR}, 
+      #{replycommentsisshow,jdbcType=TINYINT}, #{replycommentreason,jdbcType=VARCHAR}, 
+      #{replycommentmodifytime,jdbcType=VARCHAR}, #{replyworkcommentsuserid,jdbcType=BIGINT}, 
+      #{replycommentsrcid,jdbcType=BIGINT}, #{replydetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.ReplyComments">
+    insert into tw_replycomments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="replycommentsid != null">
+        replyCommentsId,
+      </if>
+      <if test="replycommentsworkid != null">
+        replyCommentsWorkId,
+      </if>
+      <if test="oldcommentsuserid != null">
+        oldCommentsUserId,
+      </if>
+      <if test="replycommentsuserid != null">
+        replyCommentsUserId,
+      </if>
+      <if test="replycommentscreatetime != null">
+        replyCommentsCreateTime,
+      </if>
+      <if test="replycommentsisshow != null">
+        replyCommentsIsShow,
+      </if>
+      <if test="replycommentreason != null">
+        replyCommentReason,
+      </if>
+      <if test="replycommentmodifytime != null">
+        replyCommentModifyTime,
+      </if>
+      <if test="replyworkcommentsuserid != null">
+        replyWorkCommentsUserId,
+      </if>
+      <if test="replycommentsrcid != null">
+        replycommentsrcId,
+      </if>
+      <if test="replydetail != null">
+        replyDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="replycommentsid != null">
+        #{replycommentsid,jdbcType=BIGINT},
+      </if>
+      <if test="replycommentsworkid != null">
+        #{replycommentsworkid,jdbcType=BIGINT},
+      </if>
+      <if test="oldcommentsuserid != null">
+        #{oldcommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="replycommentsuserid != null">
+        #{replycommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="replycommentscreatetime != null">
+        #{replycommentscreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="replycommentsisshow != null">
+        #{replycommentsisshow,jdbcType=TINYINT},
+      </if>
+      <if test="replycommentreason != null">
+        #{replycommentreason,jdbcType=VARCHAR},
+      </if>
+      <if test="replycommentmodifytime != null">
+        #{replycommentmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="replyworkcommentsuserid != null">
+        #{replyworkcommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="replycommentsrcid != null">
+        #{replycommentsrcid,jdbcType=BIGINT},
+      </if>
+      <if test="replydetail != null">
+        #{replydetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.ReplyCommentsExample" resultType="java.lang.Long">
+    select count(*) from tw_replycomments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_replycomments
+    <set>
+      <if test="record.replycommentsid != null">
+        replyCommentsId = #{record.replycommentsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replycommentsworkid != null">
+        replyCommentsWorkId = #{record.replycommentsworkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.oldcommentsuserid != null">
+        oldCommentsUserId = #{record.oldcommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replycommentsuserid != null">
+        replyCommentsUserId = #{record.replycommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replycommentscreatetime != null">
+        replyCommentsCreateTime = #{record.replycommentscreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replycommentsisshow != null">
+        replyCommentsIsShow = #{record.replycommentsisshow,jdbcType=TINYINT},
+      </if>
+      <if test="record.replycommentreason != null">
+        replyCommentReason = #{record.replycommentreason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replycommentmodifytime != null">
+        replyCommentModifyTime = #{record.replycommentmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replyworkcommentsuserid != null">
+        replyWorkCommentsUserId = #{record.replyworkcommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replycommentsrcid != null">
+        replycommentsrcId = #{record.replycommentsrcid,jdbcType=BIGINT},
+      </if>
+      <if test="record.replydetail != null">
+        replyDetail = #{record.replydetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tw_replycomments
+    set replyCommentsId = #{record.replycommentsid,jdbcType=BIGINT},
+      replyCommentsWorkId = #{record.replycommentsworkid,jdbcType=BIGINT},
+      oldCommentsUserId = #{record.oldcommentsuserid,jdbcType=BIGINT},
+      replyCommentsUserId = #{record.replycommentsuserid,jdbcType=BIGINT},
+      replyCommentsCreateTime = #{record.replycommentscreatetime,jdbcType=VARCHAR},
+      replyCommentsIsShow = #{record.replycommentsisshow,jdbcType=TINYINT},
+      replyCommentReason = #{record.replycommentreason,jdbcType=VARCHAR},
+      replyCommentModifyTime = #{record.replycommentmodifytime,jdbcType=VARCHAR},
+      replyWorkCommentsUserId = #{record.replyworkcommentsuserid,jdbcType=BIGINT},
+      replycommentsrcId = #{record.replycommentsrcid,jdbcType=BIGINT},
+      replyDetail = #{record.replydetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_replycomments
+    set replyCommentsId = #{record.replycommentsid,jdbcType=BIGINT},
+      replyCommentsWorkId = #{record.replycommentsworkid,jdbcType=BIGINT},
+      oldCommentsUserId = #{record.oldcommentsuserid,jdbcType=BIGINT},
+      replyCommentsUserId = #{record.replycommentsuserid,jdbcType=BIGINT},
+      replyCommentsCreateTime = #{record.replycommentscreatetime,jdbcType=VARCHAR},
+      replyCommentsIsShow = #{record.replycommentsisshow,jdbcType=TINYINT},
+      replyCommentReason = #{record.replycommentreason,jdbcType=VARCHAR},
+      replyCommentModifyTime = #{record.replycommentmodifytime,jdbcType=VARCHAR},
+      replyWorkCommentsUserId = #{record.replyworkcommentsuserid,jdbcType=BIGINT},
+      replycommentsrcId = #{record.replycommentsrcid,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.ReplyComments">
+    update tw_replycomments
+    <set>
+      <if test="replycommentsworkid != null">
+        replyCommentsWorkId = #{replycommentsworkid,jdbcType=BIGINT},
+      </if>
+      <if test="oldcommentsuserid != null">
+        oldCommentsUserId = #{oldcommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="replycommentsuserid != null">
+        replyCommentsUserId = #{replycommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="replycommentscreatetime != null">
+        replyCommentsCreateTime = #{replycommentscreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="replycommentsisshow != null">
+        replyCommentsIsShow = #{replycommentsisshow,jdbcType=TINYINT},
+      </if>
+      <if test="replycommentreason != null">
+        replyCommentReason = #{replycommentreason,jdbcType=VARCHAR},
+      </if>
+      <if test="replycommentmodifytime != null">
+        replyCommentModifyTime = #{replycommentmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="replyworkcommentsuserid != null">
+        replyWorkCommentsUserId = #{replyworkcommentsuserid,jdbcType=BIGINT},
+      </if>
+      <if test="replycommentsrcid != null">
+        replycommentsrcId = #{replycommentsrcid,jdbcType=BIGINT},
+      </if>
+      <if test="replydetail != null">
+        replyDetail = #{replydetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where replyCommentsId = #{replycommentsid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ums.bean.ReplyComments">
+    update tw_replycomments
+    set replyCommentsWorkId = #{replycommentsworkid,jdbcType=BIGINT},
+      oldCommentsUserId = #{oldcommentsuserid,jdbcType=BIGINT},
+      replyCommentsUserId = #{replycommentsuserid,jdbcType=BIGINT},
+      replyCommentsCreateTime = #{replycommentscreatetime,jdbcType=VARCHAR},
+      replyCommentsIsShow = #{replycommentsisshow,jdbcType=TINYINT},
+      replyCommentReason = #{replycommentreason,jdbcType=VARCHAR},
+      replyCommentModifyTime = #{replycommentmodifytime,jdbcType=VARCHAR},
+      replyWorkCommentsUserId = #{replyworkcommentsuserid,jdbcType=BIGINT},
+      replycommentsrcId = #{replycommentsrcid,jdbcType=BIGINT},
+      replyDetail = #{replydetail,jdbcType=LONGVARCHAR}
+    where replyCommentsId = #{replycommentsid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.ReplyComments">
+    update tw_replycomments
+    set replyCommentsWorkId = #{replycommentsworkid,jdbcType=BIGINT},
+      oldCommentsUserId = #{oldcommentsuserid,jdbcType=BIGINT},
+      replyCommentsUserId = #{replycommentsuserid,jdbcType=BIGINT},
+      replyCommentsCreateTime = #{replycommentscreatetime,jdbcType=VARCHAR},
+      replyCommentsIsShow = #{replycommentsisshow,jdbcType=TINYINT},
+      replyCommentReason = #{replycommentreason,jdbcType=VARCHAR},
+      replyCommentModifyTime = #{replycommentmodifytime,jdbcType=VARCHAR},
+      replyWorkCommentsUserId = #{replyworkcommentsuserid,jdbcType=BIGINT},
+      replycommentsrcId = #{replycommentsrcid,jdbcType=BIGINT}
+    where replyCommentsId = #{replycommentsid,jdbcType=BIGINT}
+  </update>
+</mapper>

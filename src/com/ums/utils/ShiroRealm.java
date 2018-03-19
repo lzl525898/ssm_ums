@@ -13,36 +13,37 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.util.ByteSource;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.ums.service.GlobalUserService;
+import com.ums.bean.User;
 
 public class ShiroRealm extends AuthorizingRealm {
 
+	@Autowired
+	private GlobalUserService globalUserService;
 	// 用于认证的方法
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
-		// TODO Auto-generated method stub
 		// 将token强转为UsernamePasswordToken
-		System.out.println("firstShiroRealm....");
+		System.out.println("开始验证用户信息....");
 		UsernamePasswordToken currentUser = (UsernamePasswordToken) token;
 		// 获取登录用户名
 		String userName = currentUser.getUsername();
-		if ("liuyanming".equals(userName)) {
-			System.out.println("用户不存在");
-			throw new UnknownAccountException("用户不存在...");
+		User myUser = globalUserService.selectByUsername(userName);
+		if (myUser!=null) {
+			if (myUser.getId()!=0) {
+				Object principal = myUser.getUsername();
+				Object hashedCredentials = myUser.getPassword();
+				String realmName = getName();
+				SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, hashedCredentials, realmName);
+				return info;
+			}else { // 表明数据库查询异常...
+				System.out.println("存在多条数据");
+				throw new UnknownAccountException("存在多条数据");
+			}
 		}
-		Object principal = userName;
-		Object hashedCredentials = null;
-		if ("admin".equals(userName)) {
-			hashedCredentials = "cf2f84b6b83710fd7442ede509c95012";
-		} else if ("zelei".equals(userName)) {
-			hashedCredentials = "97ce7ef67570a4d730f6b929fb77faef";
-		} else {
-			hashedCredentials = "97ce7ef67570a4d797ce7ef67570a4d7";
-		}
-		ByteSource credentialsSalt = ByteSource.Util.bytes(userName);
-		String realmName = getName();
-		SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(principal, hashedCredentials, credentialsSalt, realmName);
-		return info;
+		return null;
 	}
 	// 用于授权的方法
 	@Override
@@ -52,9 +53,12 @@ public class ShiroRealm extends AuthorizingRealm {
 		roles.add("user");
 		// 获取登录用户信息
 		Object principal = principas.getPrimaryPrincipal();
+		User myUser = globalUserService.selectByUsername(principal.toString());
 		// 利用登录用户信息获取当前用户角色或权限
-		if ("admin".equals(principal)) {
+		if (myUser.getUserroleid()==1) { //  管理员 
 			roles.add("admin");
+		} else if (myUser.getUserroleid()==5) { // 老师
+			roles.add("teacher");
 		}
 		// 创建SimpleAuthorizationInfo，并设置其roles属性
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo(roles);

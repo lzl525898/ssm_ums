@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.SignMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.Sign">
+    <id column="signId" jdbcType="BIGINT" property="signid" />
+    <result column="signUserId" jdbcType="BIGINT" property="signuserid" />
+    <result column="signTime" jdbcType="VARCHAR" property="signtime" />
+    <result column="signStatus" jdbcType="TINYINT" property="signstatus" />
+    <result column="signGoDays" jdbcType="INTEGER" property="signgodays" />
+    <result column="signShareNumbers" jdbcType="INTEGER" property="signsharenumbers" />
+    <result column="signCommentNumbers" jdbcType="INTEGER" property="signcommentnumbers" />
+    <result column="signuploadfileNumbers" jdbcType="INTEGER" property="signuploadfilenumbers" />
+    <result column="signNextIntergal" jdbcType="INTEGER" property="signnextintergal" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    signId, signUserId, signTime, signStatus, signGoDays, signShareNumbers, signCommentNumbers, 
+    signuploadfileNumbers, signNextIntergal
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.SignExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sign
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sign
+    where signId = #{signid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sign
+    where signId = #{signid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.SignExample">
+    delete from sign
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.Sign">
+    insert into sign (signId, signUserId, signTime, 
+      signStatus, signGoDays, signShareNumbers, 
+      signCommentNumbers, signuploadfileNumbers, 
+      signNextIntergal)
+    values (#{signid,jdbcType=BIGINT}, #{signuserid,jdbcType=BIGINT}, #{signtime,jdbcType=VARCHAR}, 
+      #{signstatus,jdbcType=TINYINT}, #{signgodays,jdbcType=INTEGER}, #{signsharenumbers,jdbcType=INTEGER}, 
+      #{signcommentnumbers,jdbcType=INTEGER}, #{signuploadfilenumbers,jdbcType=INTEGER}, 
+      #{signnextintergal,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.Sign">
+    insert into sign
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="signid != null">
+        signId,
+      </if>
+      <if test="signuserid != null">
+        signUserId,
+      </if>
+      <if test="signtime != null">
+        signTime,
+      </if>
+      <if test="signstatus != null">
+        signStatus,
+      </if>
+      <if test="signgodays != null">
+        signGoDays,
+      </if>
+      <if test="signsharenumbers != null">
+        signShareNumbers,
+      </if>
+      <if test="signcommentnumbers != null">
+        signCommentNumbers,
+      </if>
+      <if test="signuploadfilenumbers != null">
+        signuploadfileNumbers,
+      </if>
+      <if test="signnextintergal != null">
+        signNextIntergal,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="signid != null">
+        #{signid,jdbcType=BIGINT},
+      </if>
+      <if test="signuserid != null">
+        #{signuserid,jdbcType=BIGINT},
+      </if>
+      <if test="signtime != null">
+        #{signtime,jdbcType=VARCHAR},
+      </if>
+      <if test="signstatus != null">
+        #{signstatus,jdbcType=TINYINT},
+      </if>
+      <if test="signgodays != null">
+        #{signgodays,jdbcType=INTEGER},
+      </if>
+      <if test="signsharenumbers != null">
+        #{signsharenumbers,jdbcType=INTEGER},
+      </if>
+      <if test="signcommentnumbers != null">
+        #{signcommentnumbers,jdbcType=INTEGER},
+      </if>
+      <if test="signuploadfilenumbers != null">
+        #{signuploadfilenumbers,jdbcType=INTEGER},
+      </if>
+      <if test="signnextintergal != null">
+        #{signnextintergal,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.SignExample" resultType="java.lang.Long">
+    select count(*) from sign
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sign
+    <set>
+      <if test="record.signid != null">
+        signId = #{record.signid,jdbcType=BIGINT},
+      </if>
+      <if test="record.signuserid != null">
+        signUserId = #{record.signuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.signtime != null">
+        signTime = #{record.signtime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.signstatus != null">
+        signStatus = #{record.signstatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.signgodays != null">
+        signGoDays = #{record.signgodays,jdbcType=INTEGER},
+      </if>
+      <if test="record.signsharenumbers != null">
+        signShareNumbers = #{record.signsharenumbers,jdbcType=INTEGER},
+      </if>
+      <if test="record.signcommentnumbers != null">
+        signCommentNumbers = #{record.signcommentnumbers,jdbcType=INTEGER},
+      </if>
+      <if test="record.signuploadfilenumbers != null">
+        signuploadfileNumbers = #{record.signuploadfilenumbers,jdbcType=INTEGER},
+      </if>
+      <if test="record.signnextintergal != null">
+        signNextIntergal = #{record.signnextintergal,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sign
+    set signId = #{record.signid,jdbcType=BIGINT},
+      signUserId = #{record.signuserid,jdbcType=BIGINT},
+      signTime = #{record.signtime,jdbcType=VARCHAR},
+      signStatus = #{record.signstatus,jdbcType=TINYINT},
+      signGoDays = #{record.signgodays,jdbcType=INTEGER},
+      signShareNumbers = #{record.signsharenumbers,jdbcType=INTEGER},
+      signCommentNumbers = #{record.signcommentnumbers,jdbcType=INTEGER},
+      signuploadfileNumbers = #{record.signuploadfilenumbers,jdbcType=INTEGER},
+      signNextIntergal = #{record.signnextintergal,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Sign">
+    update sign
+    <set>
+      <if test="signuserid != null">
+        signUserId = #{signuserid,jdbcType=BIGINT},
+      </if>
+      <if test="signtime != null">
+        signTime = #{signtime,jdbcType=VARCHAR},
+      </if>
+      <if test="signstatus != null">
+        signStatus = #{signstatus,jdbcType=TINYINT},
+      </if>
+      <if test="signgodays != null">
+        signGoDays = #{signgodays,jdbcType=INTEGER},
+      </if>
+      <if test="signsharenumbers != null">
+        signShareNumbers = #{signsharenumbers,jdbcType=INTEGER},
+      </if>
+      <if test="signcommentnumbers != null">
+        signCommentNumbers = #{signcommentnumbers,jdbcType=INTEGER},
+      </if>
+      <if test="signuploadfilenumbers != null">
+        signuploadfileNumbers = #{signuploadfilenumbers,jdbcType=INTEGER},
+      </if>
+      <if test="signnextintergal != null">
+        signNextIntergal = #{signnextintergal,jdbcType=INTEGER},
+      </if>
+    </set>
+    where signId = #{signid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.Sign">
+    update sign
+    set signUserId = #{signuserid,jdbcType=BIGINT},
+      signTime = #{signtime,jdbcType=VARCHAR},
+      signStatus = #{signstatus,jdbcType=TINYINT},
+      signGoDays = #{signgodays,jdbcType=INTEGER},
+      signShareNumbers = #{signsharenumbers,jdbcType=INTEGER},
+      signCommentNumbers = #{signcommentnumbers,jdbcType=INTEGER},
+      signuploadfileNumbers = #{signuploadfilenumbers,jdbcType=INTEGER},
+      signNextIntergal = #{signnextintergal,jdbcType=INTEGER}
+    where signId = #{signid,jdbcType=BIGINT}
+  </update>
+</mapper>

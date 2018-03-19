@@ -1,33 +1,43 @@
 package com.ums.bean;
 
 public class Role {
-    private Byte roleId;
+    private Long id;
 
-    private String roleType;
+    private String roleName;
 
-    private String roleDesc;
+    private String roleSign;
 
-    public Byte getRoleId() {
-        return roleId;
+    private String description;
+
+    public Long getId() {
+        return id;
     }
 
-    public void setRoleId(Byte roleId) {
-        this.roleId = roleId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getRoleType() {
-        return roleType;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setRoleType(String roleType) {
-        this.roleType = roleType == null ? null : roleType.trim();
+    public void setRoleName(String roleName) {
+        this.roleName = roleName == null ? null : roleName.trim();
     }
 
-    public String getRoleDesc() {
-        return roleDesc;
+    public String getRoleSign() {
+        return roleSign;
     }
 
-    public void setRoleDesc(String roleDesc) {
-        this.roleDesc = roleDesc == null ? null : roleDesc.trim();
+    public void setRoleSign(String roleSign) {
+        this.roleSign = roleSign == null ? null : roleSign.trim();
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description == null ? null : description.trim();
     }
 }

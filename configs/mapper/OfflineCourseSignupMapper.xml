@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.OfflineCourseSignupMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.OfflineCourseSignup">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parentId" jdbcType="BIGINT" property="parentid" />
+    <result column="schooltime" jdbcType="VARCHAR" property="schooltime" />
+    <result column="stuName" jdbcType="VARCHAR" property="stuname" />
+    <result column="olCourse_id" jdbcType="BIGINT" property="olcourseId" />
+    <result column="stuGrade" jdbcType="VARCHAR" property="stugrade" />
+    <result column="stuPhone" jdbcType="VARCHAR" property="stuphone" />
+    <result column="stuAddress" jdbcType="VARCHAR" property="stuaddress" />
+    <result column="isPay" jdbcType="INTEGER" property="ispay" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="outTradeNo" jdbcType="VARCHAR" property="outtradeno" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, parentId, schooltime, stuName, olCourse_id, stuGrade, stuPhone, stuAddress, isPay, 
+    amount, outTradeNo
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.OfflineCourseSignupExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from offline_course_signup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from offline_course_signup
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from offline_course_signup
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.OfflineCourseSignupExample">
+    delete from offline_course_signup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.OfflineCourseSignup">
+    insert into offline_course_signup (id, parentId, schooltime, 
+      stuName, olCourse_id, stuGrade, 
+      stuPhone, stuAddress, isPay, 
+      amount, outTradeNo)
+    values (#{id,jdbcType=BIGINT}, #{parentid,jdbcType=BIGINT}, #{schooltime,jdbcType=VARCHAR}, 
+      #{stuname,jdbcType=VARCHAR}, #{olcourseId,jdbcType=BIGINT}, #{stugrade,jdbcType=VARCHAR}, 
+      #{stuphone,jdbcType=VARCHAR}, #{stuaddress,jdbcType=VARCHAR}, #{ispay,jdbcType=INTEGER}, 
+      #{amount,jdbcType=INTEGER}, #{outtradeno,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.OfflineCourseSignup">
+    insert into offline_course_signup
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="schooltime != null">
+        schooltime,
+      </if>
+      <if test="stuname != null">
+        stuName,
+      </if>
+      <if test="olcourseId != null">
+        olCourse_id,
+      </if>
+      <if test="stugrade != null">
+        stuGrade,
+      </if>
+      <if test="stuphone != null">
+        stuPhone,
+      </if>
+      <if test="stuaddress != null">
+        stuAddress,
+      </if>
+      <if test="ispay != null">
+        isPay,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="outtradeno != null">
+        outTradeNo,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="schooltime != null">
+        #{schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null">
+        #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="olcourseId != null">
+        #{olcourseId,jdbcType=BIGINT},
+      </if>
+      <if test="stugrade != null">
+        #{stugrade,jdbcType=VARCHAR},
+      </if>
+      <if test="stuphone != null">
+        #{stuphone,jdbcType=VARCHAR},
+      </if>
+      <if test="stuaddress != null">
+        #{stuaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ispay != null">
+        #{ispay,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="outtradeno != null">
+        #{outtradeno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.OfflineCourseSignupExample" resultType="java.lang.Long">
+    select count(*) from offline_course_signup
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update offline_course_signup
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentid != null">
+        parentId = #{record.parentid,jdbcType=BIGINT},
+      </if>
+      <if test="record.schooltime != null">
+        schooltime = #{record.schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuname != null">
+        stuName = #{record.stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.olcourseId != null">
+        olCourse_id = #{record.olcourseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.stugrade != null">
+        stuGrade = #{record.stugrade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuphone != null">
+        stuPhone = #{record.stuphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuaddress != null">
+        stuAddress = #{record.stuaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ispay != null">
+        isPay = #{record.ispay,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.outtradeno != null">
+        outTradeNo = #{record.outtradeno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update offline_course_signup
+    set id = #{record.id,jdbcType=BIGINT},
+      parentId = #{record.parentid,jdbcType=BIGINT},
+      schooltime = #{record.schooltime,jdbcType=VARCHAR},
+      stuName = #{record.stuname,jdbcType=VARCHAR},
+      olCourse_id = #{record.olcourseId,jdbcType=BIGINT},
+      stuGrade = #{record.stugrade,jdbcType=VARCHAR},
+      stuPhone = #{record.stuphone,jdbcType=VARCHAR},
+      stuAddress = #{record.stuaddress,jdbcType=VARCHAR},
+      isPay = #{record.ispay,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      outTradeNo = #{record.outtradeno,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.OfflineCourseSignup">
+    update offline_course_signup
+    <set>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=BIGINT},
+      </if>
+      <if test="schooltime != null">
+        schooltime = #{schooltime,jdbcType=VARCHAR},
+      </if>
+      <if test="stuname != null">
+        stuName = #{stuname,jdbcType=VARCHAR},
+      </if>
+      <if test="olcourseId != null">
+        olCourse_id = #{olcourseId,jdbcType=BIGINT},
+      </if>
+      <if test="stugrade != null">
+        stuGrade = #{stugrade,jdbcType=VARCHAR},
+      </if>
+      <if test="stuphone != null">
+        stuPhone = #{stuphone,jdbcType=VARCHAR},
+      </if>
+      <if test="stuaddress != null">
+        stuAddress = #{stuaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ispay != null">
+        isPay = #{ispay,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="outtradeno != null">
+        outTradeNo = #{outtradeno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.OfflineCourseSignup">
+    update offline_course_signup
+    set parentId = #{parentid,jdbcType=BIGINT},
+      schooltime = #{schooltime,jdbcType=VARCHAR},
+      stuName = #{stuname,jdbcType=VARCHAR},
+      olCourse_id = #{olcourseId,jdbcType=BIGINT},
+      stuGrade = #{stugrade,jdbcType=VARCHAR},
+      stuPhone = #{stuphone,jdbcType=VARCHAR},
+      stuAddress = #{stuaddress,jdbcType=VARCHAR},
+      isPay = #{ispay,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      outTradeNo = #{outtradeno,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

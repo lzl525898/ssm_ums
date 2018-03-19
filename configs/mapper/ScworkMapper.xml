@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.ScworkMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.Scwork">
+    <id column="scId" jdbcType="BIGINT" property="scid" />
+    <result column="scworkId" jdbcType="BIGINT" property="scworkid" />
+    <result column="scuserId" jdbcType="BIGINT" property="scuserid" />
+    <result column="sctime" jdbcType="VARCHAR" property="sctime" />
+    <result column="scstatus" jdbcType="TINYINT" property="scstatus" />
+    <result column="sctype" jdbcType="TINYINT" property="sctype" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    scId, scworkId, scuserId, sctime, scstatus, sctype
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.ScworkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from scwork
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from scwork
+    where scId = #{scid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from scwork
+    where scId = #{scid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.ScworkExample">
+    delete from scwork
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.Scwork">
+    insert into scwork (scId, scworkId, scuserId, 
+      sctime, scstatus, sctype
+      )
+    values (#{scid,jdbcType=BIGINT}, #{scworkid,jdbcType=BIGINT}, #{scuserid,jdbcType=BIGINT}, 
+      #{sctime,jdbcType=VARCHAR}, #{scstatus,jdbcType=TINYINT}, #{sctype,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.Scwork">
+    insert into scwork
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="scid != null">
+        scId,
+      </if>
+      <if test="scworkid != null">
+        scworkId,
+      </if>
+      <if test="scuserid != null">
+        scuserId,
+      </if>
+      <if test="sctime != null">
+        sctime,
+      </if>
+      <if test="scstatus != null">
+        scstatus,
+      </if>
+      <if test="sctype != null">
+        sctype,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="scid != null">
+        #{scid,jdbcType=BIGINT},
+      </if>
+      <if test="scworkid != null">
+        #{scworkid,jdbcType=BIGINT},
+      </if>
+      <if test="scuserid != null">
+        #{scuserid,jdbcType=BIGINT},
+      </if>
+      <if test="sctime != null">
+        #{sctime,jdbcType=VARCHAR},
+      </if>
+      <if test="scstatus != null">
+        #{scstatus,jdbcType=TINYINT},
+      </if>
+      <if test="sctype != null">
+        #{sctype,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.ScworkExample" resultType="java.lang.Long">
+    select count(*) from scwork
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update scwork
+    <set>
+      <if test="record.scid != null">
+        scId = #{record.scid,jdbcType=BIGINT},
+      </if>
+      <if test="record.scworkid != null">
+        scworkId = #{record.scworkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.scuserid != null">
+        scuserId = #{record.scuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.sctime != null">
+        sctime = #{record.sctime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scstatus != null">
+        scstatus = #{record.scstatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.sctype != null">
+        sctype = #{record.sctype,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update scwork
+    set scId = #{record.scid,jdbcType=BIGINT},
+      scworkId = #{record.scworkid,jdbcType=BIGINT},
+      scuserId = #{record.scuserid,jdbcType=BIGINT},
+      sctime = #{record.sctime,jdbcType=VARCHAR},
+      scstatus = #{record.scstatus,jdbcType=TINYINT},
+      sctype = #{record.sctype,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Scwork">
+    update scwork
+    <set>
+      <if test="scworkid != null">
+        scworkId = #{scworkid,jdbcType=BIGINT},
+      </if>
+      <if test="scuserid != null">
+        scuserId = #{scuserid,jdbcType=BIGINT},
+      </if>
+      <if test="sctime != null">
+        sctime = #{sctime,jdbcType=VARCHAR},
+      </if>
+      <if test="scstatus != null">
+        scstatus = #{scstatus,jdbcType=TINYINT},
+      </if>
+      <if test="sctype != null">
+        sctype = #{sctype,jdbcType=TINYINT},
+      </if>
+    </set>
+    where scId = #{scid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.Scwork">
+    update scwork
+    set scworkId = #{scworkid,jdbcType=BIGINT},
+      scuserId = #{scuserid,jdbcType=BIGINT},
+      sctime = #{sctime,jdbcType=VARCHAR},
+      scstatus = #{scstatus,jdbcType=TINYINT},
+      sctype = #{sctype,jdbcType=TINYINT}
+    where scId = #{scid,jdbcType=BIGINT}
+  </update>
+</mapper>

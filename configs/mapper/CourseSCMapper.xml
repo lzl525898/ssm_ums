@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.CourseSCMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.CourseSC">
+    <id column="coursescId" jdbcType="BIGINT" property="coursescid" />
+    <result column="courseaboutId" jdbcType="BIGINT" property="courseaboutid" />
+    <result column="coursescuserId" jdbcType="BIGINT" property="coursescuserid" />
+    <result column="coursesctime" jdbcType="VARCHAR" property="coursesctime" />
+    <result column="coursescstatus" jdbcType="TINYINT" property="coursescstatus" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    coursescId, courseaboutId, coursescuserId, coursesctime, coursescstatus
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.CourseSCExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_course_sc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tw_course_sc
+    where coursescId = #{coursescid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tw_course_sc
+    where coursescId = #{coursescid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.CourseSCExample">
+    delete from tw_course_sc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.CourseSC">
+    insert into tw_course_sc (coursescId, courseaboutId, coursescuserId, 
+      coursesctime, coursescstatus)
+    values (#{coursescid,jdbcType=BIGINT}, #{courseaboutid,jdbcType=BIGINT}, #{coursescuserid,jdbcType=BIGINT}, 
+      #{coursesctime,jdbcType=VARCHAR}, #{coursescstatus,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.CourseSC">
+    insert into tw_course_sc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="coursescid != null">
+        coursescId,
+      </if>
+      <if test="courseaboutid != null">
+        courseaboutId,
+      </if>
+      <if test="coursescuserid != null">
+        coursescuserId,
+      </if>
+      <if test="coursesctime != null">
+        coursesctime,
+      </if>
+      <if test="coursescstatus != null">
+        coursescstatus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="coursescid != null">
+        #{coursescid,jdbcType=BIGINT},
+      </if>
+      <if test="courseaboutid != null">
+        #{courseaboutid,jdbcType=BIGINT},
+      </if>
+      <if test="coursescuserid != null">
+        #{coursescuserid,jdbcType=BIGINT},
+      </if>
+      <if test="coursesctime != null">
+        #{coursesctime,jdbcType=VARCHAR},
+      </if>
+      <if test="coursescstatus != null">
+        #{coursescstatus,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.CourseSCExample" resultType="java.lang.Long">
+    select count(*) from tw_course_sc
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_course_sc
+    <set>
+      <if test="record.coursescid != null">
+        coursescId = #{record.coursescid,jdbcType=BIGINT},
+      </if>
+      <if test="record.courseaboutid != null">
+        courseaboutId = #{record.courseaboutid,jdbcType=BIGINT},
+      </if>
+      <if test="record.coursescuserid != null">
+        coursescuserId = #{record.coursescuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.coursesctime != null">
+        coursesctime = #{record.coursesctime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coursescstatus != null">
+        coursescstatus = #{record.coursescstatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_course_sc
+    set coursescId = #{record.coursescid,jdbcType=BIGINT},
+      courseaboutId = #{record.courseaboutid,jdbcType=BIGINT},
+      coursescuserId = #{record.coursescuserid,jdbcType=BIGINT},
+      coursesctime = #{record.coursesctime,jdbcType=VARCHAR},
+      coursescstatus = #{record.coursescstatus,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.CourseSC">
+    update tw_course_sc
+    <set>
+      <if test="courseaboutid != null">
+        courseaboutId = #{courseaboutid,jdbcType=BIGINT},
+      </if>
+      <if test="coursescuserid != null">
+        coursescuserId = #{coursescuserid,jdbcType=BIGINT},
+      </if>
+      <if test="coursesctime != null">
+        coursesctime = #{coursesctime,jdbcType=VARCHAR},
+      </if>
+      <if test="coursescstatus != null">
+        coursescstatus = #{coursescstatus,jdbcType=TINYINT},
+      </if>
+    </set>
+    where coursescId = #{coursescid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.CourseSC">
+    update tw_course_sc
+    set courseaboutId = #{courseaboutid,jdbcType=BIGINT},
+      coursescuserId = #{coursescuserid,jdbcType=BIGINT},
+      coursesctime = #{coursesctime,jdbcType=VARCHAR},
+      coursescstatus = #{coursescstatus,jdbcType=TINYINT}
+    where coursescId = #{coursescid,jdbcType=BIGINT}
+  </update>
+</mapper>

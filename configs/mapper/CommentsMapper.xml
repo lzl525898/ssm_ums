@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.CommentsMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.Comments">
+    <id column="commentsId" jdbcType="BIGINT" property="commentsid" />
+    <result column="commentsWorkId" jdbcType="BIGINT" property="commentsworkid" />
+    <result column="commentsReleaseUserId" jdbcType="BIGINT" property="commentsreleaseuserid" />
+    <result column="commentsCreateTime" jdbcType="VARCHAR" property="commentscreatetime" />
+    <result column="commentsIsShow" jdbcType="TINYINT" property="commentsisshow" />
+    <result column="commentReason" jdbcType="VARCHAR" property="commentreason" />
+    <result column="commentModifyTime" jdbcType="VARCHAR" property="commentmodifytime" />
+    <result column="commentModifyUserId" jdbcType="BIGINT" property="commentmodifyuserid" />
+    <result column="commentReplyDetail" jdbcType="VARCHAR" property="commentreplydetail" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ums.bean.Comments">
+    <result column="commentsDetail" jdbcType="LONGVARCHAR" property="commentsdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    commentsId, commentsWorkId, commentsReleaseUserId, commentsCreateTime, commentsIsShow, 
+    commentReason, commentModifyTime, commentModifyUserId, commentReplyDetail
+  </sql>
+  <sql id="Blob_Column_List">
+    commentsDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ums.bean.CommentsExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ums.bean.CommentsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_comments
+    where commentsId = #{commentsid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tw_comments
+    where commentsId = #{commentsid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.CommentsExample">
+    delete from tw_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.Comments">
+    insert into tw_comments (commentsId, commentsWorkId, commentsReleaseUserId, 
+      commentsCreateTime, commentsIsShow, commentReason, 
+      commentModifyTime, commentModifyUserId, 
+      commentReplyDetail, commentsDetail)
+    values (#{commentsid,jdbcType=BIGINT}, #{commentsworkid,jdbcType=BIGINT}, #{commentsreleaseuserid,jdbcType=BIGINT}, 
+      #{commentscreatetime,jdbcType=VARCHAR}, #{commentsisshow,jdbcType=TINYINT}, #{commentreason,jdbcType=VARCHAR}, 
+      #{commentmodifytime,jdbcType=VARCHAR}, #{commentmodifyuserid,jdbcType=BIGINT}, 
+      #{commentreplydetail,jdbcType=VARCHAR}, #{commentsdetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.Comments">
+    insert into tw_comments
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="commentsid != null">
+        commentsId,
+      </if>
+      <if test="commentsworkid != null">
+        commentsWorkId,
+      </if>
+      <if test="commentsreleaseuserid != null">
+        commentsReleaseUserId,
+      </if>
+      <if test="commentscreatetime != null">
+        commentsCreateTime,
+      </if>
+      <if test="commentsisshow != null">
+        commentsIsShow,
+      </if>
+      <if test="commentreason != null">
+        commentReason,
+      </if>
+      <if test="commentmodifytime != null">
+        commentModifyTime,
+      </if>
+      <if test="commentmodifyuserid != null">
+        commentModifyUserId,
+      </if>
+      <if test="commentreplydetail != null">
+        commentReplyDetail,
+      </if>
+      <if test="commentsdetail != null">
+        commentsDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="commentsid != null">
+        #{commentsid,jdbcType=BIGINT},
+      </if>
+      <if test="commentsworkid != null">
+        #{commentsworkid,jdbcType=BIGINT},
+      </if>
+      <if test="commentsreleaseuserid != null">
+        #{commentsreleaseuserid,jdbcType=BIGINT},
+      </if>
+      <if test="commentscreatetime != null">
+        #{commentscreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsisshow != null">
+        #{commentsisshow,jdbcType=TINYINT},
+      </if>
+      <if test="commentreason != null">
+        #{commentreason,jdbcType=VARCHAR},
+      </if>
+      <if test="commentmodifytime != null">
+        #{commentmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="commentmodifyuserid != null">
+        #{commentmodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="commentreplydetail != null">
+        #{commentreplydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsdetail != null">
+        #{commentsdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.CommentsExample" resultType="java.lang.Long">
+    select count(*) from tw_comments
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_comments
+    <set>
+      <if test="record.commentsid != null">
+        commentsId = #{record.commentsid,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentsworkid != null">
+        commentsWorkId = #{record.commentsworkid,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentsreleaseuserid != null">
+        commentsReleaseUserId = #{record.commentsreleaseuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentscreatetime != null">
+        commentsCreateTime = #{record.commentscreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentsisshow != null">
+        commentsIsShow = #{record.commentsisshow,jdbcType=TINYINT},
+      </if>
+      <if test="record.commentreason != null">
+        commentReason = #{record.commentreason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentmodifytime != null">
+        commentModifyTime = #{record.commentmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentmodifyuserid != null">
+        commentModifyUserId = #{record.commentmodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.commentreplydetail != null">
+        commentReplyDetail = #{record.commentreplydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.commentsdetail != null">
+        commentsDetail = #{record.commentsdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tw_comments
+    set commentsId = #{record.commentsid,jdbcType=BIGINT},
+      commentsWorkId = #{record.commentsworkid,jdbcType=BIGINT},
+      commentsReleaseUserId = #{record.commentsreleaseuserid,jdbcType=BIGINT},
+      commentsCreateTime = #{record.commentscreatetime,jdbcType=VARCHAR},
+      commentsIsShow = #{record.commentsisshow,jdbcType=TINYINT},
+      commentReason = #{record.commentreason,jdbcType=VARCHAR},
+      commentModifyTime = #{record.commentmodifytime,jdbcType=VARCHAR},
+      commentModifyUserId = #{record.commentmodifyuserid,jdbcType=BIGINT},
+      commentReplyDetail = #{record.commentreplydetail,jdbcType=VARCHAR},
+      commentsDetail = #{record.commentsdetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_comments
+    set commentsId = #{record.commentsid,jdbcType=BIGINT},
+      commentsWorkId = #{record.commentsworkid,jdbcType=BIGINT},
+      commentsReleaseUserId = #{record.commentsreleaseuserid,jdbcType=BIGINT},
+      commentsCreateTime = #{record.commentscreatetime,jdbcType=VARCHAR},
+      commentsIsShow = #{record.commentsisshow,jdbcType=TINYINT},
+      commentReason = #{record.commentreason,jdbcType=VARCHAR},
+      commentModifyTime = #{record.commentmodifytime,jdbcType=VARCHAR},
+      commentModifyUserId = #{record.commentmodifyuserid,jdbcType=BIGINT},
+      commentReplyDetail = #{record.commentreplydetail,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Comments">
+    update tw_comments
+    <set>
+      <if test="commentsworkid != null">
+        commentsWorkId = #{commentsworkid,jdbcType=BIGINT},
+      </if>
+      <if test="commentsreleaseuserid != null">
+        commentsReleaseUserId = #{commentsreleaseuserid,jdbcType=BIGINT},
+      </if>
+      <if test="commentscreatetime != null">
+        commentsCreateTime = #{commentscreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsisshow != null">
+        commentsIsShow = #{commentsisshow,jdbcType=TINYINT},
+      </if>
+      <if test="commentreason != null">
+        commentReason = #{commentreason,jdbcType=VARCHAR},
+      </if>
+      <if test="commentmodifytime != null">
+        commentModifyTime = #{commentmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="commentmodifyuserid != null">
+        commentModifyUserId = #{commentmodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="commentreplydetail != null">
+        commentReplyDetail = #{commentreplydetail,jdbcType=VARCHAR},
+      </if>
+      <if test="commentsdetail != null">
+        commentsDetail = #{commentsdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where commentsId = #{commentsid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ums.bean.Comments">
+    update tw_comments
+    set commentsWorkId = #{commentsworkid,jdbcType=BIGINT},
+      commentsReleaseUserId = #{commentsreleaseuserid,jdbcType=BIGINT},
+      commentsCreateTime = #{commentscreatetime,jdbcType=VARCHAR},
+      commentsIsShow = #{commentsisshow,jdbcType=TINYINT},
+      commentReason = #{commentreason,jdbcType=VARCHAR},
+      commentModifyTime = #{commentmodifytime,jdbcType=VARCHAR},
+      commentModifyUserId = #{commentmodifyuserid,jdbcType=BIGINT},
+      commentReplyDetail = #{commentreplydetail,jdbcType=VARCHAR},
+      commentsDetail = #{commentsdetail,jdbcType=LONGVARCHAR}
+    where commentsId = #{commentsid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.Comments">
+    update tw_comments
+    set commentsWorkId = #{commentsworkid,jdbcType=BIGINT},
+      commentsReleaseUserId = #{commentsreleaseuserid,jdbcType=BIGINT},
+      commentsCreateTime = #{commentscreatetime,jdbcType=VARCHAR},
+      commentsIsShow = #{commentsisshow,jdbcType=TINYINT},
+      commentReason = #{commentreason,jdbcType=VARCHAR},
+      commentModifyTime = #{commentmodifytime,jdbcType=VARCHAR},
+      commentModifyUserId = #{commentmodifyuserid,jdbcType=BIGINT},
+      commentReplyDetail = #{commentreplydetail,jdbcType=VARCHAR}
+    where commentsId = #{commentsid,jdbcType=BIGINT}
+  </update>
+</mapper>

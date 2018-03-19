@@ -118,8 +118,9 @@ ums_footer  {
 .ums-nav {
 	height: 64px; 
 	width: 100%; 
-	position: fixed; 
+	position:fixed;
 	top: 0;
+	z-index: 999;
 }
 
 .ums-nav-info {
@@ -148,4 +149,20 @@ ums_footer  {
 
 .ums-nav-info span {
 	color: #ffffff;
+}
+
+.ums-main {
+	height: 650px;
+}
+
+.ums-user-manage {
+	height:650px;
+}
+
+#users_table th {
+	text-align: center;
+}
+
+#users_table td {
+	text-align: center;
 }

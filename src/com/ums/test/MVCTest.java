@@ -34,9 +34,9 @@ public class MVCTest {
 	public void test() throws Exception {
 		System.out.println("Start Test...");
 		//模拟请求拿到返回值
-		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/manage")).andReturn();
+		MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/user/users")).andReturn();
 		MockHttpServletRequest request = result.getRequest();
-		System.out.println(request.getAttribute("name"));
+		System.out.println(request.getAttribute("userList"));
 		System.out.println("End Test...");
 	}
 }

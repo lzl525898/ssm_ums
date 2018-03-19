@@ -1,0 +1,679 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.WorkMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.Work">
+    <id column="workId" jdbcType="BIGINT" property="workid" />
+    <result column="workTypeAboutId" jdbcType="BIGINT" property="worktypeaboutid" />
+    <result column="workName" jdbcType="VARCHAR" property="workname" />
+    <result column="workFilePath" jdbcType="VARCHAR" property="workfilepath" />
+    <result column="workPicture1" jdbcType="VARCHAR" property="workpicture1" />
+    <result column="workPicture2" jdbcType="VARCHAR" property="workpicture2" />
+    <result column="workPicture3" jdbcType="VARCHAR" property="workpicture3" />
+    <result column="workAuthor" jdbcType="VARCHAR" property="workauthor" />
+    <result column="workCreateUserId" jdbcType="BIGINT" property="workcreateuserid" />
+    <result column="workCreateTime" jdbcType="VARCHAR" property="workcreatetime" />
+    <result column="workModifyTime" jdbcType="VARCHAR" property="workmodifytime" />
+    <result column="workBrowseNumber" jdbcType="INTEGER" property="workbrowsenumber" />
+    <result column="workCommentsNumber" jdbcType="INTEGER" property="workcommentsnumber" />
+    <result column="workShareNumber" jdbcType="INTEGER" property="worksharenumber" />
+    <result column="workThumpNumber" jdbcType="INTEGER" property="workthumpnumber" />
+    <result column="workDownLoadNumber" jdbcType="INTEGER" property="workdownloadnumber" />
+    <result column="workShareLink" jdbcType="VARCHAR" property="worksharelink" />
+    <result column="workAboutWork" jdbcType="VARCHAR" property="workaboutwork" />
+    <result column="workModifyUserId" jdbcType="BIGINT" property="workmodifyuserid" />
+    <result column="workIsShow" jdbcType="TINYINT" property="workisshow" />
+    <result column="workHomeRecommendation" jdbcType="TINYINT" property="workhomerecommendation" />
+    <result column="workShareLinkList" jdbcType="VARCHAR" property="worksharelinklist" />
+    <result column="workTwoFilePath" jdbcType="VARCHAR" property="worktwofilepath" />
+    <result column="workDianZanStatus" jdbcType="TINYINT" property="workdianzanstatus" />
+    <result column="workAboutCollectionId" jdbcType="BIGINT" property="workaboutcollectionid" />
+    <result column="dianzanId" jdbcType="BIGINT" property="dianzanid" />
+    <result column="workShouCangNumber" jdbcType="INTEGER" property="workshoucangnumber" />
+    <result column="mode" jdbcType="INTEGER" property="mode" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ums.bean.Work">
+    <result column="workDetail" jdbcType="LONGVARCHAR" property="workdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    workId, workTypeAboutId, workName, workFilePath, workPicture1, workPicture2, workPicture3, 
+    workAuthor, workCreateUserId, workCreateTime, workModifyTime, workBrowseNumber, workCommentsNumber, 
+    workShareNumber, workThumpNumber, workDownLoadNumber, workShareLink, workAboutWork, 
+    workModifyUserId, workIsShow, workHomeRecommendation, workShareLinkList, workTwoFilePath, 
+    workDianZanStatus, workAboutCollectionId, dianzanId, workShouCangNumber, mode
+  </sql>
+  <sql id="Blob_Column_List">
+    workDetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ums.bean.WorkExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ums.bean.WorkExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tw_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tw_work
+    where workId = #{workid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tw_work
+    where workId = #{workid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.WorkExample">
+    delete from tw_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.Work">
+    insert into tw_work (workId, workTypeAboutId, workName, 
+      workFilePath, workPicture1, workPicture2, 
+      workPicture3, workAuthor, workCreateUserId, 
+      workCreateTime, workModifyTime, workBrowseNumber, 
+      workCommentsNumber, workShareNumber, workThumpNumber, 
+      workDownLoadNumber, workShareLink, workAboutWork, 
+      workModifyUserId, workIsShow, workHomeRecommendation, 
+      workShareLinkList, workTwoFilePath, workDianZanStatus, 
+      workAboutCollectionId, dianzanId, workShouCangNumber, 
+      mode, workDetail)
+    values (#{workid,jdbcType=BIGINT}, #{worktypeaboutid,jdbcType=BIGINT}, #{workname,jdbcType=VARCHAR}, 
+      #{workfilepath,jdbcType=VARCHAR}, #{workpicture1,jdbcType=VARCHAR}, #{workpicture2,jdbcType=VARCHAR}, 
+      #{workpicture3,jdbcType=VARCHAR}, #{workauthor,jdbcType=VARCHAR}, #{workcreateuserid,jdbcType=BIGINT}, 
+      #{workcreatetime,jdbcType=VARCHAR}, #{workmodifytime,jdbcType=VARCHAR}, #{workbrowsenumber,jdbcType=INTEGER}, 
+      #{workcommentsnumber,jdbcType=INTEGER}, #{worksharenumber,jdbcType=INTEGER}, #{workthumpnumber,jdbcType=INTEGER}, 
+      #{workdownloadnumber,jdbcType=INTEGER}, #{worksharelink,jdbcType=VARCHAR}, #{workaboutwork,jdbcType=VARCHAR}, 
+      #{workmodifyuserid,jdbcType=BIGINT}, #{workisshow,jdbcType=TINYINT}, #{workhomerecommendation,jdbcType=TINYINT}, 
+      #{worksharelinklist,jdbcType=VARCHAR}, #{worktwofilepath,jdbcType=VARCHAR}, #{workdianzanstatus,jdbcType=TINYINT}, 
+      #{workaboutcollectionid,jdbcType=BIGINT}, #{dianzanid,jdbcType=BIGINT}, #{workshoucangnumber,jdbcType=INTEGER}, 
+      #{mode,jdbcType=INTEGER}, #{workdetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.Work">
+    insert into tw_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="workid != null">
+        workId,
+      </if>
+      <if test="worktypeaboutid != null">
+        workTypeAboutId,
+      </if>
+      <if test="workname != null">
+        workName,
+      </if>
+      <if test="workfilepath != null">
+        workFilePath,
+      </if>
+      <if test="workpicture1 != null">
+        workPicture1,
+      </if>
+      <if test="workpicture2 != null">
+        workPicture2,
+      </if>
+      <if test="workpicture3 != null">
+        workPicture3,
+      </if>
+      <if test="workauthor != null">
+        workAuthor,
+      </if>
+      <if test="workcreateuserid != null">
+        workCreateUserId,
+      </if>
+      <if test="workcreatetime != null">
+        workCreateTime,
+      </if>
+      <if test="workmodifytime != null">
+        workModifyTime,
+      </if>
+      <if test="workbrowsenumber != null">
+        workBrowseNumber,
+      </if>
+      <if test="workcommentsnumber != null">
+        workCommentsNumber,
+      </if>
+      <if test="worksharenumber != null">
+        workShareNumber,
+      </if>
+      <if test="workthumpnumber != null">
+        workThumpNumber,
+      </if>
+      <if test="workdownloadnumber != null">
+        workDownLoadNumber,
+      </if>
+      <if test="worksharelink != null">
+        workShareLink,
+      </if>
+      <if test="workaboutwork != null">
+        workAboutWork,
+      </if>
+      <if test="workmodifyuserid != null">
+        workModifyUserId,
+      </if>
+      <if test="workisshow != null">
+        workIsShow,
+      </if>
+      <if test="workhomerecommendation != null">
+        workHomeRecommendation,
+      </if>
+      <if test="worksharelinklist != null">
+        workShareLinkList,
+      </if>
+      <if test="worktwofilepath != null">
+        workTwoFilePath,
+      </if>
+      <if test="workdianzanstatus != null">
+        workDianZanStatus,
+      </if>
+      <if test="workaboutcollectionid != null">
+        workAboutCollectionId,
+      </if>
+      <if test="dianzanid != null">
+        dianzanId,
+      </if>
+      <if test="workshoucangnumber != null">
+        workShouCangNumber,
+      </if>
+      <if test="mode != null">
+        mode,
+      </if>
+      <if test="workdetail != null">
+        workDetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="workid != null">
+        #{workid,jdbcType=BIGINT},
+      </if>
+      <if test="worktypeaboutid != null">
+        #{worktypeaboutid,jdbcType=BIGINT},
+      </if>
+      <if test="workname != null">
+        #{workname,jdbcType=VARCHAR},
+      </if>
+      <if test="workfilepath != null">
+        #{workfilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="workpicture1 != null">
+        #{workpicture1,jdbcType=VARCHAR},
+      </if>
+      <if test="workpicture2 != null">
+        #{workpicture2,jdbcType=VARCHAR},
+      </if>
+      <if test="workpicture3 != null">
+        #{workpicture3,jdbcType=VARCHAR},
+      </if>
+      <if test="workauthor != null">
+        #{workauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="workcreateuserid != null">
+        #{workcreateuserid,jdbcType=BIGINT},
+      </if>
+      <if test="workcreatetime != null">
+        #{workcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="workmodifytime != null">
+        #{workmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="workbrowsenumber != null">
+        #{workbrowsenumber,jdbcType=INTEGER},
+      </if>
+      <if test="workcommentsnumber != null">
+        #{workcommentsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="worksharenumber != null">
+        #{worksharenumber,jdbcType=INTEGER},
+      </if>
+      <if test="workthumpnumber != null">
+        #{workthumpnumber,jdbcType=INTEGER},
+      </if>
+      <if test="workdownloadnumber != null">
+        #{workdownloadnumber,jdbcType=INTEGER},
+      </if>
+      <if test="worksharelink != null">
+        #{worksharelink,jdbcType=VARCHAR},
+      </if>
+      <if test="workaboutwork != null">
+        #{workaboutwork,jdbcType=VARCHAR},
+      </if>
+      <if test="workmodifyuserid != null">
+        #{workmodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="workisshow != null">
+        #{workisshow,jdbcType=TINYINT},
+      </if>
+      <if test="workhomerecommendation != null">
+        #{workhomerecommendation,jdbcType=TINYINT},
+      </if>
+      <if test="worksharelinklist != null">
+        #{worksharelinklist,jdbcType=VARCHAR},
+      </if>
+      <if test="worktwofilepath != null">
+        #{worktwofilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="workdianzanstatus != null">
+        #{workdianzanstatus,jdbcType=TINYINT},
+      </if>
+      <if test="workaboutcollectionid != null">
+        #{workaboutcollectionid,jdbcType=BIGINT},
+      </if>
+      <if test="dianzanid != null">
+        #{dianzanid,jdbcType=BIGINT},
+      </if>
+      <if test="workshoucangnumber != null">
+        #{workshoucangnumber,jdbcType=INTEGER},
+      </if>
+      <if test="mode != null">
+        #{mode,jdbcType=INTEGER},
+      </if>
+      <if test="workdetail != null">
+        #{workdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.WorkExample" resultType="java.lang.Long">
+    select count(*) from tw_work
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tw_work
+    <set>
+      <if test="record.workid != null">
+        workId = #{record.workid,jdbcType=BIGINT},
+      </if>
+      <if test="record.worktypeaboutid != null">
+        workTypeAboutId = #{record.worktypeaboutid,jdbcType=BIGINT},
+      </if>
+      <if test="record.workname != null">
+        workName = #{record.workname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workfilepath != null">
+        workFilePath = #{record.workfilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workpicture1 != null">
+        workPicture1 = #{record.workpicture1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workpicture2 != null">
+        workPicture2 = #{record.workpicture2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workpicture3 != null">
+        workPicture3 = #{record.workpicture3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workauthor != null">
+        workAuthor = #{record.workauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workcreateuserid != null">
+        workCreateUserId = #{record.workcreateuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.workcreatetime != null">
+        workCreateTime = #{record.workcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workmodifytime != null">
+        workModifyTime = #{record.workmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workbrowsenumber != null">
+        workBrowseNumber = #{record.workbrowsenumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.workcommentsnumber != null">
+        workCommentsNumber = #{record.workcommentsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.worksharenumber != null">
+        workShareNumber = #{record.worksharenumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.workthumpnumber != null">
+        workThumpNumber = #{record.workthumpnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.workdownloadnumber != null">
+        workDownLoadNumber = #{record.workdownloadnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.worksharelink != null">
+        workShareLink = #{record.worksharelink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workaboutwork != null">
+        workAboutWork = #{record.workaboutwork,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workmodifyuserid != null">
+        workModifyUserId = #{record.workmodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.workisshow != null">
+        workIsShow = #{record.workisshow,jdbcType=TINYINT},
+      </if>
+      <if test="record.workhomerecommendation != null">
+        workHomeRecommendation = #{record.workhomerecommendation,jdbcType=TINYINT},
+      </if>
+      <if test="record.worksharelinklist != null">
+        workShareLinkList = #{record.worksharelinklist,jdbcType=VARCHAR},
+      </if>
+      <if test="record.worktwofilepath != null">
+        workTwoFilePath = #{record.worktwofilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.workdianzanstatus != null">
+        workDianZanStatus = #{record.workdianzanstatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.workaboutcollectionid != null">
+        workAboutCollectionId = #{record.workaboutcollectionid,jdbcType=BIGINT},
+      </if>
+      <if test="record.dianzanid != null">
+        dianzanId = #{record.dianzanid,jdbcType=BIGINT},
+      </if>
+      <if test="record.workshoucangnumber != null">
+        workShouCangNumber = #{record.workshoucangnumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.mode != null">
+        mode = #{record.mode,jdbcType=INTEGER},
+      </if>
+      <if test="record.workdetail != null">
+        workDetail = #{record.workdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update tw_work
+    set workId = #{record.workid,jdbcType=BIGINT},
+      workTypeAboutId = #{record.worktypeaboutid,jdbcType=BIGINT},
+      workName = #{record.workname,jdbcType=VARCHAR},
+      workFilePath = #{record.workfilepath,jdbcType=VARCHAR},
+      workPicture1 = #{record.workpicture1,jdbcType=VARCHAR},
+      workPicture2 = #{record.workpicture2,jdbcType=VARCHAR},
+      workPicture3 = #{record.workpicture3,jdbcType=VARCHAR},
+      workAuthor = #{record.workauthor,jdbcType=VARCHAR},
+      workCreateUserId = #{record.workcreateuserid,jdbcType=BIGINT},
+      workCreateTime = #{record.workcreatetime,jdbcType=VARCHAR},
+      workModifyTime = #{record.workmodifytime,jdbcType=VARCHAR},
+      workBrowseNumber = #{record.workbrowsenumber,jdbcType=INTEGER},
+      workCommentsNumber = #{record.workcommentsnumber,jdbcType=INTEGER},
+      workShareNumber = #{record.worksharenumber,jdbcType=INTEGER},
+      workThumpNumber = #{record.workthumpnumber,jdbcType=INTEGER},
+      workDownLoadNumber = #{record.workdownloadnumber,jdbcType=INTEGER},
+      workShareLink = #{record.worksharelink,jdbcType=VARCHAR},
+      workAboutWork = #{record.workaboutwork,jdbcType=VARCHAR},
+      workModifyUserId = #{record.workmodifyuserid,jdbcType=BIGINT},
+      workIsShow = #{record.workisshow,jdbcType=TINYINT},
+      workHomeRecommendation = #{record.workhomerecommendation,jdbcType=TINYINT},
+      workShareLinkList = #{record.worksharelinklist,jdbcType=VARCHAR},
+      workTwoFilePath = #{record.worktwofilepath,jdbcType=VARCHAR},
+      workDianZanStatus = #{record.workdianzanstatus,jdbcType=TINYINT},
+      workAboutCollectionId = #{record.workaboutcollectionid,jdbcType=BIGINT},
+      dianzanId = #{record.dianzanid,jdbcType=BIGINT},
+      workShouCangNumber = #{record.workshoucangnumber,jdbcType=INTEGER},
+      mode = #{record.mode,jdbcType=INTEGER},
+      workDetail = #{record.workdetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tw_work
+    set workId = #{record.workid,jdbcType=BIGINT},
+      workTypeAboutId = #{record.worktypeaboutid,jdbcType=BIGINT},
+      workName = #{record.workname,jdbcType=VARCHAR},
+      workFilePath = #{record.workfilepath,jdbcType=VARCHAR},
+      workPicture1 = #{record.workpicture1,jdbcType=VARCHAR},
+      workPicture2 = #{record.workpicture2,jdbcType=VARCHAR},
+      workPicture3 = #{record.workpicture3,jdbcType=VARCHAR},
+      workAuthor = #{record.workauthor,jdbcType=VARCHAR},
+      workCreateUserId = #{record.workcreateuserid,jdbcType=BIGINT},
+      workCreateTime = #{record.workcreatetime,jdbcType=VARCHAR},
+      workModifyTime = #{record.workmodifytime,jdbcType=VARCHAR},
+      workBrowseNumber = #{record.workbrowsenumber,jdbcType=INTEGER},
+      workCommentsNumber = #{record.workcommentsnumber,jdbcType=INTEGER},
+      workShareNumber = #{record.worksharenumber,jdbcType=INTEGER},
+      workThumpNumber = #{record.workthumpnumber,jdbcType=INTEGER},
+      workDownLoadNumber = #{record.workdownloadnumber,jdbcType=INTEGER},
+      workShareLink = #{record.worksharelink,jdbcType=VARCHAR},
+      workAboutWork = #{record.workaboutwork,jdbcType=VARCHAR},
+      workModifyUserId = #{record.workmodifyuserid,jdbcType=BIGINT},
+      workIsShow = #{record.workisshow,jdbcType=TINYINT},
+      workHomeRecommendation = #{record.workhomerecommendation,jdbcType=TINYINT},
+      workShareLinkList = #{record.worksharelinklist,jdbcType=VARCHAR},
+      workTwoFilePath = #{record.worktwofilepath,jdbcType=VARCHAR},
+      workDianZanStatus = #{record.workdianzanstatus,jdbcType=TINYINT},
+      workAboutCollectionId = #{record.workaboutcollectionid,jdbcType=BIGINT},
+      dianzanId = #{record.dianzanid,jdbcType=BIGINT},
+      workShouCangNumber = #{record.workshoucangnumber,jdbcType=INTEGER},
+      mode = #{record.mode,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Work">
+    update tw_work
+    <set>
+      <if test="worktypeaboutid != null">
+        workTypeAboutId = #{worktypeaboutid,jdbcType=BIGINT},
+      </if>
+      <if test="workname != null">
+        workName = #{workname,jdbcType=VARCHAR},
+      </if>
+      <if test="workfilepath != null">
+        workFilePath = #{workfilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="workpicture1 != null">
+        workPicture1 = #{workpicture1,jdbcType=VARCHAR},
+      </if>
+      <if test="workpicture2 != null">
+        workPicture2 = #{workpicture2,jdbcType=VARCHAR},
+      </if>
+      <if test="workpicture3 != null">
+        workPicture3 = #{workpicture3,jdbcType=VARCHAR},
+      </if>
+      <if test="workauthor != null">
+        workAuthor = #{workauthor,jdbcType=VARCHAR},
+      </if>
+      <if test="workcreateuserid != null">
+        workCreateUserId = #{workcreateuserid,jdbcType=BIGINT},
+      </if>
+      <if test="workcreatetime != null">
+        workCreateTime = #{workcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="workmodifytime != null">
+        workModifyTime = #{workmodifytime,jdbcType=VARCHAR},
+      </if>
+      <if test="workbrowsenumber != null">
+        workBrowseNumber = #{workbrowsenumber,jdbcType=INTEGER},
+      </if>
+      <if test="workcommentsnumber != null">
+        workCommentsNumber = #{workcommentsnumber,jdbcType=INTEGER},
+      </if>
+      <if test="worksharenumber != null">
+        workShareNumber = #{worksharenumber,jdbcType=INTEGER},
+      </if>
+      <if test="workthumpnumber != null">
+        workThumpNumber = #{workthumpnumber,jdbcType=INTEGER},
+      </if>
+      <if test="workdownloadnumber != null">
+        workDownLoadNumber = #{workdownloadnumber,jdbcType=INTEGER},
+      </if>
+      <if test="worksharelink != null">
+        workShareLink = #{worksharelink,jdbcType=VARCHAR},
+      </if>
+      <if test="workaboutwork != null">
+        workAboutWork = #{workaboutwork,jdbcType=VARCHAR},
+      </if>
+      <if test="workmodifyuserid != null">
+        workModifyUserId = #{workmodifyuserid,jdbcType=BIGINT},
+      </if>
+      <if test="workisshow != null">
+        workIsShow = #{workisshow,jdbcType=TINYINT},
+      </if>
+      <if test="workhomerecommendation != null">
+        workHomeRecommendation = #{workhomerecommendation,jdbcType=TINYINT},
+      </if>
+      <if test="worksharelinklist != null">
+        workShareLinkList = #{worksharelinklist,jdbcType=VARCHAR},
+      </if>
+      <if test="worktwofilepath != null">
+        workTwoFilePath = #{worktwofilepath,jdbcType=VARCHAR},
+      </if>
+      <if test="workdianzanstatus != null">
+        workDianZanStatus = #{workdianzanstatus,jdbcType=TINYINT},
+      </if>
+      <if test="workaboutcollectionid != null">
+        workAboutCollectionId = #{workaboutcollectionid,jdbcType=BIGINT},
+      </if>
+      <if test="dianzanid != null">
+        dianzanId = #{dianzanid,jdbcType=BIGINT},
+      </if>
+      <if test="workshoucangnumber != null">
+        workShouCangNumber = #{workshoucangnumber,jdbcType=INTEGER},
+      </if>
+      <if test="mode != null">
+        mode = #{mode,jdbcType=INTEGER},
+      </if>
+      <if test="workdetail != null">
+        workDetail = #{workdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where workId = #{workid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ums.bean.Work">
+    update tw_work
+    set workTypeAboutId = #{worktypeaboutid,jdbcType=BIGINT},
+      workName = #{workname,jdbcType=VARCHAR},
+      workFilePath = #{workfilepath,jdbcType=VARCHAR},
+      workPicture1 = #{workpicture1,jdbcType=VARCHAR},
+      workPicture2 = #{workpicture2,jdbcType=VARCHAR},
+      workPicture3 = #{workpicture3,jdbcType=VARCHAR},
+      workAuthor = #{workauthor,jdbcType=VARCHAR},
+      workCreateUserId = #{workcreateuserid,jdbcType=BIGINT},
+      workCreateTime = #{workcreatetime,jdbcType=VARCHAR},
+      workModifyTime = #{workmodifytime,jdbcType=VARCHAR},
+      workBrowseNumber = #{workbrowsenumber,jdbcType=INTEGER},
+      workCommentsNumber = #{workcommentsnumber,jdbcType=INTEGER},
+      workShareNumber = #{worksharenumber,jdbcType=INTEGER},
+      workThumpNumber = #{workthumpnumber,jdbcType=INTEGER},
+      workDownLoadNumber = #{workdownloadnumber,jdbcType=INTEGER},
+      workShareLink = #{worksharelink,jdbcType=VARCHAR},
+      workAboutWork = #{workaboutwork,jdbcType=VARCHAR},
+      workModifyUserId = #{workmodifyuserid,jdbcType=BIGINT},
+      workIsShow = #{workisshow,jdbcType=TINYINT},
+      workHomeRecommendation = #{workhomerecommendation,jdbcType=TINYINT},
+      workShareLinkList = #{worksharelinklist,jdbcType=VARCHAR},
+      workTwoFilePath = #{worktwofilepath,jdbcType=VARCHAR},
+      workDianZanStatus = #{workdianzanstatus,jdbcType=TINYINT},
+      workAboutCollectionId = #{workaboutcollectionid,jdbcType=BIGINT},
+      dianzanId = #{dianzanid,jdbcType=BIGINT},
+      workShouCangNumber = #{workshoucangnumber,jdbcType=INTEGER},
+      mode = #{mode,jdbcType=INTEGER},
+      workDetail = #{workdetail,jdbcType=LONGVARCHAR}
+    where workId = #{workid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.Work">
+    update tw_work
+    set workTypeAboutId = #{worktypeaboutid,jdbcType=BIGINT},
+      workName = #{workname,jdbcType=VARCHAR},
+      workFilePath = #{workfilepath,jdbcType=VARCHAR},
+      workPicture1 = #{workpicture1,jdbcType=VARCHAR},
+      workPicture2 = #{workpicture2,jdbcType=VARCHAR},
+      workPicture3 = #{workpicture3,jdbcType=VARCHAR},
+      workAuthor = #{workauthor,jdbcType=VARCHAR},
+      workCreateUserId = #{workcreateuserid,jdbcType=BIGINT},
+      workCreateTime = #{workcreatetime,jdbcType=VARCHAR},
+      workModifyTime = #{workmodifytime,jdbcType=VARCHAR},
+      workBrowseNumber = #{workbrowsenumber,jdbcType=INTEGER},
+      workCommentsNumber = #{workcommentsnumber,jdbcType=INTEGER},
+      workShareNumber = #{worksharenumber,jdbcType=INTEGER},
+      workThumpNumber = #{workthumpnumber,jdbcType=INTEGER},
+      workDownLoadNumber = #{workdownloadnumber,jdbcType=INTEGER},
+      workShareLink = #{worksharelink,jdbcType=VARCHAR},
+      workAboutWork = #{workaboutwork,jdbcType=VARCHAR},
+      workModifyUserId = #{workmodifyuserid,jdbcType=BIGINT},
+      workIsShow = #{workisshow,jdbcType=TINYINT},
+      workHomeRecommendation = #{workhomerecommendation,jdbcType=TINYINT},
+      workShareLinkList = #{worksharelinklist,jdbcType=VARCHAR},
+      workTwoFilePath = #{worktwofilepath,jdbcType=VARCHAR},
+      workDianZanStatus = #{workdianzanstatus,jdbcType=TINYINT},
+      workAboutCollectionId = #{workaboutcollectionid,jdbcType=BIGINT},
+      dianzanId = #{dianzanid,jdbcType=BIGINT},
+      workShouCangNumber = #{workshoucangnumber,jdbcType=INTEGER},
+      mode = #{mode,jdbcType=INTEGER}
+    where workId = #{workid,jdbcType=BIGINT}
+  </update>
+</mapper>

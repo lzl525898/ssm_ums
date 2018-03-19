@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.RoomMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.Room">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="room_name" jdbcType="VARCHAR" property="roomName" />
+    <result column="teacher_id" jdbcType="BIGINT" property="teacherId" />
+    <result column="course_id" jdbcType="BIGINT" property="courseId" />
+    <result column="room_num" jdbcType="INTEGER" property="roomNum" />
+    <result column="stu_num" jdbcType="INTEGER" property="stuNum" />
+    <result column="share_code" jdbcType="VARCHAR" property="shareCode" />
+    <result column="period" jdbcType="INTEGER" property="period" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="book" jdbcType="INTEGER" property="book" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, room_name, teacher_id, course_id, room_num, stu_num, share_code, period, grade, 
+    type, book, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.ums.bean.RoomExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from room
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from room
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.RoomExample">
+    delete from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.Room">
+    insert into room (id, room_name, teacher_id, 
+      course_id, room_num, stu_num, 
+      share_code, period, grade, 
+      type, book, create_time
+      )
+    values (#{id,jdbcType=BIGINT}, #{roomName,jdbcType=VARCHAR}, #{teacherId,jdbcType=BIGINT}, 
+      #{courseId,jdbcType=BIGINT}, #{roomNum,jdbcType=INTEGER}, #{stuNum,jdbcType=INTEGER}, 
+      #{shareCode,jdbcType=VARCHAR}, #{period,jdbcType=INTEGER}, #{grade,jdbcType=INTEGER}, 
+      #{type,jdbcType=INTEGER}, #{book,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.Room">
+    insert into room
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="roomName != null">
+        room_name,
+      </if>
+      <if test="teacherId != null">
+        teacher_id,
+      </if>
+      <if test="courseId != null">
+        course_id,
+      </if>
+      <if test="roomNum != null">
+        room_num,
+      </if>
+      <if test="stuNum != null">
+        stu_num,
+      </if>
+      <if test="shareCode != null">
+        share_code,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="book != null">
+        book,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="roomName != null">
+        #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null">
+        #{teacherId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="roomNum != null">
+        #{roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="stuNum != null">
+        #{stuNum,jdbcType=INTEGER},
+      </if>
+      <if test="shareCode != null">
+        #{shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="book != null">
+        #{book,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.RoomExample" resultType="java.lang.Long">
+    select count(*) from room
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update room
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomName != null">
+        room_name = #{record.roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.teacherId != null">
+        teacher_id = #{record.teacherId,jdbcType=BIGINT},
+      </if>
+      <if test="record.courseId != null">
+        course_id = #{record.courseId,jdbcType=BIGINT},
+      </if>
+      <if test="record.roomNum != null">
+        room_num = #{record.roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.stuNum != null">
+        stu_num = #{record.stuNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.shareCode != null">
+        share_code = #{record.shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.period != null">
+        period = #{record.period,jdbcType=INTEGER},
+      </if>
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.book != null">
+        book = #{record.book,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update room
+    set id = #{record.id,jdbcType=BIGINT},
+      room_name = #{record.roomName,jdbcType=VARCHAR},
+      teacher_id = #{record.teacherId,jdbcType=BIGINT},
+      course_id = #{record.courseId,jdbcType=BIGINT},
+      room_num = #{record.roomNum,jdbcType=INTEGER},
+      stu_num = #{record.stuNum,jdbcType=INTEGER},
+      share_code = #{record.shareCode,jdbcType=VARCHAR},
+      period = #{record.period,jdbcType=INTEGER},
+      grade = #{record.grade,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=INTEGER},
+      book = #{record.book,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Room">
+    update room
+    <set>
+      <if test="roomName != null">
+        room_name = #{roomName,jdbcType=VARCHAR},
+      </if>
+      <if test="teacherId != null">
+        teacher_id = #{teacherId,jdbcType=BIGINT},
+      </if>
+      <if test="courseId != null">
+        course_id = #{courseId,jdbcType=BIGINT},
+      </if>
+      <if test="roomNum != null">
+        room_num = #{roomNum,jdbcType=INTEGER},
+      </if>
+      <if test="stuNum != null">
+        stu_num = #{stuNum,jdbcType=INTEGER},
+      </if>
+      <if test="shareCode != null">
+        share_code = #{shareCode,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        period = #{period,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="book != null">
+        book = #{book,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.Room">
+    update room
+    set room_name = #{roomName,jdbcType=VARCHAR},
+      teacher_id = #{teacherId,jdbcType=BIGINT},
+      course_id = #{courseId,jdbcType=BIGINT},
+      room_num = #{roomNum,jdbcType=INTEGER},
+      stu_num = #{stuNum,jdbcType=INTEGER},
+      share_code = #{shareCode,jdbcType=VARCHAR},
+      period = #{period,jdbcType=INTEGER},
+      grade = #{grade,jdbcType=INTEGER},
+      type = #{type,jdbcType=INTEGER},
+      book = #{book,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -52,7 +52,7 @@
 		<property name="dataSource" ref="pooledDataSource"></property>
 	</bean>
 	<!--开启基于注解的事务，使用xml配置形式的事务（必要主要的都是使用配置式）  -->
-	<aop:config>
+	<aop:config proxy-target-class="true">
 		<!-- 切入点表达式 -->
 		<aop:pointcut expression="execution(* com.ums.service..*(..))" id="txPoint"/>
 		<!-- 配置事务增强 -->
@@ -74,12 +74,11 @@
         <property name="authenticator" ref="authenticator"></property>
         <property name="realms">
     		<list>
-    			<ref bean="md5Realm"/>
-    			<ref bean="sha1Realm"/>
+    			<ref bean="sha256Realm"/>
     		</list>
     	</property>
     	<!-- 记住我 时间 秒为单位 -->
-    	<property name="rememberMeManager.cookie.maxAge" value="15"></property>
+    	<property name="rememberMeManager.cookie.maxAge" value="3600"></property>
     </bean>
    	<!-- 2. 配置 CacheManager. 
    		 2.1 需要加入 ehcache 的 jar 包及配置文件. -->
@@ -97,11 +96,11 @@
     	3. 配置 Realm 
     	3.1 直接配置实现了 Realm 接口的 bean
     -->     
-    <bean id="md5Realm" class="com.ums.utils.ShiroRealm">
+    <bean id="sha256Realm" class="com.ums.utils.ShiroRealm">
     	<property name="credentialsMatcher">
     		<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
-    			<property name="hashAlgorithmName" value="MD5"></property>
-    			<property name="hashIterations" value="10"></property>
+    			<property name="hashAlgorithmName" value="sha-256"></property>
+    			<property name="hashIterations" value="1"></property>
     		</bean>
     	</property>
 	</bean>
@@ -110,7 +109,7 @@
     	<property name="credentialsMatcher">
     		<bean class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
     			<property name="hashAlgorithmName" value="SHA1"></property>
-    			<property name="hashIterations" value="10"></property>
+    			<property name="hashIterations" value="1"></property>
     		</bean>
     	</property>
 	</bean>
@@ -123,7 +122,10 @@
     5. 启用 IOC 容器中使用 shiro 的注解. 但必须在配置了 LifecycleBeanPostProcessor 之后才可以使用. 
     -->     
     <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-          depends-on="lifecycleBeanPostProcessor"/>
+          depends-on="lifecycleBeanPostProcessor">
+        <!-- 解决@Autowired 失效 -->
+    	<property name="proxyTargetClass" value="true"></property>
+    </bean>
     <bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
         <property name="securityManager" ref="securityManager"/>
     </bean>
@@ -134,6 +136,11 @@
     -->     
     <bean id="umsFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
+        <property name="filters">
+        	<map>
+        		<entry key="logout" value-ref="logoutFilter"></entry>
+        	</map>
+        </property>
         <property name="loginUrl" value="/login"/>
         <property name="successUrl" value="/manage"/>
         <property name="unauthorizedUrl" value="/unauthorized.jsp"/>
@@ -144,6 +151,9 @@
     
     <!-- 整合了rememberMe功能的filter -->  
 	<bean id="rememberAuthFilter" class="com.ums.utils.RememberAuthenticationFilter" ></bean>
-	
+	<!--自定义LogoutFilter,退出-->  
+	<bean id="logoutFilter" class="com.ums.handler.LogoutHandler">  
+      <property name="redirectUrl" value="/login"/>  
+  </bean>  
 	<!-- Spring配置文件的核心点（数据源、与mybatis的整合，事务控制） -->
 </beans>

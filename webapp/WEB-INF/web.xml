@@ -21,6 +21,10 @@
     <servlet-name>dispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
+  <!-- session过期时间 分为单位 -->
+  <session-config>
+  	<session-timeout>60</session-timeout>
+  </session-config>
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

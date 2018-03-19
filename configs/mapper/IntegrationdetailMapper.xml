@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ums.dao.IntegrationdetailMapper">
+  <resultMap id="BaseResultMap" type="com.ums.bean.Integrationdetail">
+    <id column="detailId" jdbcType="BIGINT" property="detailid" />
+    <result column="duserId" jdbcType="BIGINT" property="duserid" />
+    <result column="integrationNum" jdbcType="INTEGER" property="integrationnum" />
+    <result column="integrationType" jdbcType="VARCHAR" property="integrationtype" />
+    <result column="dcreateTime" jdbcType="VARCHAR" property="dcreatetime" />
+    <result column="dcreateMan" jdbcType="BIGINT" property="dcreateman" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ums.bean.Integrationdetail">
+    <result column="dxdetail" jdbcType="LONGVARCHAR" property="dxdetail" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    detailId, duserId, integrationNum, integrationType, dcreateTime, dcreateMan
+  </sql>
+  <sql id="Blob_Column_List">
+    dxdetail
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ums.bean.IntegrationdetailExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from integrationdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.ums.bean.IntegrationdetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from integrationdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from integrationdetail
+    where detailId = #{detailid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from integrationdetail
+    where detailId = #{detailid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.ums.bean.IntegrationdetailExample">
+    delete from integrationdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.ums.bean.Integrationdetail">
+    insert into integrationdetail (detailId, duserId, integrationNum, 
+      integrationType, dcreateTime, dcreateMan, 
+      dxdetail)
+    values (#{detailid,jdbcType=BIGINT}, #{duserid,jdbcType=BIGINT}, #{integrationnum,jdbcType=INTEGER}, 
+      #{integrationtype,jdbcType=VARCHAR}, #{dcreatetime,jdbcType=VARCHAR}, #{dcreateman,jdbcType=BIGINT}, 
+      #{dxdetail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.ums.bean.Integrationdetail">
+    insert into integrationdetail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="detailid != null">
+        detailId,
+      </if>
+      <if test="duserid != null">
+        duserId,
+      </if>
+      <if test="integrationnum != null">
+        integrationNum,
+      </if>
+      <if test="integrationtype != null">
+        integrationType,
+      </if>
+      <if test="dcreatetime != null">
+        dcreateTime,
+      </if>
+      <if test="dcreateman != null">
+        dcreateMan,
+      </if>
+      <if test="dxdetail != null">
+        dxdetail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="detailid != null">
+        #{detailid,jdbcType=BIGINT},
+      </if>
+      <if test="duserid != null">
+        #{duserid,jdbcType=BIGINT},
+      </if>
+      <if test="integrationnum != null">
+        #{integrationnum,jdbcType=INTEGER},
+      </if>
+      <if test="integrationtype != null">
+        #{integrationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatetime != null">
+        #{dcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreateman != null">
+        #{dcreateman,jdbcType=BIGINT},
+      </if>
+      <if test="dxdetail != null">
+        #{dxdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.ums.bean.IntegrationdetailExample" resultType="java.lang.Long">
+    select count(*) from integrationdetail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update integrationdetail
+    <set>
+      <if test="record.detailid != null">
+        detailId = #{record.detailid,jdbcType=BIGINT},
+      </if>
+      <if test="record.duserid != null">
+        duserId = #{record.duserid,jdbcType=BIGINT},
+      </if>
+      <if test="record.integrationnum != null">
+        integrationNum = #{record.integrationnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.integrationtype != null">
+        integrationType = #{record.integrationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dcreatetime != null">
+        dcreateTime = #{record.dcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dcreateman != null">
+        dcreateMan = #{record.dcreateman,jdbcType=BIGINT},
+      </if>
+      <if test="record.dxdetail != null">
+        dxdetail = #{record.dxdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update integrationdetail
+    set detailId = #{record.detailid,jdbcType=BIGINT},
+      duserId = #{record.duserid,jdbcType=BIGINT},
+      integrationNum = #{record.integrationnum,jdbcType=INTEGER},
+      integrationType = #{record.integrationtype,jdbcType=VARCHAR},
+      dcreateTime = #{record.dcreatetime,jdbcType=VARCHAR},
+      dcreateMan = #{record.dcreateman,jdbcType=BIGINT},
+      dxdetail = #{record.dxdetail,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update integrationdetail
+    set detailId = #{record.detailid,jdbcType=BIGINT},
+      duserId = #{record.duserid,jdbcType=BIGINT},
+      integrationNum = #{record.integrationnum,jdbcType=INTEGER},
+      integrationType = #{record.integrationtype,jdbcType=VARCHAR},
+      dcreateTime = #{record.dcreatetime,jdbcType=VARCHAR},
+      dcreateMan = #{record.dcreateman,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Integrationdetail">
+    update integrationdetail
+    <set>
+      <if test="duserid != null">
+        duserId = #{duserid,jdbcType=BIGINT},
+      </if>
+      <if test="integrationnum != null">
+        integrationNum = #{integrationnum,jdbcType=INTEGER},
+      </if>
+      <if test="integrationtype != null">
+        integrationType = #{integrationtype,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreatetime != null">
+        dcreateTime = #{dcreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="dcreateman != null">
+        dcreateMan = #{dcreateman,jdbcType=BIGINT},
+      </if>
+      <if test="dxdetail != null">
+        dxdetail = #{dxdetail,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where detailId = #{detailid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ums.bean.Integrationdetail">
+    update integrationdetail
+    set duserId = #{duserid,jdbcType=BIGINT},
+      integrationNum = #{integrationnum,jdbcType=INTEGER},
+      integrationType = #{integrationtype,jdbcType=VARCHAR},
+      dcreateTime = #{dcreatetime,jdbcType=VARCHAR},
+      dcreateMan = #{dcreateman,jdbcType=BIGINT},
+      dxdetail = #{dxdetail,jdbcType=LONGVARCHAR}
+    where detailId = #{detailid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.ums.bean.Integrationdetail">
+    update integrationdetail
+    set duserId = #{duserid,jdbcType=BIGINT},
+      integrationNum = #{integrationnum,jdbcType=INTEGER},
+      integrationType = #{integrationtype,jdbcType=VARCHAR},
+      dcreateTime = #{dcreatetime,jdbcType=VARCHAR},
+      dcreateMan = #{dcreateman,jdbcType=BIGINT}
+    where detailId = #{detailid,jdbcType=BIGINT}
+  </update>
+</mapper>

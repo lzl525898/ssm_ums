@@ -2,10 +2,45 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ums.dao.UserMapper">
   <resultMap id="BaseResultMap" type="com.ums.bean.User">
-    <id column="user_id" jdbcType="BIGINT" property="userId" />
-    <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
-    <result column="user_nick" jdbcType="VARCHAR" property="userNick" />
-    <result column="role_id" jdbcType="TINYINT" property="roleId" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parentid" jdbcType="BIGINT" property="parentid" />
+    <result column="openId" jdbcType="VARCHAR" property="openid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="truename" jdbcType="VARCHAR" property="truename" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="qq" jdbcType="VARCHAR" property="qq" />
+    <result column="homePhone" jdbcType="VARCHAR" property="homephone" />
+    <result column="telphone" jdbcType="VARCHAR" property="telphone" />
+    <result column="userCardId" jdbcType="VARCHAR" property="usercardid" />
+    <result column="userStatus" jdbcType="INTEGER" property="userstatus" />
+    <result column="state" jdbcType="VARCHAR" property="state" />
+    <result column="lastLoginTime" jdbcType="VARCHAR" property="lastlogintime" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="isDelete" jdbcType="INTEGER" property="isdelete" />
+    <result column="authorityId" jdbcType="BIGINT" property="authorityid" />
+    <result column="userRoleId" jdbcType="BIGINT" property="userroleid" />
+    <result column="headImg" jdbcType="VARCHAR" property="headimg" />
+    <result column="money" jdbcType="DOUBLE" property="money" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="isactive" jdbcType="TINYINT" property="isactive" />
+    <result column="validatecode" jdbcType="VARCHAR" property="validatecode" />
+    <result column="outdate" jdbcType="VARCHAR" property="outdate" />
+    <result column="isBinding" jdbcType="TINYINT" property="isbinding" />
+    <result column="phoneverificationcode" jdbcType="VARCHAR" property="phoneverificationcode" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="grade" jdbcType="VARCHAR" property="grade" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="usernickname" jdbcType="VARCHAR" property="usernickname" />
+    <result column="lastLoginTimeshort" jdbcType="VARCHAR" property="lastlogintimeshort" />
+    <result column="alwaysLogin" jdbcType="INTEGER" property="alwayslogin" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.ums.bean.User">
+    <result column="personIntr" jdbcType="LONGVARCHAR" property="personintr" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,15 +101,24 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, user_account, user_nick, role_id
+    id, parentid, openId, username, password, truename, sex, age, address, email, qq, 
+    homePhone, telphone, userCardId, userStatus, state, lastLoginTime, create_time, isDelete, 
+    authorityId, userRoleId, headImg, money, integral, isactive, validatecode, outdate, 
+    isBinding, phoneverificationcode, city, birthday, grade, school, usernickname, lastLoginTimeshort, 
+    alwaysLogin
   </sql>
-  <select id="selectByExample" parameterType="com.ums.bean.UserExample" resultMap="BaseResultMap">
+  <sql id="Blob_Column_List">
+    personIntr
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.ums.bean.UserExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_user
+    ,
+    <include refid="Blob_Column_List" />
+    from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -82,115 +126,696 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.ums.bean.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
     select 
     <include refid="Base_Column_List" />
-    from ums_user
-    where user_id = #{userId,jdbcType=BIGINT}
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from ums_user
-    where user_id = #{userId,jdbcType=BIGINT}
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.ums.bean.UserExample">
-    delete from ums_user
+    delete from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.ums.bean.User">
-    insert into ums_user (user_id, user_account, user_nick, 
-      role_id)
-    values (#{userId,jdbcType=BIGINT}, #{userAccount,jdbcType=VARCHAR}, #{userNick,jdbcType=VARCHAR}, 
-      #{roleId,jdbcType=TINYINT})
+    insert into user (id, parentid, openId, 
+      username, password, truename, 
+      sex, age, address, 
+      email, qq, homePhone, 
+      telphone, userCardId, userStatus, 
+      state, lastLoginTime, create_time, 
+      isDelete, authorityId, userRoleId, 
+      headImg, money, integral, 
+      isactive, validatecode, outdate, 
+      isBinding, phoneverificationcode, city, 
+      birthday, grade, school, 
+      usernickname, lastLoginTimeshort, alwaysLogin, 
+      personIntr)
+    values (#{id,jdbcType=BIGINT}, #{parentid,jdbcType=BIGINT}, #{openid,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{truename,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{age,jdbcType=INTEGER}, #{address,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{homephone,jdbcType=VARCHAR}, 
+      #{telphone,jdbcType=VARCHAR}, #{usercardid,jdbcType=VARCHAR}, #{userstatus,jdbcType=INTEGER}, 
+      #{state,jdbcType=VARCHAR}, #{lastlogintime,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, 
+      #{isdelete,jdbcType=INTEGER}, #{authorityid,jdbcType=BIGINT}, #{userroleid,jdbcType=BIGINT}, 
+      #{headimg,jdbcType=VARCHAR}, #{money,jdbcType=DOUBLE}, #{integral,jdbcType=INTEGER}, 
+      #{isactive,jdbcType=TINYINT}, #{validatecode,jdbcType=VARCHAR}, #{outdate,jdbcType=VARCHAR}, 
+      #{isbinding,jdbcType=TINYINT}, #{phoneverificationcode,jdbcType=VARCHAR}, #{city,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{grade,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, 
+      #{usernickname,jdbcType=VARCHAR}, #{lastlogintimeshort,jdbcType=VARCHAR}, #{alwayslogin,jdbcType=INTEGER}, 
+      #{personintr,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ums.bean.User">
-    insert into ums_user
+    insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        user_id,
+      <if test="id != null">
+        id,
       </if>
-      <if test="userAccount != null">
-        user_account,
+      <if test="parentid != null">
+        parentid,
       </if>
-      <if test="userNick != null">
-        user_nick,
+      <if test="openid != null">
+        openId,
       </if>
-      <if test="roleId != null">
-        role_id,
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="truename != null">
+        truename,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="homephone != null">
+        homePhone,
+      </if>
+      <if test="telphone != null">
+        telphone,
+      </if>
+      <if test="usercardid != null">
+        userCardId,
+      </if>
+      <if test="userstatus != null">
+        userStatus,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="lastlogintime != null">
+        lastLoginTime,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isdelete != null">
+        isDelete,
+      </if>
+      <if test="authorityid != null">
+        authorityId,
+      </if>
+      <if test="userroleid != null">
+        userRoleId,
+      </if>
+      <if test="headimg != null">
+        headImg,
+      </if>
+      <if test="money != null">
+        money,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="isactive != null">
+        isactive,
+      </if>
+      <if test="validatecode != null">
+        validatecode,
+      </if>
+      <if test="outdate != null">
+        outdate,
+      </if>
+      <if test="isbinding != null">
+        isBinding,
+      </if>
+      <if test="phoneverificationcode != null">
+        phoneverificationcode,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="usernickname != null">
+        usernickname,
+      </if>
+      <if test="lastlogintimeshort != null">
+        lastLoginTimeshort,
+      </if>
+      <if test="alwayslogin != null">
+        alwaysLogin,
+      </if>
+      <if test="personintr != null">
+        personIntr,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="userId != null">
-        #{userId,jdbcType=BIGINT},
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
       </if>
-      <if test="userAccount != null">
-        #{userAccount,jdbcType=VARCHAR},
+      <if test="parentid != null">
+        #{parentid,jdbcType=BIGINT},
       </if>
-      <if test="userNick != null">
-        #{userNick,jdbcType=VARCHAR},
+      <if test="openid != null">
+        #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=TINYINT},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="truename != null">
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="homephone != null">
+        #{homephone,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null">
+        #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="usercardid != null">
+        #{usercardid,jdbcType=VARCHAR},
+      </if>
+      <if test="userstatus != null">
+        #{userstatus,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        #{lastlogintime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null">
+        #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="authorityid != null">
+        #{authorityid,jdbcType=BIGINT},
+      </if>
+      <if test="userroleid != null">
+        #{userroleid,jdbcType=BIGINT},
+      </if>
+      <if test="headimg != null">
+        #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="isactive != null">
+        #{isactive,jdbcType=TINYINT},
+      </if>
+      <if test="validatecode != null">
+        #{validatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="outdate != null">
+        #{outdate,jdbcType=VARCHAR},
+      </if>
+      <if test="isbinding != null">
+        #{isbinding,jdbcType=TINYINT},
+      </if>
+      <if test="phoneverificationcode != null">
+        #{phoneverificationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="usernickname != null">
+        #{usernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintimeshort != null">
+        #{lastlogintimeshort,jdbcType=VARCHAR},
+      </if>
+      <if test="alwayslogin != null">
+        #{alwayslogin,jdbcType=INTEGER},
+      </if>
+      <if test="personintr != null">
+        #{personintr,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ums.bean.UserExample" resultType="java.lang.Long">
-    select count(*) from ums_user
+    select count(*) from user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_user
+    update user
     <set>
-      <if test="record.userId != null">
-        user_id = #{record.userId,jdbcType=BIGINT},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.userAccount != null">
-        user_account = #{record.userAccount,jdbcType=VARCHAR},
+      <if test="record.parentid != null">
+        parentid = #{record.parentid,jdbcType=BIGINT},
       </if>
-      <if test="record.userNick != null">
-        user_nick = #{record.userNick,jdbcType=VARCHAR},
+      <if test="record.openid != null">
+        openId = #{record.openid,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=TINYINT},
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=CHAR},
+      </if>
+      <if test="record.truename != null">
+        truename = #{record.truename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.age != null">
+        age = #{record.age,jdbcType=INTEGER},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.homephone != null">
+        homePhone = #{record.homephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telphone != null">
+        telphone = #{record.telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usercardid != null">
+        userCardId = #{record.usercardid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userstatus != null">
+        userStatus = #{record.userstatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null">
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastlogintime != null">
+        lastLoginTime = #{record.lastlogintime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdelete != null">
+        isDelete = #{record.isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="record.authorityid != null">
+        authorityId = #{record.authorityid,jdbcType=BIGINT},
+      </if>
+      <if test="record.userroleid != null">
+        userRoleId = #{record.userroleid,jdbcType=BIGINT},
+      </if>
+      <if test="record.headimg != null">
+        headImg = #{record.headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.money != null">
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.integral != null">
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.isactive != null">
+        isactive = #{record.isactive,jdbcType=TINYINT},
+      </if>
+      <if test="record.validatecode != null">
+        validatecode = #{record.validatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outdate != null">
+        outdate = #{record.outdate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isbinding != null">
+        isBinding = #{record.isbinding,jdbcType=TINYINT},
+      </if>
+      <if test="record.phoneverificationcode != null">
+        phoneverificationcode = #{record.phoneverificationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.grade != null">
+        grade = #{record.grade,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usernickname != null">
+        usernickname = #{record.usernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lastlogintimeshort != null">
+        lastLoginTimeshort = #{record.lastlogintimeshort,jdbcType=VARCHAR},
+      </if>
+      <if test="record.alwayslogin != null">
+        alwaysLogin = #{record.alwayslogin,jdbcType=INTEGER},
+      </if>
+      <if test="record.personintr != null">
+        personIntr = #{record.personintr,jdbcType=LONGVARCHAR},
       </if>
     </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update user
+    set id = #{record.id,jdbcType=BIGINT},
+      parentid = #{record.parentid,jdbcType=BIGINT},
+      openId = #{record.openid,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=CHAR},
+      truename = #{record.truename,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      age = #{record.age,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      homePhone = #{record.homephone,jdbcType=VARCHAR},
+      telphone = #{record.telphone,jdbcType=VARCHAR},
+      userCardId = #{record.usercardid,jdbcType=VARCHAR},
+      userStatus = #{record.userstatus,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR},
+      lastLoginTime = #{record.lastlogintime,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      isDelete = #{record.isdelete,jdbcType=INTEGER},
+      authorityId = #{record.authorityid,jdbcType=BIGINT},
+      userRoleId = #{record.userroleid,jdbcType=BIGINT},
+      headImg = #{record.headimg,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      integral = #{record.integral,jdbcType=INTEGER},
+      isactive = #{record.isactive,jdbcType=TINYINT},
+      validatecode = #{record.validatecode,jdbcType=VARCHAR},
+      outdate = #{record.outdate,jdbcType=VARCHAR},
+      isBinding = #{record.isbinding,jdbcType=TINYINT},
+      phoneverificationcode = #{record.phoneverificationcode,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      usernickname = #{record.usernickname,jdbcType=VARCHAR},
+      lastLoginTimeshort = #{record.lastlogintimeshort,jdbcType=VARCHAR},
+      alwaysLogin = #{record.alwayslogin,jdbcType=INTEGER},
+      personIntr = #{record.personintr,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_user
-    set user_id = #{record.userId,jdbcType=BIGINT},
-      user_account = #{record.userAccount,jdbcType=VARCHAR},
-      user_nick = #{record.userNick,jdbcType=VARCHAR},
-      role_id = #{record.roleId,jdbcType=TINYINT}
+    update user
+    set id = #{record.id,jdbcType=BIGINT},
+      parentid = #{record.parentid,jdbcType=BIGINT},
+      openId = #{record.openid,jdbcType=VARCHAR},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=CHAR},
+      truename = #{record.truename,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      age = #{record.age,jdbcType=INTEGER},
+      address = #{record.address,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      homePhone = #{record.homephone,jdbcType=VARCHAR},
+      telphone = #{record.telphone,jdbcType=VARCHAR},
+      userCardId = #{record.usercardid,jdbcType=VARCHAR},
+      userStatus = #{record.userstatus,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR},
+      lastLoginTime = #{record.lastlogintime,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      isDelete = #{record.isdelete,jdbcType=INTEGER},
+      authorityId = #{record.authorityid,jdbcType=BIGINT},
+      userRoleId = #{record.userroleid,jdbcType=BIGINT},
+      headImg = #{record.headimg,jdbcType=VARCHAR},
+      money = #{record.money,jdbcType=DOUBLE},
+      integral = #{record.integral,jdbcType=INTEGER},
+      isactive = #{record.isactive,jdbcType=TINYINT},
+      validatecode = #{record.validatecode,jdbcType=VARCHAR},
+      outdate = #{record.outdate,jdbcType=VARCHAR},
+      isBinding = #{record.isbinding,jdbcType=TINYINT},
+      phoneverificationcode = #{record.phoneverificationcode,jdbcType=VARCHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      grade = #{record.grade,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      usernickname = #{record.usernickname,jdbcType=VARCHAR},
+      lastLoginTimeshort = #{record.lastlogintimeshort,jdbcType=VARCHAR},
+      alwaysLogin = #{record.alwayslogin,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.User">
-    update ums_user
+    update user
     <set>
-      <if test="userAccount != null">
-        user_account = #{userAccount,jdbcType=VARCHAR},
+      <if test="parentid != null">
+        parentid = #{parentid,jdbcType=BIGINT},
       </if>
-      <if test="userNick != null">
-        user_nick = #{userNick,jdbcType=VARCHAR},
+      <if test="openid != null">
+        openId = #{openid,jdbcType=VARCHAR},
       </if>
-      <if test="roleId != null">
-        role_id = #{roleId,jdbcType=TINYINT},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="truename != null">
+        truename = #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="homephone != null">
+        homePhone = #{homephone,jdbcType=VARCHAR},
+      </if>
+      <if test="telphone != null">
+        telphone = #{telphone,jdbcType=VARCHAR},
+      </if>
+      <if test="usercardid != null">
+        userCardId = #{usercardid,jdbcType=VARCHAR},
+      </if>
+      <if test="userstatus != null">
+        userStatus = #{userstatus,jdbcType=INTEGER},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintime != null">
+        lastLoginTime = #{lastlogintime,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isdelete != null">
+        isDelete = #{isdelete,jdbcType=INTEGER},
+      </if>
+      <if test="authorityid != null">
+        authorityId = #{authorityid,jdbcType=BIGINT},
+      </if>
+      <if test="userroleid != null">
+        userRoleId = #{userroleid,jdbcType=BIGINT},
+      </if>
+      <if test="headimg != null">
+        headImg = #{headimg,jdbcType=VARCHAR},
+      </if>
+      <if test="money != null">
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="isactive != null">
+        isactive = #{isactive,jdbcType=TINYINT},
+      </if>
+      <if test="validatecode != null">
+        validatecode = #{validatecode,jdbcType=VARCHAR},
+      </if>
+      <if test="outdate != null">
+        outdate = #{outdate,jdbcType=VARCHAR},
+      </if>
+      <if test="isbinding != null">
+        isBinding = #{isbinding,jdbcType=TINYINT},
+      </if>
+      <if test="phoneverificationcode != null">
+        phoneverificationcode = #{phoneverificationcode,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="usernickname != null">
+        usernickname = #{usernickname,jdbcType=VARCHAR},
+      </if>
+      <if test="lastlogintimeshort != null">
+        lastLoginTimeshort = #{lastlogintimeshort,jdbcType=VARCHAR},
+      </if>
+      <if test="alwayslogin != null">
+        alwaysLogin = #{alwayslogin,jdbcType=INTEGER},
+      </if>
+      <if test="personintr != null">
+        personIntr = #{personintr,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where user_id = #{userId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.ums.bean.User">
+    update user
+    set parentid = #{parentid,jdbcType=BIGINT},
+      openId = #{openid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      truename = #{truename,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      homePhone = #{homephone,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      userCardId = #{usercardid,jdbcType=VARCHAR},
+      userStatus = #{userstatus,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      lastLoginTime = #{lastlogintime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      isDelete = #{isdelete,jdbcType=INTEGER},
+      authorityId = #{authorityid,jdbcType=BIGINT},
+      userRoleId = #{userroleid,jdbcType=BIGINT},
+      headImg = #{headimg,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      integral = #{integral,jdbcType=INTEGER},
+      isactive = #{isactive,jdbcType=TINYINT},
+      validatecode = #{validatecode,jdbcType=VARCHAR},
+      outdate = #{outdate,jdbcType=VARCHAR},
+      isBinding = #{isbinding,jdbcType=TINYINT},
+      phoneverificationcode = #{phoneverificationcode,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      usernickname = #{usernickname,jdbcType=VARCHAR},
+      lastLoginTimeshort = #{lastlogintimeshort,jdbcType=VARCHAR},
+      alwaysLogin = #{alwayslogin,jdbcType=INTEGER},
+      personIntr = #{personintr,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ums.bean.User">
-    update ums_user
-    set user_account = #{userAccount,jdbcType=VARCHAR},
-      user_nick = #{userNick,jdbcType=VARCHAR},
-      role_id = #{roleId,jdbcType=TINYINT}
-    where user_id = #{userId,jdbcType=BIGINT}
+    update user
+    set parentid = #{parentid,jdbcType=BIGINT},
+      openId = #{openid,jdbcType=VARCHAR},
+      username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      truename = #{truename,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      age = #{age,jdbcType=INTEGER},
+      address = #{address,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      homePhone = #{homephone,jdbcType=VARCHAR},
+      telphone = #{telphone,jdbcType=VARCHAR},
+      userCardId = #{usercardid,jdbcType=VARCHAR},
+      userStatus = #{userstatus,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      lastLoginTime = #{lastlogintime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      isDelete = #{isdelete,jdbcType=INTEGER},
+      authorityId = #{authorityid,jdbcType=BIGINT},
+      userRoleId = #{userroleid,jdbcType=BIGINT},
+      headImg = #{headimg,jdbcType=VARCHAR},
+      money = #{money,jdbcType=DOUBLE},
+      integral = #{integral,jdbcType=INTEGER},
+      isactive = #{isactive,jdbcType=TINYINT},
+      validatecode = #{validatecode,jdbcType=VARCHAR},
+      outdate = #{outdate,jdbcType=VARCHAR},
+      isBinding = #{isbinding,jdbcType=TINYINT},
+      phoneverificationcode = #{phoneverificationcode,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      grade = #{grade,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      usernickname = #{usernickname,jdbcType=VARCHAR},
+      lastLoginTimeshort = #{lastlogintimeshort,jdbcType=VARCHAR},
+      alwaysLogin = #{alwayslogin,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>
