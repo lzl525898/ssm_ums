@@ -1,0 +1,240 @@
+@charset "UTF-8";
+
+.shortModalbg {
+	margin: auto;
+	width: 450px;
+	margin-top: 50px;
+}
+
+.longModalbg {
+	margin: auto;
+	width: 600px;
+	margin-top: 130px;
+}
+
+.modalHeaderTitle {
+	height: 59px;
+	width: 275px;
+	background: url(/ssm-ums/static/img/dialog/title-bg.png) center top
+		no-repeat;
+	line-height: 59px;
+	font-size: 24px;
+	font-weight: bold;
+	color: #FFFFFF;
+	padding-left: 30px;
+}
+
+.modalClosebg {
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 59px;
+	width: 79px;
+	background-color: #FF9600;
+	border-top-left-radius: 2.25em;
+	border-top-right-radius: 2.25em;
+}
+
+.modalHeaderbg {
+	position: relative;
+	margin: auto;
+	height: 59px;
+	display: flex;
+	flex-direction: row;
+	background-color: transparent;
+}
+
+.modalClosebg button {
+	opacity: 1;
+}
+
+.modalContentbg {
+	margin: auto;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #FF9600;
+	border-bottom-left-radius: 2.25em;
+	border-bottom-right-radius: 2.25em;
+}
+
+.modalContent {
+	margin: auto;
+	min-height: 200px;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding: 30px;
+	border: none;
+	background-color: #FFF1BA;
+	border-radius: 2.2em;
+}
+
+#modalContent {
+	text-align: center;
+	padding-top: 80px;
+}
+
+#alertContent {
+	text-align: center;
+	padding-top: 80px;
+}
+
+.modalFooterbg {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	margin: auto;
+	margin-top: -32px;
+	width: 366px;
+	background-color: transparent;
+}
+
+.okBtn {
+	width: 168px;
+	height: 64px;
+	background: url(/ssm-ums/static/img/dialog/ok.png) center top no-repeat
+		!important;
+}
+
+.okBtn:active {
+	opacity: 0.9;
+}
+
+.cancleBtn {
+	width: 168px;
+	height: 64px;
+	background: url(/ssm-ums/static/img/dialog/cancle.png) center top
+		no-repeat !important;
+}
+
+.cancleBtn:active {
+	opacity: 0.9;
+}
+
+.modal-city-select div {
+	padding: 0;
+	margin-right: 0;
+}
+
+.createStuBtn {
+	border: none;
+	width: 193px;
+	height: 65px;
+	margin-left: 30px;
+	margin-top: 24px;
+	width: 193px;
+	height: 65px;
+	margin-left: 30px;
+	margin-top: 24px;
+	background: url(/ssm-ums/static/img/dialog/create-stu.png) center top
+		no-repeat !important;
+}
+
+.createStuBtn:hover {
+	background: url(/ssm-ums/static/img/dialog/create-force-stu.png) center
+		top no-repeat !important;
+}
+
+.uploadStuBtn {
+	border: none;
+	width: 193px;
+	height: 65px;
+	margin-left: 18px;
+	margin-top: 24px;
+	background: url(/ssm-ums/static/img/dialog/upload-stu.png) center top
+		no-repeat !important;
+}
+
+.uploadStuBtn:hover {
+	background: url(/ssm-ums/static/img/dialog/upload-force-stu.png) center
+		top no-repeat !important;
+}
+
+.selectStuBtn {
+	border: none;
+	width: 193px;
+	height: 65px;
+	margin-left: 30px;
+	background: url(/ssm-ums/static/img/dialog/select-stu.png) center top
+		no-repeat !important;
+}
+
+.selectStuBtn:hover {
+	background: url(/ssm-ums/static/img/dialog/select-force-stu.png) center
+		top no-repeat !important;
+}
+
+.shareStuBtn {
+	border: none;
+	width: 193px;
+	height: 65px;
+	margin-left: 18px;
+	background: url(/ssm-ums/static/img/dialog/share-stu.png) center top
+		no-repeat !important;
+}
+
+.shareStuBtn:hover {
+	background: url(/ssm-ums/static/img/dialog/share-force-stu.png) center
+		top no-repeat !important;
+}
+
+.modalBtnContent {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	border: none;
+	background-color: #FFF1BA;
+	border-radius: 2.2em;
+	min-height: 196px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.modalStudentsInfo {
+	margin-left: 48px;
+	color: #222222;
+	font-size: 14px;
+	height: 32px;
+}
+
+@media ( max-width :800px) {
+	.shortModalbg {
+		width: 90%;
+	}
+	.longModalbg {
+		width: 90%;
+	}
+	.modalHeaderTitle {
+		height: 60px;
+		width: 100%;
+		background: url("");
+		font-size: 14px;
+		background-color: #FF9600;
+		border-top-left-radius: 2.25em;
+		border-top-right-radius: 2.25em;
+	}
+	.modalClosebg {
+		top:1px;
+		border-top-left-radius: 0;
+	}
+	.modalFooterbg {
+		margin-top: -25px;
+		width: 266px;
+	}
+	.okBtn {
+		width: 120px;
+		height: 50px;
+		background: url("/ssm-ums/static/img/dialog/ok.png") center top
+			no-repeat !important;
+		background-size: 100% 100% !important;
+	}
+	.cancleBtn {
+		width: 120px;
+		height: 50px;
+		background: url(/ssm-ums/static/img/dialog/cancle.png) center top
+			no-repeat !important;
+		background-size: 100% 100% !important;
+	}
+}

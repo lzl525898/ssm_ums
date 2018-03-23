@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ums.dao.RoleMapper">
   <resultMap id="BaseResultMap" type="com.ums.bean.Role">
-    <id column="role_id" jdbcType="TINYINT" property="roleId" />
-    <result column="role_type" jdbcType="VARCHAR" property="roleType" />
-    <result column="role_desc" jdbcType="VARCHAR" property="roleDesc" />
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="role_sign" jdbcType="VARCHAR" property="roleSign" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -65,7 +66,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    role_id, role_type, role_desc
+    id, role_name, role_sign, description
   </sql>
   <select id="selectByExample" parameterType="com.ums.bean.RoleExample" resultMap="BaseResultMap">
     select
@@ -73,7 +74,7 @@
       distinct
     </if>
     <include refid="Base_Column_List" />
-    from ums_role
+    from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -81,70 +82,79 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from ums_role
-    where role_id = #{roleId,jdbcType=TINYINT}
+    from role
+    where id = #{id,jdbcType=BIGINT}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
-    delete from ums_role
-    where role_id = #{roleId,jdbcType=TINYINT}
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from role
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <delete id="deleteByExample" parameterType="com.ums.bean.RoleExample">
-    delete from ums_role
+    delete from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
   <insert id="insert" parameterType="com.ums.bean.Role">
-    insert into ums_role (role_id, role_type, role_desc
-      )
-    values (#{roleId,jdbcType=TINYINT}, #{roleType,jdbcType=VARCHAR}, #{roleDesc,jdbcType=VARCHAR}
-      )
+    insert into role (id, role_name, role_sign, 
+      description)
+    values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleSign,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.ums.bean.Role">
-    insert into ums_role
+    insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        role_id,
+      <if test="id != null">
+        id,
       </if>
-      <if test="roleType != null">
-        role_type,
+      <if test="roleName != null">
+        role_name,
       </if>
-      <if test="roleDesc != null">
-        role_desc,
+      <if test="roleSign != null">
+        role_sign,
+      </if>
+      <if test="description != null">
+        description,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="roleId != null">
-        #{roleId,jdbcType=TINYINT},
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
       </if>
-      <if test="roleType != null">
-        #{roleType,jdbcType=VARCHAR},
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="roleDesc != null">
-        #{roleDesc,jdbcType=VARCHAR},
+      <if test="roleSign != null">
+        #{roleSign,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="com.ums.bean.RoleExample" resultType="java.lang.Long">
-    select count(*) from ums_role
+    select count(*) from role
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update ums_role
+    update role
     <set>
-      <if test="record.roleId != null">
-        role_id = #{record.roleId,jdbcType=TINYINT},
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.roleType != null">
-        role_type = #{record.roleType,jdbcType=VARCHAR},
+      <if test="record.roleName != null">
+        role_name = #{record.roleName,jdbcType=VARCHAR},
       </if>
-      <if test="record.roleDesc != null">
-        role_desc = #{record.roleDesc,jdbcType=VARCHAR},
+      <if test="record.roleSign != null">
+        role_sign = #{record.roleSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -152,30 +162,35 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update ums_role
-    set role_id = #{record.roleId,jdbcType=TINYINT},
-      role_type = #{record.roleType,jdbcType=VARCHAR},
-      role_desc = #{record.roleDesc,jdbcType=VARCHAR}
+    update role
+    set id = #{record.id,jdbcType=BIGINT},
+      role_name = #{record.roleName,jdbcType=VARCHAR},
+      role_sign = #{record.roleSign,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.ums.bean.Role">
-    update ums_role
+    update role
     <set>
-      <if test="roleType != null">
-        role_type = #{roleType,jdbcType=VARCHAR},
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
       </if>
-      <if test="roleDesc != null">
-        role_desc = #{roleDesc,jdbcType=VARCHAR},
+      <if test="roleSign != null">
+        role_sign = #{roleSign,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
       </if>
     </set>
-    where role_id = #{roleId,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.ums.bean.Role">
-    update ums_role
-    set role_type = #{roleType,jdbcType=VARCHAR},
-      role_desc = #{roleDesc,jdbcType=VARCHAR}
-    where role_id = #{roleId,jdbcType=TINYINT}
+    update role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_sign = #{roleSign,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

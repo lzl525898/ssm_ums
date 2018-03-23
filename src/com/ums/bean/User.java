@@ -1,15 +1,18 @@
 package com.ums.bean;
 
+import javax.validation.constraints.Pattern;
+
 public class User {
     private Long id;
 
     private Long parentid;
 
     private String openid;
-
+    
+	@Pattern(regexp = "^[a-zA-Z0-9_-]{6,16}$", message = "用户名必须是6-16位英文和数字的组合")
     private String username;
-
-    private String password;
+	@Pattern(regexp = "^[a-zA-Z\\d_]{6,}$", message = "密码至少由6位字符组成")
+    private String password;   //
 
     private String truename;
 
@@ -19,12 +22,14 @@ public class User {
 
     private String address;
 
+	@Pattern(regexp = "^([a-z0-9_\\.-]+)@([\\da-z\\.-]+)\\.([a-z\\.]{2,6})$", message = "邮箱格式不正确")
     private String email;
 
     private String qq;
 
     private String homephone;
 
+    @Pattern(regexp = "^[1][3,4,5,7,8][0-9]{9}$", message = "请输入正确的手机号")
     private String telphone;
 
     private String usercardid;

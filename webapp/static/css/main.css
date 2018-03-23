@@ -159,10 +159,16 @@ ums_footer  {
 	height:650px;
 }
 
+#page_info_area {
+	color: #ffba02;
+}
+
 #users_table th {
+	color: #ffba02;
 	text-align: center;
 }
 
 #users_table td {
+	color: #ffba02;
 	text-align: center;
 }
