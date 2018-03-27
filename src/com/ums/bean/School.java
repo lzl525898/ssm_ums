@@ -16,6 +16,24 @@ public class School {
     private Date createtime;
 
     private Date updatetime;
+    
+    private String allName;
+    
+    public String getAllName() {
+    	String province = this.getProvince();
+		if ("北京市".equals(this.getProvince()) || 
+		    "天津市".equals(this.getProvince()) || 
+			"上海市".equals(this.getProvince()) || 
+			"重庆市".equals(this.getProvince()) ) {
+			province = "";
+		} 
+		allName = province + getCity() + getArea() + getName();
+		return allName;
+	}
+
+	public void setAllName(String allName) {
+		this.allName = allName;
+	}
 
     public Long getId() {
         return id;

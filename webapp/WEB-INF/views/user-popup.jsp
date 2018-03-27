@@ -17,6 +17,12 @@
 	width: 200px;
 }
 
+.validate-label-style {
+	margin-top: -4px;
+	margin-bottom: -12px !important;
+	font-size: 5px !important;
+}
+
 .user-brow-content {
 	height: 500px !important;
 }
@@ -287,21 +293,24 @@
 									<label class="col-sm-3 control-label">家长账户</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control user-input-style"
-											placeholder="请输入登录账号..." name="username" id="userInputUserName" />
+											placeholder="请输入家长账号..." name="username"
+											id="userInputUserName" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label" for="userInputRealName">家长密码</label>
 									<div class="col-sm-9">
-										<input type="password" class="form-control user-input-style"
-											placeholder="请输入用户密码..." name="password" id="userInputPassword" />
+										<input type="password" id="parent-password"
+											class="form-control user-input-style"
+											placeholder="请输入家长密码..." name="password"
+											id="userInputPassword" />
 									</div>
 								</div>
 								<div class="form-group">
 									<label class="col-sm-3 control-label" for="userInputRealName">确认密码</label>
 									<div class="col-sm-9">
 										<input type="password" class="form-control user-input-style"
-											placeholder="请确认用户密码..." name="confirm" id="userInputConfirm" />
+											placeholder="请确认家长密码..." name="confirm" id="userInputConfirm" />
 									</div>
 								</div>
 								<div class="form-group">
@@ -313,7 +322,69 @@
 								</div>
 							</form>
 						</div>
-						<div class="tab-pane" id="createUserWithTeacher"><form action="#"></form>介绍内容...</div>
+						<div class="tab-pane" style="margin-top: 25px;"
+							id="createUserWithTeacher">
+							<form class="form-horizontal">
+								<div class="form-group">
+									<label class="col-sm-3 control-label">教师账户</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control user-input-style"
+											placeholder="请输入教师账号..." name="username"
+											id="userInputUserName" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="userInputRealName">教师密码</label>
+									<div class="col-sm-9">
+										<input type="password" id="teacher-password"
+											class="form-control user-input-style"
+											placeholder="请输入教师密码..." name="password"
+											id="userInputPassword" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label" for="userInputRealName">确认密码</label>
+									<div class="col-sm-9">
+										<input type="password" class="form-control user-input-style"
+											placeholder="请确认用户密码..." name="confirm" id="userInputConfirm" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">教师手机</label>
+									<div class="col-sm-9">
+										<input type="text" class="form-control user-input-style"
+											placeholder="请输入手机号码..." name="telphone" id="userInputPhone" />
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">所在区域</label>
+									<div class="col-sm-9">
+										<div class="user-input-style" id="teacherRegDistpicker"
+										     style="display: flex;justify-content: space-between;">
+											<div class="col-sm-4" style="padding: 0;padding-right: 3px;">
+												<select class="form-control" id="s_province" name="province"
+													style="font-size: 12px; padding: 0;"></select>
+											</div>
+											<div class="col-sm-4" style="padding: 0;padding-left: 3px;padding-right: 3px;">
+												<select class="form-control" id="s_city" name="city"
+													style="font-size: 12px; padding: 0;"></select>
+											</div>
+											<div class="col-sm-4" style="padding: 0;padding-left: 3px;">
+												<select class="form-control" id="s_area" name="area"
+													style="font-size: 12px; padding: 0;"></select>
+											</div>
+										</div>
+											
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-sm-3 control-label">所在学校</label>
+									<div class="col-sm-9">
+										<select class="form-control user-input-style" id="school" name="school" required="required"></select>
+									</div>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -323,11 +394,12 @@
 			</div>
 		</div>
 	</div>
-	
+	<script src="${APP_PATH }/static/js/utils.js"></script>
 	<script type="text/javascript">
+	    // 初始化省市区
 		// 显示权限dialog
 		function authModalShow(object) {
-			$("#authModalContent select").empty(); 
+			$("#userAuthModalContent select").empty(); 
 			$("#current_role").html(object.curRole.roleName);
 			$("#current_role").attr("current-role-id", object.curRole.roleId);
 			for(var i=0; i< object.roles.length;i++){
@@ -383,13 +455,21 @@
 		
 		// 显示添加用户dialog
 		function userAddModalShow() {
+			// 还原form表单样式
 			$("#createUserWithParent form")[0].reset();
 			$("#createUserWithTeacher form")[0].reset();
+			$("#createUserWithParent form").find(".form-group").removeClass("has-success has-error");
+			$("#createUserWithTeacher form").find(".form-group").removeClass("has-success has-error");
+			$("#createUserWithParent form").find(".control-label.validate-label-style").remove();
+			$("#createUserWithTeacher form").find(".control-label.validate-label-style").remove();
+			
+			// 点击tab响应
 			$('#userTypeTab a').click(function (e) {
 				  e.preventDefault();
 				  $("#userAddModalOk").attr("create-user-type", "#"+$(this).prop("href").split("#")[1]);
 				  $(this).tab('show');
 			});
+			// 显示添加用户dialog
 			$("#userAddModalOk").attr("create-user-type", $("#userTypeTab").find("a:first").attr("href"));
 			$("#userAddModal").modal("show");
 		}
@@ -397,22 +477,6 @@
 		// 隐藏添加用户dialog
 		function userAddModalHide() {
 			$("#userAddModal").modal("hide");
-		}
-		//返回用户角色
-		function userRoleNameById(roleid){
-			if (roleid==1) {
-				return "管理员";
-			} else if (roleid==2) {
-				return "已注册学员";
-			} else if (roleid==4) {
-				return "已缴费学员";
-			} else if (roleid==5) {
-				return "教师";
-			} else if (roleid==6) {
-				return "助教";
-			} else if (roleid==7) {
-				return "游客";
-			}
 		}
 	</script>
 </body>
