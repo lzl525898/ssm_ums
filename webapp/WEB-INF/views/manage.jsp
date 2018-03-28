@@ -75,30 +75,38 @@
 										</div>
 									</div>
 									<!-- 显示配置数据 -->
-									<div class="row" style="margin-top: 79px;">
+									<div class="row" style="margin-top: 47px;">
 										<div class="col-md-12">
-											<ul class="nav nav-pills">
-											  <li class="active"><a href="#homehome">微信平台配置</a></li>
-											  <li><a href="#profileprofile">微信商户平台配置</a></li>
-											  <li><a href="#messagesprofile">短信平台配置</a></li>
+											<ul class="nav nav-pills" id="configTab">
+											  <li class="active"><a href="#tab-config-wx" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;">微信平台配置</a></li>
+											  <li><a href="#tab-config-wxshop" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0;">微信商户平台配置</a></li>
 											</ul>
-											<div class="tab-content">
-										      <div class="tab-pane active" id="homehome">微信平台配置</div>
-										      <div class="tab-pane" id="profileprofile">微信商户平台配置</div>
-										      <div class="tab-pane" id="messagesprofile">短信平台配置</div>
+											<div class="tab-content" style="height: 300px;background-color: #ffba02;">
+										      <div class="tab-pane active" id="tab-config-wx" style="padding-top: 50px;">
+										      	<table class="table table-hover table-bordered" id="config_table_wx">
+										      		<thead>
+														<tr style="display: flex;">
+															<th style="flex: 1">配置项</th>
+															<th style="flex: 3">配置信息</th>
+															<th style="flex: 1">操作</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+										      </div>
+										      <div class="tab-pane" id="tab-config-wxshop" style="padding-top: 50px;">
+										      	<table class="table table-hover table-bordered" id="config_table_wxshop">
+										      		<thead>
+														<tr style="display: flex;">
+															<th style="flex: 1">配置项</th>
+															<th style="flex: 3">配置信息</th>
+															<th style="flex: 1">操作</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+										      </div>
 										    </div>
-										</div>
-									</div>
-									<!-- 按钮 -->
-									<div class="row">
-										<div style="display: flex; justify-content: flex-start;position: fixed;top: 90%; width: 55%;">
-											<button class="btn btn-primary" id="user_add_modal_btn">
-												<span class="glyphicon glyphicon-plus"></span>&nbsp;新增
-											</button>
-											&nbsp;&nbsp;&nbsp;
-											<button class="btn btn-danger" id="user_delete_all_btn">
-												<span class="glyphicon glyphicon-trash"></span>&nbsp;删除
-											</button>
 										</div>
 									</div>
 								</div>
@@ -172,12 +180,18 @@
 		<script src="${APP_PATH }/static/js/city/distpicker.js"></script>
 		<script src="${APP_PATH }/static/js/school.js"></script>
 		<script src="${APP_PATH }/static/js/user/base.js"></script>
+		<script src="${APP_PATH }/static/js/config/base.js"></script>
 		<script type="text/javascript">
 			// 应用根路径
 			var APP_PATH = "${APP_PATH}";
 			// 分页信息
 			var totalRecord, currentPage;
 			$(function(){
+				// 响应配置信息tab页
+				$('#configTab a').click(function (e) {
+				  e.preventDefault();
+				  $(this).tab('show');
+				});
 				// 初始化学校select
 				areaBind("${APP_PATH}/school/getSchool", "school", "s_province", "s_city", "s_area");
 				$("#teacherRegDistpicker").distpicker();
@@ -196,6 +210,8 @@
 				});
 			});
 			$(function() {
+				// 获取配置管理信息
+				get_config_info();
 				// 控制显示菜单当前项为用户管理页面
 				handleShowOrHideContent(".ums-user-manage");
 				// 点击菜单栏的响应事件
@@ -247,6 +263,20 @@
 					handleShowOrHideContent(".ums-config-manage");
 				}
 			}
+			// 获取配置管理相关信息
+			function get_config_info(){
+				$.ajax({
+					url: "${APP_PATH}/sys/config",
+					type: "GET",
+					success: function(result){
+						build_config_table(result);
+					},
+					error: function(){
+						alert("请检查网络...");
+					}
+				});
+			//	var configs = result.extend.pageInfo.list;
+			}
 			// 跳转到指定table页
 			function to_page(type, pn){
 				if (type=='user') {
@@ -275,6 +305,43 @@
 				$(itemClass).show();
 			}
 			
+			// dialog按钮相应
+			$("#dialogOk").click(function(){
+				if ("user-delete" == $(this).attr("btn-type")) {
+					//发送ajax请求删除
+					$.ajax({
+						url:"{$APP_PATH}/user/user/"+$(this).attr("del-names"),
+						type:"DELETE",
+						success:function(result){
+							dialogHide();
+							//回到当前页面
+							to_page("user", currentPage);
+						},
+						error:function(){
+							dialogHide();
+							alertShow("请稍后再试...");
+						}
+					});
+				} else if ("config-reset" == $(this).attr("btn-type")) {
+					$.ajax({
+						url:"${APP_PATH}/sys/config/"+$(this).attr("reset-names")+"/empty",
+						type:"PUT",
+						success:function(result){
+							dialogHide();
+							//回到当前配置
+							if (result.code==1) {
+								get_config_info();
+							} else {
+								alertShow("请稍后再试...");
+							}
+						},
+						error:function(){
+							dialogHide();
+							alertShow("请稍后再试!!!");
+						}
+					});
+				}
+			});
 		</script>
 	</shiro:hasAnyRoles>
 </body>

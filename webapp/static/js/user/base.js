@@ -24,25 +24,6 @@ $("#user_delete_all_btn").click(function(){
 	$("#dialogOk").attr("del-names", delNameStr);
 	dialogShow("确认删除【"+userNames+"】吗？");
 });
-// dialog按钮相应
-$("#dialogOk").click(function(){
-	if ("user-delete" == $(this).attr("btn-type")) {
-		//发送ajax请求删除
-		$.ajax({
-			url:APP_PATH+"/user/user/"+$(this).attr("del-names"),
-			type:"DELETE",
-			success:function(result){
-				dialogHide();
-				//回到当前页面
-				to_page("user", currentPage);
-			},
-			error:function(){
-				dialogHide();
-				alertShow("请稍后再试...");
-			}
-		});
-	}
-});
 // 用户权限响应
 $("#authModalOk").click(function(){
 	$.ajax({

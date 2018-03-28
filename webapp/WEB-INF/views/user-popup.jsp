@@ -114,7 +114,6 @@
 			</div>
 		</div>
 	</div>
-	
 	<!-- 用户浏览 -->
 	<div class="modal fade" id="userBrowModal" tabindex="-1" role="dialog">
 		<div class="longModalbg">
@@ -199,7 +198,7 @@
 		<div class="longModalbg">
 			<!-- 系统提示  shortModalbg longModalbg-->
 			<div class="modalHeaderbg">
-				<div class="modalHeaderTitle">用户编辑</div>
+				<div class="modalHeaderTitle">配置编辑</div>
 				<div class="modalClosebg">
 					<button type="button" class="btn close" data-dismiss="modal">
 						<img alt="X" src="${APP_PATH}/static/img/dialog/close.png">
@@ -208,56 +207,25 @@
 			</div>
 			<div class="modalContentbg">
 				<div class="modalContent user-brow-content"
-					id="userEditModalContent">
+					id="configEditModalContent">
 					<form class="form-horizontal" style="margin-top: -5px;">
 						<div class="form-group">
-							<label class="col-sm-3 control-label">用户名</label>
+							<label class="col-sm-3 control-label">配置项</label>
 							<div class="col-sm-9">
 								<p class="form-control-static user-brow-color"></p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label">性别</label>
+							<label class="col-sm-3 control-label" for="sysInputConfig">配置信息</label>
 							<div class="col-sm-9">
-								<label class="radio-inline"> 
-									<input type="radio" style="margin-top: -1px;"
-									name="sex" id="userRadioMale" value="0"/><span>男</span>
-								</label> 
-								<label class="radio-inline"> 
-									<input type="radio" style="margin-top: -1px;"
-									name="sex" id="userRadioFemale" value="1"><span>女</span>
-								</label>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label" for="userInputRealName">真实姓名</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control user-input-style" name="truename" id="userInputRealName"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">年龄</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control user-input-style" name="age" id="userInputAge"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">手机</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control user-input-style" name="telphone" id="userInputPhone"/>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-3 control-label">邮箱</label>
-							<div class="col-sm-9">
-								<input type="text" class="form-control user-input-style" name="email" id="userInputEmail"/>
+								<input type="text" class="form-control user-input-style" name="config-info" id="sysInputConfig"/>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div class="modalFooterbg">
-				<button type="button" class="btn okBtn" id="userEditModalOk"></button>
+				<button type="button" class="btn okBtn" id="configEditModalOk"></button>
 				<button type="button" class="btn cancleBtn" data-dismiss="modal"></button>
 			</div>
 		</div>
@@ -329,8 +297,7 @@
 									<label class="col-sm-3 control-label">教师账户</label>
 									<div class="col-sm-9">
 										<input type="text" class="form-control user-input-style"
-											placeholder="请输入教师账号..." name="username"
-											id="userInputUserName" />
+											placeholder="请输入教师账号..." name="username"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -338,8 +305,7 @@
 									<div class="col-sm-9">
 										<input type="password" id="teacher-password"
 											class="form-control user-input-style"
-											placeholder="请输入教师密码..." name="password"
-											id="userInputPassword" />
+											placeholder="请输入教师密码..." name="password"/>
 									</div>
 								</div>
 								<div class="form-group">
@@ -390,6 +356,52 @@
 			</div>
 			<div class="modalFooterbg">
 				<button type="button" class="btn okBtn" id="userAddModalOk"></button>
+				<button type="button" class="btn cancleBtn" data-dismiss="modal"></button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 配置编辑 -->
+	<div class="modal fade" id="configEditModal" tabindex="-1" role="dialog">
+		<div class="shortModalbg">
+			<!-- 系统提示  shortModalbg longModalbg-->
+			<div class="modalHeaderbg">
+				<div class="modalHeaderTitle">配置修改</div>
+				<div class="modalClosebg">
+					<button type="button" class="btn close" data-dismiss="modal">
+						<img alt="X" src="${APP_PATH}/static/img/dialog/close.png">
+					</button>
+				</div>
+			</div>
+			<div class="modalContentbg">
+				<div class="modalContent" id="configModalContent">
+					<form class="form-horizontal" style="margin-top: -5px;">
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">配置项&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="text-align: left;">
+								<p class="form-control-static" id="config_name" style="color: #583e7e"></p>
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">配置信息&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<input type="text"
+									   class="form-control"
+									   placeholder="请输入配置信息..." id="config_info"/>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modalFooterbg">
+				<button type="button" class="btn okBtn" id="configModalOk"></button>
 				<button type="button" class="btn cancleBtn" data-dismiss="modal"></button>
 			</div>
 		</div>
@@ -478,6 +490,21 @@
 		function userAddModalHide() {
 			$("#userAddModal").modal("hide");
 		}
+		
+		// 显示编辑配置dialog
+		function configEditModalShow(object) {
+			$("#config_name").empty();
+			$("#config_name").append(object.get(2));
+			$("#config_info").empty();
+			$("#config_info").val(object.get(3));
+			$("#configModalOk").attr("config-type", object.get(1));
+			$("#configEditModal").modal("show");
+		}
+		// 隐藏编辑配置dialog
+		function configEditModalHide() {
+			$("#configEditModal").modal("hide");
+		}
+		
 	</script>
 </body>
 </html>

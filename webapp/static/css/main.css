@@ -176,3 +176,29 @@ ums_footer  {
 	color: #ffba02;
 	text-align: center;
 }
+
+#config_table_wx th {
+	text-align: center;
+}
+
+#config_table_wx {
+	width: 80%;
+	margin: auto;
+}
+
+#config_table_wxshop {
+	width: 80%;
+	margin: auto;
+}
+
+#config_table_wx td {
+	text-align: center;
+}
+
+#config_table_wxshop th {
+	text-align: center;
+}
+
+#config_table_wxshop td {
+	text-align: center;
+}
