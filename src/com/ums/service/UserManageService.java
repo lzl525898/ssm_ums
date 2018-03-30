@@ -9,10 +9,8 @@ import com.ums.bean.Role;
 import com.ums.bean.User;
 import com.ums.bean.UserExample;
 import com.ums.bean.UserExample.Criteria;
-import com.ums.bean.UserRole;
 import com.ums.dao.RoleMapper;
 import com.ums.dao.UserMapper;
-import com.ums.dao.UserRoleMapper;
 
 @Service
 public class UserManageService {

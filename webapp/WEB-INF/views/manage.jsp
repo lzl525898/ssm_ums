@@ -22,23 +22,41 @@
 		<div id="wrapper">
 			<div class="overlay"></div>
 			<!-- Sidebar -->
-			<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-				<ul class="nav sidebar-nav">
-					<li class="sidebar-brand"><a href="${APP_PATH }/manage">
-							人工智能云课堂 </a></li>
-					<shiro:hasAnyRoles name="admin">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							id="system_manage" data-toggle="dropdown"> <i
-								class="fa fa-fw fa-plus"></i> 系统管理 <span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu" role="menu">
-								<li class="dropdown-header">管理员可用</li>
-								<li manage_type="system_manage_user"><a href="javascript:;">用户管理</a></li>
-								<li manage_type="system_manage_config"><a href="javascript:;">配置管理</a></li>
-							</ul></li>
-					</shiro:hasAnyRoles>
-					<li><a href="#"><i class="fa fa-fw fa-twitter"></i> Last page</a></li>
-				</ul>
+			<nav class="navbar navbar-inverse navbar-fixed-top"
+				id="sidebar-wrapper" role="navigation">
+			<ul class="nav sidebar-nav">
+				<li class="sidebar-brand"><a href="${APP_PATH }/manage">
+						人工智能云课堂 </a></li>
+				<!-- 
+				<shiro:hasAnyRoles name="admin">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" id="system_manage" data-toggle="dropdown"> 
+							<i class="fa fa-fw fa-plus"></i> 系统管理 <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="dropdown-header">管理员可用</li>
+							<li manage_type="system_manage_user"><a href="javascript:;">用户管理</a></li>
+							<li manage_type="system_manage_config"><a
+								href="javascript:;">配置管理</a></li>
+						</ul>
+					</li>
+				</shiro:hasAnyRoles>
+				<li><a href="#"><i class="fa fa-fw fa-twitter"></i> Last page</a></li>
+				 -->
+				 <c:forEach items="${lv1menu}" var="lv1m">
+				 	<li class="dropdown">
+						<a href="#" class="dropdown-toggle" id="${lv1m.menupath}" data-toggle="dropdown"> 
+							<i class="${lv1m.menuimage}"></i> ${lv1m.menuname} <span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="dropdown-header">管理员可用</li>
+							<c:forEach items="${lv2menu}" var="lv2m">
+								<c:if test="${lv1m.id==lv2m.parentmenuid}">
+									<li manage_type="${lv2m.menupath}"><a href="javascript:;">${lv2m.menuname}</a></li>
+								</c:if>
+							</c:forEach>
+						</ul>
+					 </li>
+				 </c:forEach>
+			</ul>
 			</nav>
 			<!-- 页面主内容 -->
 			<div id="page-content-wrapper">
@@ -58,9 +76,8 @@
 										src="${APP_PATH }/static/img/avatar.jpg" /> &nbsp;&nbsp; <span
 										class="glyphicon glyphicon-triangle-bottom"></span>
 									<ul class="dropdown-menu dropdown-menu-right">
-										<li><a href="#">${sessionIsLogin.username }</a></li>
-										<li><a href="#">Another action</a></li>
-										<li><a href="#">Something else here</a></li>
+										<li><a href="#">${sessionUserName.username }</a></li>
+										<li><a href="#">Something</a></li>
 										<li role="separator" class="divider"></li>
 										<li><a href="${APP_PATH }/shiro/logout">退出</a></li>
 									</ul>
@@ -164,6 +181,54 @@
 										</div>
 									</div>
 								</div>
+								<!-- 显示菜单数据 -->
+								<div class="row ums-menu-manage">
+										<!-- 标题 -->
+										<div class="row">
+											<div class="col-md-12">
+												<h1>菜单管理</h1>
+											</div>
+										</div>
+										<!-- 按钮 -->
+										<div class="row">
+											<div style="display: flex; justify-content: flex-end; margin-right: 20px;">
+												<button class="btn btn-primary" id="menu_add_modal_btn">
+													<span class="glyphicon glyphicon-plus"></span>&nbsp;新增
+												</button>
+											</div>
+										</div>
+										<!-- 显示菜单数据 -->
+										<div class="row" style="padding-top: 45px;">
+											<div class="col-md-12">
+												<table class="table table-hover table-bordered"
+													id="menus_table">
+													<thead>
+														<tr style="display: flex;">
+															<th style="flex: 1">菜单名</th>
+															<th style="flex: 1">菜单路径</th>
+															<th style="flex: 1">菜单等级</th>
+															<th style="flex: 1">父菜单</th>
+															<th style="flex: 1">操作</th>
+														</tr>
+													</thead>
+													<tbody></tbody>
+												</table>
+											</div>
+										</div>
+										<!-- 显示分页信息 -->
+										<div id="paging-information-menu" style="position: fixed;top: 90%; width: 55%;">
+											<div class="row" style="margin-top: 15px;">
+												<!--分页文字信息  -->
+												<div class="col-md-6" id="page_info_area_menu"></div>
+												<!-- 分页条信息 -->
+												<div class="col-md-6"
+													style="display: flex; justify-content: flex-end;margin-top: -30px;"
+													id="page_nav_area_menu"></div>
+											</div>
+										</div>
+									</div>
+								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -179,6 +244,7 @@
 		<script src="${APP_PATH }/static/js/city/distpicker.data.js"></script>
 		<script src="${APP_PATH }/static/js/city/distpicker.js"></script>
 		<script src="${APP_PATH }/static/js/school.js"></script>
+		<script src="${APP_PATH }/static/js/menu/base.js"></script>
 		<script src="${APP_PATH }/static/js/user/base.js"></script>
 		<script src="${APP_PATH }/static/js/config/base.js"></script>
 		<script type="text/javascript">
@@ -210,10 +276,8 @@
 				});
 			});
 			$(function() {
-				// 获取配置管理信息
-				get_config_info();
 				// 控制显示菜单当前项为用户管理页面
-				handleShowOrHideContent(".ums-user-manage");
+				handleManager("system_manage_user");
 				// 点击菜单栏的响应事件
 				$(".sidebar-nav").on("click","li",function(e){
 					// 防止点击后关闭菜单栏
@@ -222,9 +286,8 @@
 					handleManager($(this).attr("manage_type"));
 				});
 				// 设置分页容器宽度
-				$("#paging-information").width($(".ums-user-manage").width());
-				// 跳转到哪页
-				to_page("user",1);
+				$("#paging-information").width($(".ums-user-manage").width());  // 用户分页
+				$("#paging-information-menu").width($(".ums-user-manage").width()); // 菜单分页
 				// 菜单栏初始化相关信息
 				var trigger = $('.hamburger'), overlay = $('.overlay'), isClosed = true;
 				hamburger_cross();
@@ -245,6 +308,7 @@
 				trigger.click(function() {
 					hamburger_cross();
 				});
+				// 设置系统管理下拉展开
 				menuItemDropdown("#system_manage");
 				// 显示菜单功能
 				$('[data-toggle="offcanvas"]').click(function() {
@@ -256,11 +320,20 @@
 				}
 				//------菜单栏初始化相关信息 ------//
 			});
+			// 处理个页面的数据请求
 			function handleManager(type){
 				if (type=="system_manage_user") { // 用户管理
+					// 跳转到哪页
+					to_page("user",1);
 					handleShowOrHideContent(".ums-user-manage");
 				} else if (type=="system_manage_config") { // 配置管理
+					// 获取配置管理信息
+					get_config_info();
 					handleShowOrHideContent(".ums-config-manage");
+				} else if (type=="system_manage_menu") { // 菜单管理
+					// 获取菜单信息
+					to_page("menu", 1);
+					handleShowOrHideContent(".ums-menu-manage");
 				}
 			}
 			// 获取配置管理相关信息
@@ -275,11 +348,10 @@
 						alert("请检查网络...");
 					}
 				});
-			//	var configs = result.extend.pageInfo.list;
 			}
 			// 跳转到指定table页
 			function to_page(type, pn){
-				if (type=='user') {
+				if (type=='user') { // 用户table
 					$.ajax({
 						url:"${APP_PATH}/user/users",
 						data:"pn="+pn,
@@ -293,18 +365,35 @@
 							build_page_nav(result);
 						}
 					});
+				} else if (type=='menu') { // 菜单table
+					$.ajax({
+						url: "${APP_PATH}/menu/menu",
+						data: "pn="+pn,
+						type: "GET",
+						success: function(result){
+							//1、构建菜单表格
+							build_menu_table(result);
+							//2、解析并显示分页信息
+							build_menu_page_info(result);
+							//3、解析显示分页条数据
+							build_menu_page_nav(result);
+						},
+						error: function(){
+							alert("网络异常...");
+						}
+					});
 				}					
 			}
 			
 			// 控制显示菜单当前项
 			function handleShowOrHideContent(itemClass){
-				var classArray = [".ums-user-manage", ".ums-config-manage"];
+				var classArray = [".ums-user-manage", ".ums-menu-manage", ".ums-config-manage"];
 				for (var i=0;i<classArray.length;i++) {
 					$(classArray[i]).hide();
 				}
 				$(itemClass).show();
 			}
-			
+						
 			// dialog按钮相应
 			$("#dialogOk").click(function(){
 				if ("user-delete" == $(this).attr("btn-type")) {
@@ -331,6 +420,25 @@
 							//回到当前配置
 							if (result.code==1) {
 								get_config_info();
+							} else {
+								alertShow("请稍后再试...");
+							}
+						},
+						error:function(){
+							dialogHide();
+							alertShow("请稍后再试!!!");
+						}
+					});
+				} else if ("menu-del" == $(this).attr("btn-type")) {
+					$.ajax({
+						url:"${APP_PATH}/menu/menu/"+$(this).attr("menu-id")+"/"+$(this).attr("parent-id"),
+						type:"DELETE",
+						success:function(result){
+							dialogHide();
+							//回到当前配置
+							if (result.code==1) {
+								window.location.href = "${APP_PATH}"+result.extend.url;
+							//	to_page("menu", currentPage);
 							} else {
 								alertShow("请稍后再试...");
 							}

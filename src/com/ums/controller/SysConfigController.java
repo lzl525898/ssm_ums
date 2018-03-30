@@ -27,7 +27,6 @@ public class SysConfigController {
 	@ResponseBody
 	public ReqResult getConfigInfo() {
 		Map<String, String> map = PropertyUtil.getProperties();
-		System.out.println(map);
 		return ReqResult.success().add("configInfo", map);
 	}
 	

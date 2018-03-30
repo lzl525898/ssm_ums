@@ -42,8 +42,8 @@ public class PropertyUtil {
 				System.out.println("config.properties文件流关闭出现异常");
 			}
 		}
-		System.out.println("加载properties文件内容完成...........");
-		System.out.println("properties文件内容：" + props);
+//		System.out.println("加载properties文件内容完成...........");
+//		System.out.println("properties文件内容：" + props);
 	}
 
 	public static String getPropery(String key) {
@@ -141,7 +141,7 @@ public class PropertyUtil {
 			System.out.println(key + ":" + value);
 			if(key.equals(keyName)){
 				result = value;
-				System.out.println("properties文件内容：" + key + ":" + value);
+//				System.out.println("properties文件内容：" + key + ":" + value);
 				break;
 			}
 		
@@ -160,9 +160,8 @@ public class PropertyUtil {
 			Map.Entry entry = (Map.Entry) it.next();
 			String key = entry.getKey().toString();
 			String value = entry.getValue().toString();
-			System.out.println(key + ":" + value);
 			map.put(key, value);
-			System.out.println("properties文件内容：" + key + ":" + value);
+//			System.out.println("properties文件内容：" + key + ":" + value);
 		}
 		
 		return map;

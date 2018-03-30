@@ -163,7 +163,15 @@ ums_footer  {
 	height:650px;
 }
 
+.ums-menu-manage {
+	height:650px;
+}
+
 #page_info_area {
+	color: #ffba02;
+}
+
+#page_info_area_menu {
 	color: #ffba02;
 }
 
@@ -200,5 +208,15 @@ ums_footer  {
 }
 
 #config_table_wxshop td {
+	text-align: center;
+}
+
+#menus_table th {
+	color: #ffba02;
+	text-align: center;
+}
+
+#menus_table td {
+	color: #ffba02;
 	text-align: center;
 }

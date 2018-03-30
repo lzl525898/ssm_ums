@@ -92,4 +92,11 @@ public class Menu {
     public void setIsdisplay(Integer isdisplay) {
         this.isdisplay = isdisplay;
     }
+
+	@Override
+	public String toString() {
+		return "Menu [id=" + id + ", menuname=" + menuname + ", menupath=" + menupath + ", menuimage=" + menuimage
+				+ ", menulvl=" + menulvl + ", parentmenuid=" + parentmenuid + ", createtime=" + createtime
+				+ ", createuserid=" + createuserid + ", isdisplay=" + isdisplay + "]";
+	}
 }

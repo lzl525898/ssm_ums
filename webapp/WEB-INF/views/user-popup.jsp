@@ -198,7 +198,7 @@
 		<div class="longModalbg">
 			<!-- 系统提示  shortModalbg longModalbg-->
 			<div class="modalHeaderbg">
-				<div class="modalHeaderTitle">配置编辑</div>
+				<div class="modalHeaderTitle">用户编辑</div>
 				<div class="modalClosebg">
 					<button type="button" class="btn close" data-dismiss="modal">
 						<img alt="X" src="${APP_PATH}/static/img/dialog/close.png">
@@ -207,30 +207,60 @@
 			</div>
 			<div class="modalContentbg">
 				<div class="modalContent user-brow-content"
-					id="configEditModalContent">
+					id="userEditModalContent">
 					<form class="form-horizontal" style="margin-top: -5px;">
 						<div class="form-group">
-							<label class="col-sm-3 control-label">配置项</label>
+							<label class="col-sm-3 control-label">用户名</label>
 							<div class="col-sm-9">
 								<p class="form-control-static user-brow-color"></p>
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-3 control-label" for="sysInputConfig">配置信息</label>
+							<label class="col-sm-3 control-label">性别</label>
 							<div class="col-sm-9">
-								<input type="text" class="form-control user-input-style" name="config-info" id="sysInputConfig"/>
+								<label class="radio-inline"> 
+									<input type="radio" style="margin-top: -1px;"
+									name="sex" id="userRadioMale" value="0"/><span>男</span>
+								</label> 
+								<label class="radio-inline"> 
+									<input type="radio" style="margin-top: -1px;"
+									name="sex" id="userRadioFemale" value="1"><span>女</span>
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label" for="userInputRealName">真实姓名</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control user-input-style" name="truename" id="userInputRealName"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">年龄</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control user-input-style" name="age" id="userInputAge"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">手机</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control user-input-style" name="telphone" id="userInputPhone"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label">邮箱</label>
+							<div class="col-sm-9">
+								<input type="text" class="form-control user-input-style" name="email" id="userInputEmail"/>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 			<div class="modalFooterbg">
-				<button type="button" class="btn okBtn" id="configEditModalOk"></button>
+				<button type="button" class="btn okBtn" id="userEditModalOk"></button>
 				<button type="button" class="btn cancleBtn" data-dismiss="modal"></button>
 			</div>
 		</div>
 	</div>
-	
 	<!-- 用户添加 -->
 	<div class="modal fade" id="userAddModal" tabindex="-1" role="dialog">
 		<div class="longModalbg">
@@ -406,6 +436,151 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- 菜单创建 -->
+	<div class="modal fade" id="menuAddModal" tabindex="-1" role="dialog">
+		<div class="shortModalbg">
+			<!-- 系统提示  shortModalbg longModalbg-->
+			<div class="modalHeaderbg">
+				<div class="modalHeaderTitle">添加菜单</div>
+				<div class="modalClosebg">
+					<button type="button" class="btn close" data-dismiss="modal">
+						<img alt="X" src="${APP_PATH}/static/img/dialog/close.png">
+					</button>
+				</div>
+			</div>
+			<div class="modalContentbg">
+				<div class="modalContent" id="menuAddModalContent">
+					<form class="form-horizontal" style="margin-top: -5px;">
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">菜单名&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="text-align: left;">
+								<input type="text"
+									   class="form-control"
+									   name="menuname"
+									   placeholder="请输入菜单名..." id="input_menu_name"/>
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">菜单路径&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<input type="text"
+									   class="form-control"
+									   name="menupath"
+									   placeholder="请输入菜单路径..." id="input_menu_path"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">父菜单&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<select class="form-control user-input-style" id="parentmenuid" name="parentmenuid" required="required"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">所属角色&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<select class="form-control user-input-style" id="menurole" name="menurole" required="required"></select>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modalFooterbg">
+				<button type="button" class="btn okBtn" id="menuAddModalOk"></button>
+				<button type="button" class="btn cancleBtn" data-dismiss="modal"></button>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 菜单编辑 -->
+	<div class="modal fade" id="menuEditModal" tabindex="-1" role="dialog">
+		<div class="shortModalbg">
+			<!-- 系统提示  shortModalbg longModalbg-->
+			<div class="modalHeaderbg">
+				<div class="modalHeaderTitle">修改菜单</div>
+				<div class="modalClosebg">
+					<button type="button" class="btn close" data-dismiss="modal">
+						<img alt="X" src="${APP_PATH}/static/img/dialog/close.png">
+					</button>
+				</div>
+			</div>
+			<div class="modalContentbg">
+				<div class="modalContent" id="menuEditModalContent">
+					<form class="form-horizontal" style="margin-top: -5px;">
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">菜单名&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="text-align: left;">
+								<input type="text"
+									   class="form-control"
+									   name="menuname"
+									   placeholder="请输入菜单名..." id="input_edt_menu_name"/>
+							</div>
+							<div class="col-sm-1"></div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">菜单路径&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<input type="text"
+									   class="form-control"
+									   name="menupath"
+									   placeholder="请输入菜单路径..." id="input_edt_menu_path"/>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">父菜单&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<select class="form-control user-input-style" id="edtparentmenuid" name="parentmenuid" required="required" onchange="curSelectMenu(this.options[this.options.selectedIndex].value)"></select>
+							</div>
+						</div>
+						<div class="form-group" id="parent-menu-icon">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">菜单图标&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<select class="form-control user-input-style" id="parentmenuicon" name="menuimage" required="required"></select>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-sm-1"></div>
+							<div  class="col-sm-3" style="text-align: right;">
+								<label class="control-label">所属角色&nbsp;:</label>
+							</div>
+							<div class="col-sm-7" style="display: flex;justify-content: flex-start;align-items: center;padding-top: 4px;">
+								<select class="form-control user-input-style" id="edtmenurole" name="menurole" required="required"></select>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="modalFooterbg">
+				<button type="button" class="btn okBtn" id="menuEditModalOk"></button>
+				<button type="button" class="btn cancleBtn" data-dismiss="modal"></button>
+			</div>
+		</div>
+	</div>
 	<script src="${APP_PATH }/static/js/utils.js"></script>
 	<script type="text/javascript">
 	    // 初始化省市区
@@ -505,6 +680,97 @@
 			$("#configEditModal").modal("hide");
 		}
 		
+		// 显示创建菜单dialog
+		function addMenuModalShow(object) {
+			$.ajax({
+				url: "${APP_PATH}/menu/select/info",
+				type: "GET",
+				success: function(result){
+					$("#menuAddModalContent form")[0].reset();
+					$("#menurole").find("option").remove();
+					$("#parentmenuid").find("option").remove();
+					var objects = result.extend;
+					for(var i=0; i< objects.roles.length;i++){
+						$("#menurole").append($("<option value="+objects.roles[i].id+"></option>").append(objects.roles[i].roleName));
+					}
+					$("#parentmenuid").append($("<option value=0></option>").append("顶级菜单"));
+					for(var i=0; i< objects.parents.length;i++){
+						$("#parentmenuid").append($("<option value="+objects.parents[i].id+"></option>").append(objects.parents[i].menuname));
+					}
+					$("#menuAddModal").modal("show");
+				}
+			});
+		}
+		// 隐藏创建菜单dialog
+		function addMenuModalHide() {
+			$("#menuAddModal").modal("hide");
+		}
+		
+		// 显示修改菜单dialog
+		function editMenuModalShow(menuid) {
+			$.ajax({
+				url: "${APP_PATH}/menu/menu/"+menuid,
+				type: "GET",
+				success: function(result){
+					$("#menuEditModalContent form")[0].reset();
+					$("#input_edt_menu_name").val(result.extend.menu.menuname); 
+					$("#input_edt_menu_path").val(result.extend.menu.menupath); 
+					$("#edtmenurole").find("option").remove();
+					$("#parentmenuicon").find("option").remove();
+					$("#edtparentmenuid").find("option").remove();
+					var objects = result.extend;
+					for(var i=0; i< objects.roles.length;i++){
+						if (objects.currole==objects.roles[i].id) {
+							$("#edtmenurole").append($("<option selected='selected' value="+objects.roles[i].id+"></option>").append(objects.roles[i].roleName));
+						} else {
+							$("#edtmenurole").append($("<option value="+objects.roles[i].id+"></option>").append(objects.roles[i].roleName));
+						}
+					}
+					for(var key in objects.fontawesome) {
+						$("#parentmenuicon").append($("<option selected='selected' value='"+objects.fontawesome[key]+"'></option>").append(key));
+					}
+					if (objects.curmenuid==0) {
+						handleFontAwesome(true);
+						$("#edtparentmenuid").append($("<option selected='selected' value=0></option>").append("顶级菜单"));
+					}else {
+						handleFontAwesome(false);
+						$("#edtparentmenuid").append($("<option value=0></option>").append("顶级菜单"));						
+					}
+					for(var i=0; i< objects.lv1menus.length;i++){
+						if (objects.curmenuid==objects.lv1menus[i].id) {
+							$("#edtparentmenuid").append($("<option selected='selected' value="+objects.lv1menus[i].id+"></option>").append(objects.lv1menus[i].menuname));
+						} else {
+							$("#edtparentmenuid").append($("<option value="+objects.lv1menus[i].id+"></option>").append(objects.lv1menus[i].menuname));
+						}
+					}
+					$("#menuEditModalOk").attr("menu-id",menuid);
+					$("#menuEditModal").modal("show");
+				}
+			});
+		}
+		
+		// 隐藏修改菜单dialog
+		function editMenuModalHide() {
+			$("#menuEditModal").modal("hide");
+		}
+		
+		// 显示或隐藏编辑菜单时的图标select
+		function handleFontAwesome(isShow){
+			if (isShow) {
+				$("#parent-menu-icon").show();
+			} else {
+				$("#parent-menu-icon").hide();
+			}
+		}
+		
+		// 获取编辑菜单时选择父菜单的顺序
+		function curSelectMenu(value){
+			if (0==value) {
+				handleFontAwesome(true);
+			} else {
+				handleFontAwesome(false);
+			}
+		}
 	</script>
 </body>
 </html>
